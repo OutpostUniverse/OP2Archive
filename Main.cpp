@@ -1,17 +1,23 @@
-#include "ResourceManager.h"
 #include <iostream>
 #include <string>
 #include <vector>
 #include "OP2Utility.h"
 #include "ArchiveConsoleListing.h"
+#include "ConsoleArgumentParser.h"
 
 using namespace std;
+using namespace ConsoleArgumentParser;
 
 void outputHelp();
 
 static string version = "0.1.0";
 
 ArchiveConsoleListing archiveConsoleListing;
+
+bool isArchiveFileExtension(const std::string& filename)
+{
+	return XFile::extensionMatches(filename, "VOL") || XFile::extensionMatches(filename, "CLM");
+}
 
 void listArchiveContent(const string& filename)
 {
@@ -21,11 +27,11 @@ void listArchiveContent(const string& filename)
 		archiveConsoleListing.listContents(new ClmFile(filename.c_str()));
 }
 
-void listAllArchivesInDirectory()
+void listAllArchivesInDirectory(const string& directory)
 {
-	ResourceManager resourceManager("./");
-	vector<string> volFilenames = resourceManager.getAllFilenamesOfType("./", ".vol", false);
-	vector<string> clmFilenames = resourceManager.getAllFilenames("./", ".clm", false);
+	ResourceManager resourceManager(directory);
+	vector<string> volFilenames = resourceManager.getAllFilenamesOfType(directory, ".vol", false);
+	vector<string> clmFilenames = resourceManager.getAllFilenames(directory, ".clm", false);
 
 	cout << volFilenames.size() << " vol archive file(s) located." << endl;
 	cout << clmFilenames.size() << " clm archive file(s) located." << endl;
@@ -36,6 +42,12 @@ void listAllArchivesInDirectory()
 
 	for each(const string& filename in clmFilenames)
 		listArchiveContent(filename);
+}
+
+void checkIfPathsEmpty(const ConsoleArgs& consoleArgs)
+{
+	if (consoleArgs.paths.size() == 0)
+		throw exception("You must provide at least one file or directory. To provide the current directory, enter './'.");
 }
 
 void locateFileInArchives(const string& path)
@@ -52,17 +64,105 @@ void locateFileInArchives(const string& path)
 		cout << "The file " << filename << " is located in the archive " << archiveFilename << "." << endl << endl;
 }
 
+void locateCommand(const ConsoleArgs& consoleArgs)
+{
+	checkIfPathsEmpty(consoleArgs);
+
+	for each (string path in consoleArgs.paths)
+	{
+		locateFileInArchives(path);
+	}
+}
+
+void listCommand(const ConsoleArgs& consoleArgs)
+{
+	checkIfPathsEmpty(consoleArgs);
+
+	for each (string path in consoleArgs.paths)
+	{
+		if (XFile::isDirectory(path))
+			listAllArchivesInDirectory(path);
+		else if (isArchiveFileExtension(path))
+			listArchiveContent(path);
+		else
+			throw exception("You must provide either a directory or a file of type (.vol|.clm).");
+	}
+}
+
+void extractFromAnyArchive(const ConsoleArgs& consoleArgs)
+{
+	ResourceManager resourceManager("./");
+
+	for each (string path in consoleArgs.paths)
+	{
+
+	}
+}
+
+void extractFromSpecificArchive(const ConsoleArgs& consoleArgs)
+{
+
+}
+
+void extractCommand(const ConsoleArgs& consoleArgs)
+{
+	if (consoleArgs.paths.size() == 0)
+		throw exception("You must specify a filename to extract or the source archive file (.vol|.clm) to extract from.");
+
+	if (isArchiveFileExtension(consoleArgs.paths[0]))
+		extractFromSpecificArchive(consoleArgs);
+	else
+		extractFromAnyArchive(consoleArgs);
+}
+
+void createCommand(const ConsoleArgs& consoleArgs)
+{
+	checkIfPathsEmpty(consoleArgs);
+
+
+}
+
 int main(int argc, char **argv)
 {
-	listAllArchivesInDirectory();
+	try
+	{
+		ConsoleArgs consoleArgs = sortArguments(argc, argv);
 
-	outputHelp();
+		switch (consoleArgs.consoleCommand)
+		{
+		case ConsoleCommand::Help:
+			outputHelp();
+			break;
+		case ConsoleCommand::Create:
+			createCommand(consoleArgs);
+			break;
+		case ConsoleCommand::Extract:
+			extractCommand(consoleArgs);
+			break;
+		case ConsoleCommand::Find:
+			locateCommand(consoleArgs);
+			break;
+		case ConsoleCommand::List:
+			listCommand(consoleArgs);
+			break;
+		}
+	}
+	catch (exception e) {
+		cerr << e.what() << endl;
+		cerr << "Run without arguments to see usage message." << endl << endl;
 
-	locateFileInArchives("eden04.map");
+#if defined _DEBUG
+		getchar();
+#endif
 
-	locateFileInArchives("test.map");
+		return 1;
+	}
 
+#if defined _DEBUG
 	getchar();
+#endif
+
+	return 0;
 }
 
 // OP2Archive contents archiveName.[vol|clm]
@@ -92,19 +192,26 @@ void outputHelp()
 	cout << "OP2Archive Ver " << version << " - Outpost 2 Archive Access and Maintenance" << endl;
 	cout << "Developed by Hooman and Brett208 (Vagabond)" << endl;
 	cout << endl;
-	cout << "+++ USAGE NOTES +++" << endl;
-	cout << "  * Capable of saving multiple map files and entire directories." << endl;
+	cout << "Allows examining, creating, and extracting files from Outpost 2 .vol and .clm archives." << endl;
 	cout << endl;
-	cout << "+++ EXAMPLE COMMANDS +++" << endl;
-	cout << "  * OP2Archive mapFilename.[map|OP2]" << endl;
-	cout << "  * OP2MapImager -s 16 -o -q Ashes.map eden01.map sgame0.op2" << endl;
-	cout << "  * OP2MapImager --Scale 8 --ImageFormat BMP [Directory of choice]" << endl;
+	cout << "+++ COMMANDS +++" << endl;
+	cout << "  * OP2Archive LIST (archivename.(vol|clm) | directory)..." << endl;
+	cout << "  * OP2Archive FIND filename..." << endl;
+	cout << "  * OP2Archive CREATE archivename.(vol|clm) [filename | directory]... [-q] [-s sourceDirectory] [-o] [-c None|LZH]" << endl;
+	cout << "      * If no filename(s) or directory(s) provided," << endl;
+	cout << "        archives all contents of the default source directory (./archiveFilename)." << endl;
+	cout << "  * OP2Archive EXTRACT archivename.(vol|clm) [filename]... [-q] [-d destDirectory] [-o]" << endl;
+	cout << "      * If no filename(s) provided, extracts the entire vol file. " << endl;
+	cout << "      * Defaults destination for entire vol file is ./archiveFilename." << endl;
 	cout << endl;
 	cout << "+++ OPTIONAL ARGUMENTS +++" << endl;
-	cout << "  -H / --Help: Displays Help File" << endl;
-	cout << "  -Q / --Quiet: [Default false] Add switch to run application without issuing console messages." << endl;
-	cout << "  -O / --Overwrite: [Default false] Add switch to allow application to overwrite existing files." << endl;
-	cout << "  -C / --Compression: [Default None]. Allows None|JPG|BMP. Sets the compression alghorithim used in archive. Only available to Create command." << endl;
+	cout << "  -H / --Help / -?: Displays help information." << endl;
+	cout << "  -Q / --Quiet: [Default false] Prevents application from issuing console messages." << endl;
+	cout << "  -O / --Overwrite: [Default false] Allows application to overwrite existing files." << endl;
+	cout << "  -D / --DestinationDirectory: [Default for single file is './', Default for all files is archive's filename]. " << endl;
+	cout << "                               Sets the destination directory for extracted file(s)." << endl;
+	cout << "  -S / --SourceDirectory: EXTRACT: [Deafault is archive's filename]. Sets the source file directory when creating an archive." << endl;
+	cout << "  -C / --Compression: [Default None]. Sets the compression alghorithim used when creating an archive (None|LZH)." << endl;
 	cout << endl;
 	cout << "For more information about Outpost 2 visit the Outpost Universe (http://outpost2.net/)." << endl;
 	cout << endl;

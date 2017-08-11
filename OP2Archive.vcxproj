@@ -114,10 +114,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ArchiveConsoleListing.cpp" />
+    <ClCompile Include="ConsoleArgumentParser.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArchiveConsoleListing.h" />
+    <ClInclude Include="ConsoleArgumentParser.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OP2Utility\OP2Utility\OP2Utility.vcxproj">
