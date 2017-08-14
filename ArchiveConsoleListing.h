@@ -11,5 +11,6 @@ public:
 	void listContents(ArchiveFile* archiveFile);
 
 private:
+	const size_t maxFilenameSize = 40;
 	int findMaxFilenameSize(ArchiveFile* archiveFile);
 };

@@ -89,7 +89,7 @@ void listCommand(const ConsoleArgs& consoleArgs)
 	}
 }
 
-void extractFromAnyArchive(const ConsoleArgs& consoleArgs)
+void extractFromAllArchivesInDirectory(const ConsoleArgs& consoleArgs)
 {
 	ResourceManager resourceManager("./");
 
@@ -99,7 +99,50 @@ void extractFromAnyArchive(const ConsoleArgs& consoleArgs)
 	}
 }
 
+ArchiveFile* openArchiveFile(const string& archivePath)
+{
+	Archives::ArchiveFile* archiveFile;
+
+	if (XFile::extensionMatches(archivePath, "VOL"))
+		archiveFile = new Archives::VolFile(archivePath.c_str());
+	else
+		archiveFile = new Archives::ClmFile(archivePath.c_str());
+
+	return archiveFile;
+}
+
+void extractAllFilesFromArchive(ArchiveFile* archiveFile, const ConsoleSettings& consoleSettings)
+{
+	for (int i = 0; i < archiveFile->GetNumberOfPackedFiles(); ++i)
+	{
+		archiveFile->ExtractFile(i,
+			XFile::replaceFilename(consoleSettings.destDirectory,
+				archiveFile->GetInternalFileName(i)).c_str());
+	}
+}
+
 void extractFromSpecificArchive(const ConsoleArgs& consoleArgs)
+{
+	ArchiveFile* archiveFile = openArchiveFile(consoleArgs.paths[0]);
+
+	if (consoleArgs.paths.size() == 1)
+	{
+		extractAllFilesFromArchive(archiveFile, consoleArgs.consoleSettings);
+		return;
+	}
+		
+	for (size_t i = 1; i < consoleArgs.paths.size(); i++)
+	{
+		string filename = consoleArgs.paths[i];
+		archiveFile->ExtractFile(
+			archiveFile->GetInternalFileIndex(filename.c_str()), 
+			XFile::replaceFilename(consoleArgs.consoleSettings.destDirectory, filename).c_str());
+	}
+
+	delete archiveFile;
+}
+
+void extractFromArchive(const ConsoleArgs& consoleArgs)
 {
 
 }
@@ -111,8 +154,10 @@ void extractCommand(const ConsoleArgs& consoleArgs)
 
 	if (isArchiveFileExtension(consoleArgs.paths[0]))
 		extractFromSpecificArchive(consoleArgs);
+	else if (XFile::isDirectory(consoleArgs.paths[0]))
+		extractFromAllArchivesInDirectory(consoleArgs);
 	else
-		extractFromAnyArchive(consoleArgs);
+		extractFromArchive(consoleArgs);
 }
 
 void createCommand(const ConsoleArgs& consoleArgs)
@@ -165,23 +210,11 @@ int main(int argc, char **argv)
 	return 0;
 }
 
-// OP2Archive contents archiveName.[vol|clm]
-//  * Lists the contents of an archive file.
-
-// OP2Archive find filename
-//  * Lists the archive filename that contains the specified file.
-
-// OP2Archive create archiveName.[vol|clm] [filename...]
-//  * Creates an archive with the given name. Adds the listed files to the archive.
-
 // OP2Archive add archiveName.[vol|clm] filename...
 //  * Adds the specified file to the archive.
 
 // OP2Archive remove archiveName.[vol|clm] filename...
 //  * Removes the specified file from the archive.
-
-// OP2Archvie extract archiveName.[vol|clm]... [filename]...
-//  * Extracts the specified file from the archive. If no volFilenames provided, extracts the entire archive.
 
 //.vol .bmp .map .prt .raw .txt .wav .rtf
 //.clm .wav
@@ -210,7 +243,7 @@ void outputHelp()
 	cout << "  -O / --Overwrite: [Default false] Allows application to overwrite existing files." << endl;
 	cout << "  -D / --DestinationDirectory: [Default for single file is './', Default for all files is archive's filename]. " << endl;
 	cout << "                               Sets the destination directory for extracted file(s)." << endl;
-	cout << "  -S / --SourceDirectory: EXTRACT: [Deafault is archive's filename]. Sets the source file directory when creating an archive." << endl;
+	cout << "  -S / --SourceDirectory: EXTRACT: [Deafault is archive's filename]. Sets the source directory when creating an archive." << endl;
 	cout << "  -C / --Compression: [Default None]. Sets the compression alghorithim used when creating an archive (None|LZH)." << endl;
 	cout << endl;
 	cout << "For more information about Outpost 2 visit the Outpost Universe (http://outpost2.net/)." << endl;

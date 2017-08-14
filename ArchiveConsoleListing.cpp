@@ -11,16 +11,21 @@ void ArchiveConsoleListing::listContents(ArchiveFile* archiveFile)
 		return;
 	}
 
-	int maxFilenameSize = findMaxFilenameSize(archiveFile);
+	int filenameColumnSize = findMaxFilenameSize(archiveFile);
 
 	cout << "Contents of " << XFile::getFilename(archiveFile->GetVolumeFileName()) << " (" << archiveFile->GetNumberOfPackedFiles() << " files)" << endl;
-	cout << "ID  " << "NAME" << string(maxFilenameSize - 4, ' ') << "  SIZE (KB)" << endl;
+	cout << "ID  " << "NAME" << string(filenameColumnSize - 4, ' ') << "  SIZE (KB)" << endl;
 	cout << "--------------------------------------------------" << endl;
 
 	for (int i = 0; i < archiveFile->GetNumberOfPackedFiles(); ++i)
 	{
 		string filename(archiveFile->GetInternalFileName(i));
-		string blanks(maxFilenameSize - filename.size(), ' ');
+
+		int numberOfBlankChars = 0;
+		if (filename.size() <= maxFilenameSize)
+			numberOfBlankChars = filenameColumnSize - filename.size();
+
+		string blanks(numberOfBlankChars, ' ');
 		int sizeKb = archiveFile->GetInternalFileSize(i) / 1024;
 		cout.imbue(locale(""));
 
@@ -32,14 +37,14 @@ void ArchiveConsoleListing::listContents(ArchiveFile* archiveFile)
 
 int ArchiveConsoleListing::findMaxFilenameSize(ArchiveFile* archiveFile)
 {
-	int maxFilenameSize = 0;
+	size_t largestFilenameSize = 0;
 
 	for (int i = 0; i < archiveFile->GetNumberOfPackedFiles(); ++i)
 	{
-		int filenameSize = string(archiveFile->GetInternalFileName(i)).size();
-		if (filenameSize > maxFilenameSize)
-			maxFilenameSize = filenameSize;
+		size_t filenameSize = string(archiveFile->GetInternalFileName(i)).size();
+		if (filenameSize > largestFilenameSize && filenameSize <= maxFilenameSize)
+			largestFilenameSize = filenameSize;
 	}
 
-	return maxFilenameSize;
+	return largestFilenameSize;
 }
