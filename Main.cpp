@@ -11,6 +11,7 @@ using namespace ConsoleArgumentParser;
 void outputHelp();
 
 static string version = "0.1.0";
+const string dashedLine = "--------------------------------------------------";
 
 ArchiveConsoleListing archiveConsoleListing;
 
@@ -35,7 +36,7 @@ void listAllArchivesInDirectory(const string& directory)
 
 	cout << volFilenames.size() << " vol archive file(s) located." << endl;
 	cout << clmFilenames.size() << " clm archive file(s) located." << endl;
-	cout << "--------------------------------------------------" << endl << endl;
+	cout << dashedLine << endl << endl;
 
 	for each (const string& filename in volFilenames)
 		listArchiveContent(filename);
@@ -69,9 +70,7 @@ void locateCommand(const ConsoleArgs& consoleArgs)
 	checkIfPathsEmpty(consoleArgs);
 
 	for each (string path in consoleArgs.paths)
-	{
 		locateFileInArchives(path);
-	}
 }
 
 void listCommand(const ConsoleArgs& consoleArgs)
@@ -89,13 +88,16 @@ void listCommand(const ConsoleArgs& consoleArgs)
 	}
 }
 
-void extractFromAllArchivesInDirectory(const ConsoleArgs& consoleArgs)
+void consoleExtractFromAllArchivesInDirectory(const ConsoleArgs& consoleArgs)
 {
 	ResourceManager resourceManager("./");
 
+	vector<string> volFilenames = XFile::getFilesFromDirectory("./", "vol");
+	vector<string> clmFilenames = XFile::getFilesFromDirectory("./", "clm");
+
 	for each (string path in consoleArgs.paths)
 	{
-
+		
 	}
 }
 
@@ -111,17 +113,37 @@ ArchiveFile* openArchiveFile(const string& archivePath)
 	return archiveFile;
 }
 
-void extractAllFilesFromArchive(ArchiveFile* archiveFile, const ConsoleSettings& consoleSettings)
+void extractFileFromArchive(ArchiveFile* archiveFile, const string& filename, const ConsoleSettings& consoleSettings)
 {
-	for (int i = 0; i < archiveFile->GetNumberOfPackedFiles(); ++i)
-	{
-		archiveFile->ExtractFile(i,
-			XFile::replaceFilename(consoleSettings.destDirectory,
-				archiveFile->GetInternalFileName(i)).c_str());
-	}
+	if (!XFile::pathExists(consoleSettings.destDirectory))
+		XFile::createDirectory(consoleSettings.destDirectory);
+
+	bool success = archiveFile->ExtractFile(
+		archiveFile->GetInternalFileIndex(filename.c_str()),
+		XFile::replaceFilename(consoleSettings.destDirectory, filename).c_str());
+
+	if (consoleSettings.quiet)
+		return; 
+
+	if (success)
+		cout << filename << " extracted." << endl;
+	else
+		cout << "Error extracting " << filename << endl;
 }
 
-void extractFromSpecificArchive(const ConsoleArgs& consoleArgs)
+void extractAllFilesFromArchive(ArchiveFile* archiveFile, const ConsoleSettings& consoleSettings)
+{
+	if (!consoleSettings.quiet)
+		cout << "Extracting all " << archiveFile->GetNumberOfPackedFiles() << " files from archive " << archiveFile->GetVolumeFileName() << "." << endl;
+	
+	for (int i = 0; i < archiveFile->GetNumberOfPackedFiles(); ++i)
+		extractFileFromArchive(archiveFile, archiveFile->GetInternalFileName(i), consoleSettings);
+
+	if (!consoleSettings.quiet)
+		cout << "Extraction Finished." << endl;
+}
+
+void consoleExtractFromSpecificArchive(const ConsoleArgs& consoleArgs)
 {
 	ArchiveFile* archiveFile = openArchiveFile(consoleArgs.paths[0]);
 
@@ -131,12 +153,9 @@ void extractFromSpecificArchive(const ConsoleArgs& consoleArgs)
 		return;
 	}
 		
-	for (size_t i = 1; i < consoleArgs.paths.size(); i++)
+	for (size_t i = 1; i < consoleArgs.paths.size(); ++i)
 	{
-		string filename = consoleArgs.paths[i];
-		archiveFile->ExtractFile(
-			archiveFile->GetInternalFileIndex(filename.c_str()), 
-			XFile::replaceFilename(consoleArgs.consoleSettings.destDirectory, filename).c_str());
+		extractFileFromArchive(archiveFile, consoleArgs.paths[i], consoleArgs.consoleSettings);
 	}
 
 	delete archiveFile;
@@ -150,21 +169,118 @@ void extractFromArchive(const ConsoleArgs& consoleArgs)
 void extractCommand(const ConsoleArgs& consoleArgs)
 {
 	if (consoleArgs.paths.size() == 0)
-		throw exception("You must specify a filename to extract or the source archive file (.vol|.clm) to extract from.");
+		throw exception("You must specify either a filename to extract or a source archive file (.vol|.clm) to extract from.");
 
 	if (isArchiveFileExtension(consoleArgs.paths[0]))
-		extractFromSpecificArchive(consoleArgs);
+		consoleExtractFromSpecificArchive(consoleArgs);
 	else if (XFile::isDirectory(consoleArgs.paths[0]))
-		extractFromAllArchivesInDirectory(consoleArgs);
+		consoleExtractFromAllArchivesInDirectory(consoleArgs);
 	else
 		extractFromArchive(consoleArgs);
+}
+
+void createArchiveFile(const string& archiveFilename, const vector<string>& filenames, const ConsoleSettings& consoleSettings)
+{
+	ArchiveFile* archiveFile;
+	if (XFile::extensionMatches(archiveFilename, "VOL"))
+		archiveFile = new VolFile("VolTemplate.vol");
+	else if (XFile::extensionMatches(archiveFilename, "CLM"))
+		archiveFile = new ClmFile("ClmTemplate.clm");
+	else
+		throw exception("An archive filename must be provided (.vol|.clm).");
+
+	vector<string> internalFilenames;
+
+	for each (string filename in filenames)
+		internalFilenames.push_back(XFile::getFilename(filename));
+
+	if (!consoleSettings.quiet)
+	{
+		cout << "Creating archive " << archiveFilename << ", containing " << filenames.size() << " file(s)." << endl;
+		cout << dashedLine << endl;
+	}
+
+	const char** filenamesCArray = StringHelper::vectorToCharArray(filenames);
+	const char** internalFilenamesCArray = StringHelper::vectorToCharArray(internalFilenames);
+
+	bool success = archiveFile->CreateVolume(archiveFilename.c_str(), filenames.size(), filenamesCArray, internalFilenamesCArray);
+
+	delete filenamesCArray;
+	delete internalFilenamesCArray;
+	delete archiveFile;
+
+	if (consoleSettings.quiet)
+		return;
+
+	if (success)
+	{
+		cout << "Archive created." << endl;
+
+		if (filenames.size() == 0)
+			cout << "Caution: Created archive is empty (contains no files)." << endl;
+	}
+	else
+		cerr << "Error creating archive." << endl;
+}
+
+void createUsingDefaultDirectory(const string& archiveFilename, const ConsoleSettings& consoleSettings)
+{
+	/*string sourceDir = XFile::changeFileExtension(archiveFilename, "");
+
+	if (!XFile::isDirectory(sourceDir))
+		throw exception(("The directory " + sourceDir + " does not exist. Either create this directory or explicity specify the source directory/files.").c_str());
+
+	vector<string> filenamesStr = XFile::getFilesFromDirectory(sourceDir);*/
+
+	createArchiveFile(archiveFilename, vector<string>(), consoleSettings);
+}
+
+vector<string> gatherFilesForArchive(const vector<string>& paths)
+{
+	vector<string> filenames;
+
+	for (size_t i = 1; i < paths.size(); i++) //Skip the first path since it is the archive name.
+	{
+		if (XFile::isDirectory(paths[i]))
+		{
+			vector<string> dirFilenames = XFile::getFilesFromDirectory(paths[i]);
+			filenames.insert(std::end(filenames), std::begin(dirFilenames), std::end(dirFilenames));
+		}
+		else
+			filenames.push_back(paths[i]);
+	}
+
+	return filenames;
 }
 
 void createCommand(const ConsoleArgs& consoleArgs)
 {
 	checkIfPathsEmpty(consoleArgs);
 
+	string archiveFilename = consoleArgs.paths[0];
 
+	if (!isArchiveFileExtension(archiveFilename))
+		throw exception("A .vol or .clm filename must be provided to create an archive.");
+
+	if (XFile::pathExists(archiveFilename))
+	{
+		if (!consoleArgs.consoleSettings.overwrite)
+			throw exception("Archive file already exists at specified path. If overwrite is desired add argument -o.");
+		else if (consoleArgs.consoleSettings.overwrite && !consoleArgs.consoleSettings.quiet)
+			cout << "An archive file already exists at the specified path. Overwrite authorized by user." << endl;
+	}
+
+	//TODO: Create an archive with filename as directory source.
+
+	if (consoleArgs.paths.size() == 1)
+	{
+		createUsingDefaultDirectory(consoleArgs.paths[0], consoleArgs.consoleSettings);
+	}
+	else
+	{
+		vector<string> filenames = gatherFilesForArchive(consoleArgs.paths);
+		createArchiveFile(archiveFilename, filenames, consoleArgs.consoleSettings);
+	}
 }
 
 int main(int argc, char **argv)
@@ -230,7 +346,7 @@ void outputHelp()
 	cout << "+++ COMMANDS +++" << endl;
 	cout << "  * OP2Archive LIST (archivename.(vol|clm) | directory)..." << endl;
 	cout << "  * OP2Archive FIND filename..." << endl;
-	cout << "  * OP2Archive CREATE archivename.(vol|clm) [filename | directory]... [-q] [-s sourceDirectory] [-o] [-c None|LZH]" << endl;
+	cout << "  * OP2Archive CREATE archivename.(vol|clm) [filename | directory]... [-q] [-o] [-c None|LZH]" << endl;
 	cout << "      * If no filename(s) or directory(s) provided," << endl;
 	cout << "        archives all contents of the default source directory (./archiveFilename)." << endl;
 	cout << "  * OP2Archive EXTRACT archivename.(vol|clm) [filename]... [-q] [-d destDirectory] [-o]" << endl;
@@ -243,7 +359,7 @@ void outputHelp()
 	cout << "  -O / --Overwrite: [Default false] Allows application to overwrite existing files." << endl;
 	cout << "  -D / --DestinationDirectory: [Default for single file is './', Default for all files is archive's filename]. " << endl;
 	cout << "                               Sets the destination directory for extracted file(s)." << endl;
-	cout << "  -S / --SourceDirectory: EXTRACT: [Deafault is archive's filename]. Sets the source directory when creating an archive." << endl;
+	cout << "  -S / --SourceDirectory: CREATE: [Deafault is archive's filename]. Sets the source directory when creating an archive." << endl;
 	cout << "  -C / --Compression: [Default None]. Sets the compression alghorithim used when creating an archive (None|LZH)." << endl;
 	cout << endl;
 	cout << "For more information about Outpost 2 visit the Outpost Universe (http://outpost2.net/)." << endl;

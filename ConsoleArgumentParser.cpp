@@ -10,7 +10,8 @@ namespace ConsoleArgumentParser
 		ConsoleSwitch("-D", "--DESTINATIONDIRECTORY", parseDestDirectory, 1),
 		ConsoleSwitch("-Q", "--QUIET", parseQuiet, 0),
 		ConsoleSwitch("-O", "--OVERWRITE", parseOverwrite, 0),
-		ConsoleSwitch("-C", "--COMPRESSION", parseCompressionFormat, 1)
+		ConsoleSwitch("-C", "--COMPRESSION", parseCompressionFormat, 1),
+		ConsoleSwitch("-S", "--SOURCEDIRECTORY", parseSourceDirectory, 1)
 	};
 
 	bool findSwitch(char* argumentChar, ConsoleSwitch& currentSwitch)
@@ -154,5 +155,10 @@ namespace ConsoleArgumentParser
 	void parseCompressionFormat(const char* value, ConsoleArgs& consoleArgs)
 	{
 		consoleArgs.consoleSettings.compression = parseCompression(value);
+	}
+
+	void parseSourceDirectory(const char* value, ConsoleArgs& consoleArgs)
+	{
+		consoleArgs.consoleSettings.sourceDirectory = value;
 	}
 }

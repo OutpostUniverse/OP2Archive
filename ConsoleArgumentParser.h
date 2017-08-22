@@ -12,6 +12,7 @@ namespace ConsoleArgumentParser
 	struct ConsoleSettings
 	{
 		string destDirectory = "./";
+		string sourceDirectory = "./";
 		bool overwrite = false;
 		bool quiet = false;
 		bool helpRequested = false;
@@ -69,4 +70,5 @@ namespace ConsoleArgumentParser
 	void parseHelp(const char* value, ConsoleArgs& consoleArgs);
 	void parseOverwrite(const char* value, ConsoleArgs& consoleArgs);
 	void parseCompressionFormat(const char* value, ConsoleArgs& consoleArgs);
+	void parseSourceDirectory(const char* value, ConsoleArgs& consoleArgs);
 }
