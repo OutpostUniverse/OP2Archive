@@ -24,12 +24,18 @@
     <ClCompile Include="ConsoleArgumentParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ConsoleExtract.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArchiveConsoleListing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ConsoleArgumentParser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleExtract.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

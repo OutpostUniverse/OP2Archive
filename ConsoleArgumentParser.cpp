@@ -91,6 +91,12 @@ namespace ConsoleArgumentParser
 		if (commandStrUpper == "CREATE")
 			return ConsoleCommand::Create;
 
+		if (commandStrUpper == "ADD")
+			return ConsoleCommand::Add;
+
+		if (commandStrUpper == "REMOVE")
+			return ConsoleCommand::Remove;
+
 		throw exception("A valid command was not provided.");
 	}
 

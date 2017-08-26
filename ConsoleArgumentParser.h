@@ -25,7 +25,9 @@ namespace ConsoleArgumentParser
 		Find,
 		Extract,
 		Create,
-		Help
+		Help,
+		Add,
+		Remove
 	};
 
 	struct ConsoleArgs
