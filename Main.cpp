@@ -237,35 +237,57 @@ string createTempDirectory()
 	return directory;
 }
 
+vector<string>* removeFilenames(ArchiveFile* archive, const vector<string>& filesToRemove)
+{
+	vector<string>* internalFilenames = new vector<string>();
+
+	for (int i = 0; i < archive->GetNumberOfPackedFiles(); ++i)
+		internalFilenames->push_back(archive->GetInternalFileName(i));
+
+	auto pred = [&filesToRemove](const std::string& key) ->bool
+	{
+		return std::find(filesToRemove.begin(), filesToRemove.end(), key) != filesToRemove.end();
+	};
+
+	internalFilenames->erase(std::remove_if(internalFilenames->begin(), internalFilenames->end(), pred), internalFilenames->end());
+
+	return internalFilenames;
+}
+
 void removeCommand(const ConsoleArgs& consoleArgs)
 {
+	if (consoleArgs.paths.size() == 0)
+		throw exception("No archive filename provided.");
+
 	const string archiveFilename = consoleArgs.paths[0];
+	const vector<string> filesToRemove(consoleArgs.paths.begin() + 1, consoleArgs.paths.end());
+
+	if (filesToRemove.size() == 0)
+		throw exception("No file(s) provided to remove from the archive.");
+
 	const string directory = createTempDirectory();
 
 	ArchiveFile* archive = openArchive(archiveFilename);
 
-	vector<int> validIndices;
-	//for (int i = 0; i < archive->GetNumberOfPackedFiles(); ++i)
-	//{
-		for (size_t j = 1; j < consoleArgs.paths.size(); ++j)
-		{
-			int index = archive->GetInternalFileIndex(consoleArgs.paths[j].c_str());
+	const vector<string>* internalFilenames = removeFilenames(archive, filesToRemove);
 
-			if (archive->ContainsFile(consoleArgs.paths[j].c_str()))
-				if (!consoleArgs.consoleSettings.quiet)
-					cout << "Removing File " << consoleArgs.paths[j] << "." << endl;
-			else
-				archive->ExtractFile(j, XFile::appendSubDirectory("./" + directory,  archive->GetInternalFileName(i)).c_str());
-		}
-	//}
+	for (size_t i = 0; i < internalFilenames->size(); ++i)
+	{
+		string filename(internalFilenames->at(i));
+		int index = archive->GetInternalFileIndex(filename.c_str());
+		archive->ExtractFile(index, XFile::appendSubDirectory("./" + directory, filename).c_str());
+	}
+
+	delete archive;
 
 	if (!XFile::isDirectory(archiveFilename))
 		XFile::deletePath(archiveFilename);
-	
+
 	vector<string> filenames = XFile::getFilesFromDirectory(directory);
 	createArchiveFile(archiveFilename, filenames, consoleArgs.consoleSettings);
 
-	delete archive;
+
+	delete internalFilenames;
 	XFile::deletePath(directory);
 }
 
