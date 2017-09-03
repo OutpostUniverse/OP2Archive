@@ -4,6 +4,7 @@
 #include <vector>
 #include "ConsoleArgumentParser.h"
 
+using namespace std;
 using namespace ConsoleArgumentParser;
 
 void consoleExtractFiles(const ConsoleArgs& consoleArgs);

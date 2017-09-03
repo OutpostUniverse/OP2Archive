@@ -2,6 +2,8 @@
 #include "OP2Utility.h"
 #include <iostream>
 
+using namespace Archives;
+
 void consoleExtractFiles(const ConsoleArgs& consoleArgs)
 {
 	for (string path : consoleArgs.paths)
