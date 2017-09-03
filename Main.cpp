@@ -40,10 +40,10 @@ void listAllArchivesInDirectory(const string& directory)
 	cout << clmFilenames.size() << " clm archive file(s) located." << endl;
 	cout << dashedLine << endl << endl;
 
-	for each (const string& filename in volFilenames)
+	for (const string& filename : volFilenames)
 		listArchiveContent(filename);
 
-	for each(const string& filename in clmFilenames)
+	for (const string& filename : clmFilenames)
 		listArchiveContent(filename);
 }
 
@@ -71,7 +71,7 @@ void locateCommand(const ConsoleArgs& consoleArgs)
 {
 	checkIfPathsEmpty(consoleArgs);
 
-	for each (string path in consoleArgs.paths)
+	for (string path : consoleArgs.paths)
 		locateFileInArchives(path);
 }
 
@@ -79,7 +79,7 @@ void listCommand(const ConsoleArgs& consoleArgs)
 {
 	checkIfPathsEmpty(consoleArgs);
 
-	for each (string path in consoleArgs.paths)
+	for (string path : consoleArgs.paths)
 	{
 		if (XFile::isDirectory(path))
 			listAllArchivesInDirectory(path);
@@ -129,7 +129,7 @@ void createArchiveFile(const string& archiveFilename, const vector<string>& file
 
 	vector<string> internalFilenames;
 
-	for each (string filename in filenames)
+	for (string filename : filenames)
 		internalFilenames.push_back(XFile::getFilename(filename));
 
 	if (!consoleSettings.quiet)
@@ -237,58 +237,123 @@ string createTempDirectory()
 	return directory;
 }
 
-vector<string>* removeFilenames(ArchiveFile* archive, const vector<string>& filesToRemove)
+vector<string>* removeMatchingStrings(const vector<string>& strings, const vector<string>& stringsToRemove)
 {
-	vector<string>* internalFilenames = new vector<string>();
+	vector<string>* stringsToReturn = new vector<string>(strings.begin(), strings.end());
 
-	for (int i = 0; i < archive->GetNumberOfPackedFiles(); ++i)
-		internalFilenames->push_back(archive->GetInternalFileName(i));
-
-	auto pred = [&filesToRemove](const std::string& key) ->bool
+	auto pred = [&stringsToRemove](const std::string& key) ->bool
 	{
-		return std::find(filesToRemove.begin(), filesToRemove.end(), key) != filesToRemove.end();
+		return std::find(stringsToRemove.begin(), stringsToRemove.end(), key) != stringsToRemove.end();
 	};
 
-	internalFilenames->erase(std::remove_if(internalFilenames->begin(), internalFilenames->end(), pred), internalFilenames->end());
+	stringsToReturn->erase(std::remove_if(stringsToReturn->begin(), stringsToReturn->end(), pred), stringsToReturn->end());
 
-	return internalFilenames;
+	return stringsToReturn;
 }
 
-void removeCommand(const ConsoleArgs& consoleArgs)
+vector<string>* removeFilenames(ArchiveFile* archive, const vector<string>& filesToRemove)
+{
+	vector<string> internalFilenames;
+
+	for (int i = 0; i < archive->GetNumberOfPackedFiles(); ++i)
+		internalFilenames.push_back(archive->GetInternalFileName(i));
+
+	return removeMatchingStrings(internalFilenames, filesToRemove);
+}
+
+void throwUnfoundFileDuringRemoveException(vector<string>* unfoundFilenames)
+{
+	string exceptionString("The Following filename(s) were not found in the archive:");
+
+	for (size_t i = 0; i < unfoundFilenames->size(); ++i)
+	{
+		exceptionString += " " + unfoundFilenames->at(i);
+
+		if (i < unfoundFilenames->size() - 1)
+			exceptionString += ",";
+	}
+
+	exceptionString += ".";
+
+	delete unfoundFilenames;
+
+	throw exception(exceptionString.c_str());
+}
+
+void checkFilesAvailableToRemove(ArchiveFile* archive, const vector<string>& filesToRemove, bool quiet)
+{
+	vector<string> internalFilenames;
+
+	for (int i = 0; i < archive->GetNumberOfPackedFiles(); ++i)
+		internalFilenames.push_back(archive->GetInternalFileName(i));
+
+	vector<string>* unfoundFilenames = removeMatchingStrings(filesToRemove, internalFilenames);
+
+	if (unfoundFilenames->size() > 0)
+		throwUnfoundFileDuringRemoveException(unfoundFilenames);
+	
+	if (!quiet)
+		cout << "All " << filesToRemove.size() << " files requested for removal located in archive." << endl;
+
+	delete unfoundFilenames;
+}
+
+vector<string>* getFilesToRemove(const ConsoleArgs& consoleArgs)
+{
+	vector<string>* filesToRemove = new vector<string>(consoleArgs.paths.begin() + 1, consoleArgs.paths.end());
+
+	if (filesToRemove->size() == 0)
+		throw exception("No file(s) provided to remove from the archive.");
+
+	return filesToRemove;
+}
+
+ArchiveFile* checkAndOpenArchive(const ConsoleArgs& consoleArgs)
 {
 	if (consoleArgs.paths.size() == 0)
 		throw exception("No archive filename provided.");
 
 	const string archiveFilename = consoleArgs.paths[0];
-	const vector<string> filesToRemove(consoleArgs.paths.begin() + 1, consoleArgs.paths.end());
 
-	if (filesToRemove.size() == 0)
-		throw exception("No file(s) provided to remove from the archive.");
+	return openArchive(archiveFilename);
+}
+
+void removeCommand(const ConsoleArgs& consoleArgs)
+{
+	ArchiveFile* archive = checkAndOpenArchive(consoleArgs);
+	vector<string>* filesToRemove = getFilesToRemove(consoleArgs);
+
+	checkFilesAvailableToRemove(archive, *filesToRemove, consoleArgs.consoleSettings.quiet);
+
+	const vector<string>* archiveInternalFilenames = removeFilenames(archive, *filesToRemove);
 
 	const string directory = createTempDirectory();
 
-	ArchiveFile* archive = openArchive(archiveFilename);
 
-	const vector<string>* internalFilenames = removeFilenames(archive, filesToRemove);
-
-	for (size_t i = 0; i < internalFilenames->size(); ++i)
+	for (size_t i = 0; i < archiveInternalFilenames->size(); ++i)
 	{
-		string filename(internalFilenames->at(i));
+		string filename(archiveInternalFilenames->at(i));
 		int index = archive->GetInternalFileIndex(filename.c_str());
-		archive->ExtractFile(index, XFile::appendSubDirectory("./" + directory, filename).c_str());
+		string pathToExtractTo = XFile::appendSubDirectory(filename, directory);
+		if (!archive->ExtractFile(index, pathToExtractTo.c_str()))
+		{
+			XFile::deletePath(directory);
+			throw exception(("Unable to extract file " + filename + " from original archive. Operation Aborted.").c_str());
+		}
 	}
+	
+	string archiveFilename = archive->GetVolumeFileName();
+	delete dynamic_cast<ClmFile*>(archive);
 
-	delete archive;
-
-	if (!XFile::isDirectory(archiveFilename))
-		XFile::deletePath(archiveFilename);
+	XFile::deletePath(archiveFilename);
 
 	vector<string> filenames = XFile::getFilesFromDirectory(directory);
 	createArchiveFile(archiveFilename, filenames, consoleArgs.consoleSettings);
 
-
-	delete internalFilenames;
+	delete archiveInternalFilenames;
 	XFile::deletePath(directory);
+
+	delete filesToRemove;
 }
 
 void addCommand(const ConsoleArgs& consoleArgs)

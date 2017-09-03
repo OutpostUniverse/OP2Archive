@@ -4,7 +4,7 @@
 
 void consoleExtractFiles(const ConsoleArgs& consoleArgs)
 {
-	for each (string path in consoleArgs.paths)
+	for (string path : consoleArgs.paths)
 	{
 		if (XFile::isDirectory(path))
 			consoleExtractDirectory(path, consoleArgs.consoleSettings);
@@ -66,7 +66,7 @@ void consoleExtractDirectory(const string& directory, const ConsoleSettings& con
 {
 	vector<ArchiveFile*> archives = openArchivesInDirectory(directory);
 
-	for each (ArchiveFile* archive in archives)
+	for (ArchiveFile* archive : archives)
 	{
 		extractAllFilesSpecificArchive(archive, consoleSettings);
 		delete archive;
@@ -89,7 +89,7 @@ vector<ArchiveFile*> openArchivesInDirectory(const string& directory)
 
 	vector<ArchiveFile*> archives;
 
-	for each (string filename in archiveFilenames)
+	for (string filename : archiveFilenames)
 		archives.push_back(openArchive(filename));
 
 	return archives;
