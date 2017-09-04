@@ -1,9 +1,9 @@
 #pragma once
 
-#include <vector>
-#include <string>
 #include "ConsoleSettings.h"
 #include "OP2Utility.h"
+#include <vector>
+#include <string>
 
 using namespace std;
 using namespace Archives;

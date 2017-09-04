@@ -1,10 +1,9 @@
 #pragma once
 
-#include "ConsoleArgumentParser.h"
+#include "ConsoleSettings.h"
 #include <string>
 
 using namespace std;
-using namespace ConsoleArgumentParser;
 
 const string dashedLine = "--------------------------------------------------";
 

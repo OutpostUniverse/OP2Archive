@@ -1,8 +1,8 @@
 #pragma once
 
-#include <string>
-#include "OP2Utility.h"
 #include "ConsoleSettings.h"
+#include "OP2Utility.h"
+#include <string>
 
 using namespace std;
 using namespace Archives;

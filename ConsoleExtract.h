@@ -1,8 +1,8 @@
 #pragma once
 
+#include "ConsoleSettings.h"
 #include <string>
 #include <vector>
-#include "ConsoleSettings.h"
 
 using namespace std;
 
