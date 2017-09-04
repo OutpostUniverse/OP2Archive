@@ -75,7 +75,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\Brett\Documents\Outpost2SVN\GameResources\OP2Utility\OP2Utility\Archives;C:\Users\Brett\Documents\Outpost2SVN\GameResources\OP2Utility\OP2Utility;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\OP2Utility\Archives;..\OP2Utility\OP2Utility;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -92,7 +92,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\Brett\Documents\Outpost2SVN\GameResources\OP2Utility\OP2Utility\Archives;C:\Users\Brett\Documents\Outpost2SVN\GameResources\OP2Utility\OP2Utility;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\OP2Utility\Archives;..\OP2Utility\OP2Utility;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -128,6 +128,7 @@
     <ClInclude Include="ConsoleExtract.h" />
     <ClInclude Include="ConsoleHelper.h" />
     <ClInclude Include="ConsoleRemove.h" />
+    <ClInclude Include="ConsoleSettings.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OP2Utility\OP2Utility\OP2Utility.vcxproj">

@@ -2,11 +2,10 @@
 
 #include <vector>
 #include <string>
-#include "ConsoleArgumentParser.h"
+#include "ConsoleSettings.h"
 #include "OP2Utility.h"
 
 using namespace std;
-using namespace ConsoleArgumentParser;
 using namespace Archives;
 
 vector<string>* removeMatchingStrings(const vector<string>& strings, const vector<string>& stringsToRemove);

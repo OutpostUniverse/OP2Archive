@@ -2,10 +2,9 @@
 
 #include <string>
 #include <vector>
-#include "ConsoleArgumentParser.h"
+#include "ConsoleSettings.h"
 
 using namespace std;
-using namespace ConsoleArgumentParser;
 
 void consoleExtractFiles(const ConsoleArgs& consoleArgs);
 void extractSpecificArchive(const ConsoleArgs& consoleArgs);

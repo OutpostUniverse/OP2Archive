@@ -8,6 +8,7 @@
 #include "ConsoleExtract.h"
 #include "ConsoleRemove.h"
 #include "ConsoleHelper.h"
+#include "ConsoleSettings.h"
 #include <cstdlib>
 
 using namespace std;

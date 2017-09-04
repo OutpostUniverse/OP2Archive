@@ -2,11 +2,10 @@
 
 #include <string>
 #include "OP2Utility.h"
-#include "ConsoleArgumentParser.h"
+#include "ConsoleSettings.h"
 
 using namespace std;
 using namespace Archives;
-using namespace ConsoleArgumentParser;
 
 ArchiveFile* createArchiveTemplate(const string& archiveFilename);
 void outputCreateBegan(const string& archiveFilename, int packedFileCount);

@@ -1,8 +1,8 @@
 #pragma once
 
+#include "OP2Utility.h"
 #include <vector>
 #include <string>
-#include "OP2Utility.h"
 
 using namespace std;
 using namespace Archives;
