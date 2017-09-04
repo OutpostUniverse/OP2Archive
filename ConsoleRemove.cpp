@@ -109,7 +109,7 @@ void removeCommand(const ConsoleArgs& consoleArgs)
 	}
 
 	string archiveFilename = archive->GetVolumeFileName();
-	delete dynamic_cast<ClmFile*>(archive);
+	delete archive;
 
 	XFile::deletePath(archiveFilename);
 
