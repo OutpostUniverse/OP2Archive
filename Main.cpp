@@ -1,7 +1,3 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include "OP2Utility.h"
 #include "ArchiveConsoleListing.h"
 #include "ConsoleArgumentParser.h"
 #include "ConsoleCreate.h"
@@ -9,6 +5,10 @@
 #include "ConsoleRemove.h"
 #include "ConsoleHelper.h"
 #include "ConsoleSettings.h"
+#include "OP2Utility.h"
+#include <string>
+#include <vector>
+#include <iostream>
 #include <cstdlib>
 
 using namespace std;

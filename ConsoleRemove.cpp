@@ -1,7 +1,7 @@
 #include "ConsoleRemove.h"
-#include <iostream>
 #include "ConsoleExtract.h"
 #include "ConsoleCreate.h"
+#include <iostream>
 
 vector<string>* removeMatchingStrings(const vector<string>& strings, const vector<string>& stringsToRemove)
 {
