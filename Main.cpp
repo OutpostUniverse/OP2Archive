@@ -1,5 +1,6 @@
 #include "ArchiveConsoleListing.h"
 #include "ConsoleArgumentParser.h"
+#include "ConsoleAdd.h"
 #include "ConsoleCreate.h"
 #include "ConsoleExtract.h"
 #include "ConsoleRemove.h"
@@ -82,11 +83,6 @@ void listCommand(const ConsoleArgs& consoleArgs)
 	}
 }
 
-void addCommand(const ConsoleArgs& consoleArgs)
-{
-
-}
-
 void selectCommand(const ConsoleArgs& consoleArgs)
 {
 	switch (consoleArgs.consoleCommand)
@@ -109,7 +105,8 @@ void selectCommand(const ConsoleArgs& consoleArgs)
 		listCommand(consoleArgs);
 		break;
 	case ConsoleCommand::Add:
-		addCommand(consoleArgs);
+		ConsoleAdd consoleAdd;
+		consoleAdd.addCommand(consoleArgs);
 		break;
 	case ConsoleCommand::Remove:
 		ConsoleRemove consoleRemove;

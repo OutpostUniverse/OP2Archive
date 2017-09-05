@@ -114,6 +114,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ArchiveConsoleListing.cpp" />
+    <ClCompile Include="ConsoleAdd.cpp" />
     <ClCompile Include="ConsoleArgumentParser.cpp" />
     <ClCompile Include="ConsoleCreate.cpp" />
     <ClCompile Include="ConsoleExtract.cpp" />
@@ -123,6 +124,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArchiveConsoleListing.h" />
+    <ClInclude Include="ConsoleAdd.h" />
     <ClInclude Include="ConsoleArgumentParser.h" />
     <ClInclude Include="ConsoleCreate.h" />
     <ClInclude Include="ConsoleExtract.h" />
