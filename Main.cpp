@@ -108,7 +108,8 @@ void selectCommand(const ConsoleArgs& consoleArgs)
 		outputHelp();
 		break;
 	case ConsoleCommand::Create:
-		createCommand(consoleArgs);
+		ConsoleCreate consoleCreate;
+		consoleCreate.createCommand(consoleArgs);
 		break;
 	case ConsoleCommand::Extract:
 		extractCommand(consoleArgs);

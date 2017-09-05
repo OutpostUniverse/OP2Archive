@@ -115,7 +115,9 @@ void ConsoleRemove::removeCommand(const ConsoleArgs& consoleArgs)
 	XFile::deletePath(archiveFilename);
 
 	vector<string> filenames = XFile::getFilesFromDirectory(directory);
-	createArchiveFile(archiveFilename, filenames, consoleArgs.consoleSettings);
+
+	ConsoleCreate consoleCreate;
+	consoleCreate.createArchiveFile(archiveFilename, filenames, consoleArgs.consoleSettings);
 
 	delete archiveInternalFilenames;
 	XFile::deletePath(directory);

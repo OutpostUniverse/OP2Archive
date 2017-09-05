@@ -1,8 +1,8 @@
 #include "ConsoleCreate.h"
-#include <iostream>
 #include "ConsoleHelper.h"
+#include <iostream>
 
-ArchiveFile* createArchiveTemplate(const string& archiveFilename)
+ArchiveFile* ConsoleCreate::createArchiveTemplate(const string& archiveFilename)
 {
 	ArchiveFile* archiveFile;
 
@@ -16,13 +16,13 @@ ArchiveFile* createArchiveTemplate(const string& archiveFilename)
 	return archiveFile;
 }
 
-void outputCreateBegan(const string& archiveFilename, int packedFileCount)
+void ConsoleCreate::outputCreateBegan(const string& archiveFilename, int packedFileCount)
 {
 	cout << "Creating archive " << archiveFilename << ", containing " << packedFileCount << " file(s)." << endl;
 	cout << dashedLine << endl;
 }
 
-void outputCreateResults(bool success, int packedFileCount)
+void ConsoleCreate::outputCreateResults(bool success, int packedFileCount)
 {
 	if (success)
 	{
@@ -35,7 +35,7 @@ void outputCreateResults(bool success, int packedFileCount)
 		cerr << "Error creating archive." << endl;
 }
 
-void createArchiveFile(const string& archiveFilename, const vector<string>& filenames, const ConsoleSettings& consoleSettings)
+void ConsoleCreate::createArchiveFile(const string& archiveFilename, const vector<string>& filenames, const ConsoleSettings& consoleSettings)
 {
 	ArchiveFile* archiveFile = createArchiveTemplate(archiveFilename);
 
@@ -60,7 +60,7 @@ void createArchiveFile(const string& archiveFilename, const vector<string>& file
 		outputCreateResults(success, filenames.size());
 }
 
-void createUsingDefaultDirectory(const string& archiveFilename, const ConsoleSettings& consoleSettings)
+void ConsoleCreate::createUsingDefaultDirectory(const string& archiveFilename, const ConsoleSettings& consoleSettings)
 {
 	string sourceDir = XFile::changeFileExtension(archiveFilename, "");
 
@@ -72,7 +72,7 @@ void createUsingDefaultDirectory(const string& archiveFilename, const ConsoleSet
 	createArchiveFile(archiveFilename, filenames, consoleSettings);
 }
 
-vector<string> gatherFilesForArchive(const vector<string>& paths)
+vector<string> ConsoleCreate::gatherFilesForArchive(const vector<string>& paths)
 {
 	vector<string> filenames;
 
@@ -90,7 +90,7 @@ vector<string> gatherFilesForArchive(const vector<string>& paths)
 	return filenames;
 }
 
-void checkCreateOverwrite(const string& archiveFilename, bool overwrite, bool quiet)
+void ConsoleCreate::checkCreateOverwrite(const string& archiveFilename, bool overwrite, bool quiet)
 {
 	if (XFile::pathExists(archiveFilename))
 	{
@@ -101,7 +101,7 @@ void checkCreateOverwrite(const string& archiveFilename, bool overwrite, bool qu
 	}
 }
 
-void createCommand(const ConsoleArgs& consoleArgs)
+void ConsoleCreate::createCommand(const ConsoleArgs& consoleArgs)
 {
 	checkIfPathsEmpty(consoleArgs);
 
