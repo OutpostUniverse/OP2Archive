@@ -10,7 +10,7 @@ void ConsoleExtract::extractCommand(const ConsoleArgs& consoleArgs)
 	if (consoleArgs.paths.size() == 0)
 		throw exception("You must specify either a filename to extract or a source archive file (.vol|.clm) to extract from.");
 
-	if (isArchiveExtension(consoleArgs.paths[0]))
+	if (ConsoleHelper::isArchiveExtension(consoleArgs.paths[0]))
 		extractSpecificArchive(consoleArgs);
 	else
 		consoleExtractFiles(consoleArgs);
@@ -29,7 +29,7 @@ void ConsoleExtract::consoleExtractFiles(const ConsoleArgs& consoleArgs)
 
 void ConsoleExtract::extractSpecificArchive(const ConsoleArgs& consoleArgs)
 {
-	ArchiveFile* archiveFile = openArchive(consoleArgs.paths[0]);
+	ArchiveFile* archiveFile = ConsoleHelper::openArchive(consoleArgs.paths[0]);
 
 	// If no files provided, extract entire contents of archive.
 	if (consoleArgs.paths.size() == 1)
@@ -104,7 +104,7 @@ vector<ArchiveFile*> ConsoleExtract::openArchivesInDirectory(const string& direc
 	vector<ArchiveFile*> archives;
 
 	for (string filename : archiveFilenames)
-		archives.push_back(openArchive(filename));
+		archives.push_back(ConsoleHelper::openArchive(filename));
 
 	return archives;
 }

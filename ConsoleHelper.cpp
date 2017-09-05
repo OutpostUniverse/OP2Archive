@@ -1,17 +1,19 @@
 #include "ConsoleHelper.h"
 
-bool isArchiveExtension(const string& filename)
+string ConsoleHelper::dashedLine = "--------------------------------------------------";
+
+bool ConsoleHelper::isArchiveExtension(const string& filename)
 {
 	return XFile::extensionMatches(filename, "VOL") || XFile::extensionMatches(filename, "CLM");
 }
 
-void checkIfPathsEmpty(const ConsoleArgs& consoleArgs)
+void ConsoleHelper::checkIfPathsEmpty(const ConsoleArgs& consoleArgs)
 {
 	if (consoleArgs.paths.size() == 0)
 		throw exception("You must provide at least one file or directory. To provide the current directory, enter './'.");
 }
 
-ArchiveFile* openArchive(const string& archivePath)
+ArchiveFile* ConsoleHelper::openArchive(const string& archivePath)
 {
 	Archives::ArchiveFile* archiveFile;
 
@@ -23,7 +25,7 @@ ArchiveFile* openArchive(const string& archivePath)
 	return archiveFile;
 }
 
-string createTempDirectory()
+string ConsoleHelper::createTempDirectory()
 {
 	srand((int)time(NULL)); // For creating a unique directory.
 	int number = rand();

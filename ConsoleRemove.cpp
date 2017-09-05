@@ -82,7 +82,7 @@ ArchiveFile* ConsoleRemove::checkAndOpenArchive(const ConsoleArgs& consoleArgs)
 
 	const string archiveFilename = consoleArgs.paths[0];
 
-	return openArchive(archiveFilename);
+	return ConsoleHelper::openArchive(archiveFilename);
 }
 
 void ConsoleRemove::removeCommand(const ConsoleArgs& consoleArgs)
@@ -94,8 +94,7 @@ void ConsoleRemove::removeCommand(const ConsoleArgs& consoleArgs)
 
 	const vector<string>* archiveInternalFilenames = removeFilenames(archive, *filesToRemove);
 
-	const string directory = createTempDirectory();
-
+	const string directory = ConsoleHelper::createTempDirectory();
 
 	for (size_t i = 0; i < archiveInternalFilenames->size(); ++i)
 	{

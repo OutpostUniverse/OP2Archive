@@ -19,7 +19,7 @@ ArchiveFile* ConsoleCreate::createArchiveTemplate(const string& archiveFilename)
 void ConsoleCreate::outputCreateBegan(const string& archiveFilename, int packedFileCount)
 {
 	cout << "Creating archive " << archiveFilename << ", containing " << packedFileCount << " file(s)." << endl;
-	cout << dashedLine << endl;
+	cout << ConsoleHelper::dashedLine << endl;
 }
 
 void ConsoleCreate::outputCreateResults(bool success, int packedFileCount)
@@ -103,11 +103,11 @@ void ConsoleCreate::checkCreateOverwrite(const string& archiveFilename, bool ove
 
 void ConsoleCreate::createCommand(const ConsoleArgs& consoleArgs)
 {
-	checkIfPathsEmpty(consoleArgs);
+	ConsoleHelper::checkIfPathsEmpty(consoleArgs);
 
 	string archiveFilename = consoleArgs.paths[0];
 
-	if (!isArchiveExtension(archiveFilename))
+	if (!ConsoleHelper::isArchiveExtension(archiveFilename))
 		throw exception("A .vol or .clm filename must be provided to create an archive.");
 
 	checkCreateOverwrite(archiveFilename, consoleArgs.consoleSettings.overwrite, consoleArgs.consoleSettings.quiet);

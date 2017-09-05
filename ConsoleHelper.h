@@ -5,9 +5,13 @@
 
 using namespace std;
 
-const string dashedLine = "--------------------------------------------------";
+class ConsoleHelper
+{
+public: 
+	static string dashedLine;
 
-bool isArchiveExtension(const string& filename);
-void checkIfPathsEmpty(const ConsoleArgs& consoleArgs);
-ArchiveFile* openArchive(const string& archivePath);
-string createTempDirectory();
+	static bool isArchiveExtension(const string& filename);
+	static void checkIfPathsEmpty(const ConsoleArgs& consoleArgs);
+	static ArchiveFile* openArchive(const string& archivePath);
+	static string createTempDirectory();
+};

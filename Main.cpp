@@ -36,7 +36,7 @@ void listAllArchivesInDirectory(const string& directory)
 
 	cout << volFilenames.size() << " vol archive file(s) located." << endl;
 	cout << clmFilenames.size() << " clm archive file(s) located." << endl;
-	cout << dashedLine << endl << endl;
+	cout << ConsoleHelper::dashedLine << endl << endl;
 
 	for (const string& filename : volFilenames)
 		listArchiveContent(filename);
@@ -61,7 +61,7 @@ void locateFileInArchives(const string& path)
 
 void locateCommand(const ConsoleArgs& consoleArgs)
 {
-	checkIfPathsEmpty(consoleArgs);
+	ConsoleHelper::checkIfPathsEmpty(consoleArgs);
 
 	for (string path : consoleArgs.paths)
 		locateFileInArchives(path);
@@ -69,13 +69,13 @@ void locateCommand(const ConsoleArgs& consoleArgs)
 
 void listCommand(const ConsoleArgs& consoleArgs)
 {
-	checkIfPathsEmpty(consoleArgs);
+	ConsoleHelper::checkIfPathsEmpty(consoleArgs);
 
 	for (string path : consoleArgs.paths)
 	{
 		if (XFile::isDirectory(path))
 			listAllArchivesInDirectory(path);
-		else if (isArchiveExtension(path))
+		else if (ConsoleHelper::isArchiveExtension(path))
 			listArchiveContent(path);
 		else
 			throw exception("You must provide either a directory or a file of type (.vol|.clm).");
