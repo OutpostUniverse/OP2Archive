@@ -1,29 +1,30 @@
-OP2MapImager - Outpost 2 Map and Saved Game Imager
+OP2Archive - Outpost 2 Archive Access and Maintenance
 Developed by Hooman and Brett208 (Vagabond)
 
-+++ USAGE NOTES +++
-  * Capable of saving multiple map files and entire directories.
-  * The OP2MapImager executable and FreeImage.dll must be in the same directory as the tileset BMPs.
-  * Scale Factor (-s) determines the final render size and represents the final pixel length of a single tile
-    * Max Value: 32, renders at full size, or 32 pixels per tile.
-    * Min Value: 1, renders at 1 pixel per tile
+Allows examining, creating, and extracting files from Outpost 2 .vol and .clm archives.
 
-+++ EXAMPLE COMMANDS +++
-  * OP2MapImager mapFilename.[map|OP2]
-  * OP2MapImager -s 16 -o -q Ashes.map eden01.map sgame0.op2
-  * OP2MapImager --Scale 8 --ImageFormat BMP [Directory of choice]
++++ COMMANDS +++
+	* OP2Archive LIST (archivename.(vol|clm) | directory)...
+	* OP2Archive FIND filename...
+	* OP2Archive CREATE archivename.(vol|clm) [filename | directory]... [-q] [-o] [-c None|LZH]
+	  * If no filename(s) or directory(s) provided,
+        archives all contents of the default source directory (./archiveFilename).
+    * OP2Archive EXTRACT archivename.(vol|clm) [filename]... [-q] [-d destDirectory] [-o]
+      * If no filename(s) provided, extracts the entire vol file.
+      * Defaults destination for entire vol file is ./archiveFilename.
+	* OP2Archive ADD archiveName.[vol|clm] filename...
+	* OP2Archive REMOVE archiveName.[vol|clm] filename...
 
 +++ OPTIONAL ARGUMENTS +++
-  -H / --Help: Displays Help File
-  -Q / --Quiet: [Default false] Add switch to run application without issuing console messages.
-  -O / --Overwrite: [Default false] Add switch to allow application to overwrite existing files.
-  -D / --DestinationDirectory: [Default MapRenders]. Add switch and name of new destination path.
-  -I / --ImageFormat: [Default PNG]. Allows PNG|JPG|BMP. Sets the image format of the final render.
-  -S / --Scale: [Default 4] Sets Scale Factor of image.
-  -A / --AccessArchives [Default true]. Add switch to disable searching VOL archives for map and well files.
+    -H / --Help / -?: Displays help information." << endl;
+	-Q / --Quiet: [Default false] Prevents application from issuing console messages." << endl;
+	-O / --Overwrite: [Default false] Allows application to overwrite existing files." << endl;
+	-D / --DestinationDirectory: [Default for single file is './', Default for all files is archive's filename]. " << endl;
+	                             Sets the destination directory for extracted file(s)." << endl;
+	-S / --SourceDirectory: CREATE: [Deafault is archive's filename]. Sets the source directory when creating an archive." << endl;
+	-C / --Compression: [Default None]. Sets the compression alghorithim used when creating an archive (None|LZH)." << endl;
 
 For more information about Outpost 2 visit the Outpost Universe (http://outpost2.net/).
-Image Manipulation accomplished through FreeImage (http://freeimage.sourceforge.net/).
 
 
 + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + +
@@ -73,5 +74,5 @@ The Post Build Event requires a SVN console interface. I recommend the TortoiseS
 
 +++ Change Log +++
 
-Ver 1.0.0 (22Jul2017)
+Ver 1.0.0 (XXSep2017)
  * Initial Release
