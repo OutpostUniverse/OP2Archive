@@ -82,19 +82,6 @@ void listCommand(const ConsoleArgs& consoleArgs)
 	}
 }
 
-
-
-void extractCommand(const ConsoleArgs& consoleArgs)
-{
-	if (consoleArgs.paths.size() == 0)
-		throw exception("You must specify either a filename to extract or a source archive file (.vol|.clm) to extract from.");
-
-	if (isArchiveExtension(consoleArgs.paths[0]))
-		extractSpecificArchive(consoleArgs);
-	else
-		consoleExtractFiles(consoleArgs);
-}
-
 void addCommand(const ConsoleArgs& consoleArgs)
 {
 
@@ -112,7 +99,8 @@ void selectCommand(const ConsoleArgs& consoleArgs)
 		consoleCreate.createCommand(consoleArgs);
 		break;
 	case ConsoleCommand::Extract:
-		extractCommand(consoleArgs);
+		ConsoleExtract consoleExtract;
+		consoleExtract.extractCommand(consoleArgs);
 		break;
 	case ConsoleCommand::Find:
 		locateCommand(consoleArgs);

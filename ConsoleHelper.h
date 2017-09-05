@@ -9,4 +9,5 @@ const string dashedLine = "--------------------------------------------------";
 
 bool isArchiveExtension(const string& filename);
 void checkIfPathsEmpty(const ConsoleArgs& consoleArgs);
+ArchiveFile* openArchive(const string& archivePath);
 string createTempDirectory();

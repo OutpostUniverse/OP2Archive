@@ -11,6 +11,18 @@ void checkIfPathsEmpty(const ConsoleArgs& consoleArgs)
 		throw exception("You must provide at least one file or directory. To provide the current directory, enter './'.");
 }
 
+ArchiveFile* openArchive(const string& archivePath)
+{
+	Archives::ArchiveFile* archiveFile;
+
+	if (XFile::extensionMatches(archivePath, "VOL"))
+		archiveFile = new Archives::VolFile(archivePath.c_str());
+	else
+		archiveFile = new Archives::ClmFile(archivePath.c_str());
+
+	return archiveFile;
+}
+
 string createTempDirectory()
 {
 	srand((int)time(NULL)); // For creating a unique directory.

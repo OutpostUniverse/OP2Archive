@@ -1,10 +1,22 @@
 #include "ConsoleExtract.h"
+#include "ConsoleHelper.h"
 #include "OP2Utility.h"
 #include <iostream>
 
 using namespace Archives;
 
-void consoleExtractFiles(const ConsoleArgs& consoleArgs)
+void ConsoleExtract::extractCommand(const ConsoleArgs& consoleArgs)
+{
+	if (consoleArgs.paths.size() == 0)
+		throw exception("You must specify either a filename to extract or a source archive file (.vol|.clm) to extract from.");
+
+	if (isArchiveExtension(consoleArgs.paths[0]))
+		extractSpecificArchive(consoleArgs);
+	else
+		consoleExtractFiles(consoleArgs);
+}
+
+void ConsoleExtract::consoleExtractFiles(const ConsoleArgs& consoleArgs)
 {
 	for (string path : consoleArgs.paths)
 	{
@@ -15,7 +27,7 @@ void consoleExtractFiles(const ConsoleArgs& consoleArgs)
 	}
 }
 
-void extractSpecificArchive(const ConsoleArgs& consoleArgs)
+void ConsoleExtract::extractSpecificArchive(const ConsoleArgs& consoleArgs)
 {
 	ArchiveFile* archiveFile = openArchive(consoleArgs.paths[0]);
 
@@ -34,7 +46,7 @@ void extractSpecificArchive(const ConsoleArgs& consoleArgs)
 }
 
 
-void extractFileSpecificArchive(ArchiveFile* archiveFile, const string& filename, const ConsoleSettings& consoleSettings)
+void ConsoleExtract::extractFileSpecificArchive(ArchiveFile* archiveFile, const string& filename, const ConsoleSettings& consoleSettings)
 {
 	if (!XFile::pathExists(consoleSettings.destDirectory))
 		XFile::createDirectory(consoleSettings.destDirectory);
@@ -52,7 +64,7 @@ void extractFileSpecificArchive(ArchiveFile* archiveFile, const string& filename
 		cout << "Error extracting " << filename << endl;
 }
 
-void extractAllFilesSpecificArchive(ArchiveFile* archiveFile, const ConsoleSettings& consoleSettings)
+void ConsoleExtract::extractAllFilesSpecificArchive(ArchiveFile* archiveFile, const ConsoleSettings& consoleSettings)
 {
 	if (!consoleSettings.quiet)
 		cout << "Extracting all " << archiveFile->GetNumberOfPackedFiles() << " file(s) from archive " << archiveFile->GetVolumeFileName() << "." << endl;
@@ -64,7 +76,7 @@ void extractAllFilesSpecificArchive(ArchiveFile* archiveFile, const ConsoleSetti
 		cout << "Extraction Finished." << endl;
 }
 
-void consoleExtractDirectory(const string& directory, const ConsoleSettings& consoleSettings)
+void ConsoleExtract::consoleExtractDirectory(const string& directory, const ConsoleSettings& consoleSettings)
 {
 	vector<ArchiveFile*> archives = openArchivesInDirectory(directory);
 
@@ -75,14 +87,14 @@ void consoleExtractDirectory(const string& directory, const ConsoleSettings& con
 	}
 }
 
-void consoleExtractFile(const string& internalFilename, const ConsoleSettings& consoleSettings)
+void ConsoleExtract::consoleExtractFile(const string& internalFilename, const ConsoleSettings& consoleSettings)
 {
 	vector<ArchiveFile*> archives = openArchivesInDirectory("./");
 
 	// TODO: Change to ResourceManager...
 }
 
-vector<ArchiveFile*> openArchivesInDirectory(const string& directory)
+vector<ArchiveFile*> ConsoleExtract::openArchivesInDirectory(const string& directory)
 {
 	vector<string> archiveFilenames = XFile::getFilesFromDirectory("./", "vol");
 	vector<string> clmFilenames = XFile::getFilesFromDirectory("./", "clm");
@@ -95,16 +107,4 @@ vector<ArchiveFile*> openArchivesInDirectory(const string& directory)
 		archives.push_back(openArchive(filename));
 
 	return archives;
-}
-
-ArchiveFile* openArchive(const string& archivePath)
-{
-	Archives::ArchiveFile* archiveFile;
-
-	if (XFile::extensionMatches(archivePath, "VOL"))
-		archiveFile = new Archives::VolFile(archivePath.c_str());
-	else
-		archiveFile = new Archives::ClmFile(archivePath.c_str());
-
-	return archiveFile;
 }
