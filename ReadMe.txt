@@ -4,25 +4,25 @@ Developed by Hooman and Brett208 (Vagabond)
 Allows examining, creating, and extracting files from Outpost 2 .vol and .clm archives.
 
 +++ COMMANDS +++
-	* OP2Archive LIST (archivename.(vol|clm) | directory)...
-	* OP2Archive FIND filename...
-	* OP2Archive CREATE archivename.(vol|clm) [filename | directory]... [-q] [-o] [-c None|LZH]
-	  * If no filename(s) or directory(s) provided,
+    * OP2Archive LIST (archivename.(vol|clm) | directory)...
+    * OP2Archive FIND filename...
+    * OP2Archive CREATE archivename.(vol|clm) [filename | directory]... [-q] [-o] [-c None|LZH]
+      * If no filename(s) or directory(s) provided,
         archives all contents of the default source directory (./archiveFilename).
     * OP2Archive EXTRACT archivename.(vol|clm) [filename]... [-q] [-d destDirectory] [-o]
       * If no filename(s) provided, extracts the entire vol file.
       * Defaults destination for entire vol file is ./archiveFilename.
-	* OP2Archive ADD archiveName.[vol|clm] filename...
-	* OP2Archive REMOVE archiveName.[vol|clm] filename...
+    * OP2Archive ADD archiveName.[vol|clm] filename...
+    * OP2Archive REMOVE archiveName.[vol|clm] filename...
 
 +++ OPTIONAL ARGUMENTS +++
     -H / --Help / -?: Displays help information." << endl;
-	-Q / --Quiet: [Default false] Prevents application from issuing console messages." << endl;
-	-O / --Overwrite: [Default false] Allows application to overwrite existing files." << endl;
-	-D / --DestinationDirectory: [Default for single file is './', Default for all files is archive's filename]. " << endl;
-	                             Sets the destination directory for extracted file(s)." << endl;
-	-S / --SourceDirectory: CREATE: [Deafault is archive's filename]. Sets the source directory when creating an archive." << endl;
-	-C / --Compression: [Default None]. Sets the compression alghorithim used when creating an archive (None|LZH)." << endl;
+    -Q / --Quiet: [Default false] Prevents application from issuing console messages.
+    -O / --Overwrite: [Default false] Allows application to overwrite existing files.
+    -D / --DestinationDirectory: [Default for single file is './', Default for all files is archive's filename].
+                                Sets the destination directory for extracted file(s).
+    -S / --SourceDirectory: CREATE: [Deafault is archive's filename]. Sets the source directory when creating an archive.
+    -C / --Compression: [Default None]. Sets the compression alghorithim used when creating an archive (None|LZH).
 
 For more information about Outpost 2 visit the Outpost Universe (http://outpost2.net/).
 

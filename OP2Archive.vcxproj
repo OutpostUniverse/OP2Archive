@@ -119,6 +119,7 @@
     <ClCompile Include="ConsoleCreate.cpp" />
     <ClCompile Include="ConsoleExtract.cpp" />
     <ClCompile Include="ConsoleHelper.cpp" />
+    <ClCompile Include="ConsoleModifyBase.cpp" />
     <ClCompile Include="ConsoleRemove.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
@@ -129,6 +130,7 @@
     <ClInclude Include="ConsoleCreate.h" />
     <ClInclude Include="ConsoleExtract.h" />
     <ClInclude Include="ConsoleHelper.h" />
+    <ClInclude Include="ConsoleModifyBase.h" />
     <ClInclude Include="ConsoleRemove.h" />
     <ClInclude Include="ConsoleSettings.h" />
   </ItemGroup>

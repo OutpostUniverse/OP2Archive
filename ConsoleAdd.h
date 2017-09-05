@@ -1,8 +1,9 @@
 #pragma once
 
+#include "ConsoleModifyBase.h"
 #include "ConsoleSettings.h"
 
-class ConsoleAdd
+class ConsoleAdd : ConsoleModifyBase
 {
 public:
 	void addCommand(const ConsoleArgs& consoleArgs);

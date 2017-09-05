@@ -4,6 +4,45 @@
 #include "ConsoleHelper.h"
 #include <iostream>
 
+void ConsoleRemove::removeCommand(const ConsoleArgs& consoleArgs)
+{
+	string archiveFilename = getArchiveName(consoleArgs);
+	ArchiveFile* archive = ConsoleHelper::openArchive(archiveFilename);
+	vector<string>* filesToRemove = getFilesToModify(consoleArgs);
+	
+	checkFilesAvailableToRemove(archive, *filesToRemove, consoleArgs.consoleSettings.quiet);
+
+	const vector<string>* archiveInternalFilenames = removeMatchingFilenames(archive, *filesToRemove);
+
+	const string directory = ConsoleHelper::createTempDirectory();
+
+	for (size_t i = 0; i < archiveInternalFilenames->size(); ++i)
+	{
+		string filename(archiveInternalFilenames->at(i));
+		int index = archive->GetInternalFileIndex(filename.c_str());
+		string pathToExtractTo = XFile::appendSubDirectory(filename, directory);
+		if (!archive->ExtractFile(index, pathToExtractTo.c_str()))
+		{
+			XFile::deletePath(directory);
+			throw exception(("Unable to extract file " + filename + " from original archive. Operation Aborted.").c_str());
+		}
+	}
+
+	delete archive;
+
+	XFile::deletePath(archiveFilename);
+
+	vector<string> filenames = XFile::getFilesFromDirectory(directory);
+
+	ConsoleCreate consoleCreate;
+	consoleCreate.createArchiveFile(archiveFilename, filenames, consoleArgs.consoleSettings);
+
+	delete archiveInternalFilenames;
+	XFile::deletePath(directory);
+
+	delete filesToRemove;
+}
+
 vector<string>* ConsoleRemove::removeMatchingStrings(const vector<string>& strings, const vector<string>& stringsToRemove)
 {
 	vector<string>* stringsToReturn = new vector<string>(strings.begin(), strings.end());
@@ -18,7 +57,7 @@ vector<string>* ConsoleRemove::removeMatchingStrings(const vector<string>& strin
 	return stringsToReturn;
 }
 
-vector<string>* ConsoleRemove::removeFilenames(ArchiveFile* archive, const vector<string>& filesToRemove)
+vector<string>* ConsoleRemove::removeMatchingFilenames(ArchiveFile* archive, const vector<string>& filesToRemove)
 {
 	vector<string> internalFilenames;
 
@@ -63,63 +102,4 @@ void ConsoleRemove::checkFilesAvailableToRemove(ArchiveFile* archive, const vect
 		cout << "All " << filesToRemove.size() << " files requested for removal located in archive." << endl;
 
 	delete unfoundFilenames;
-}
-
-vector<string>* ConsoleRemove::getFilesToRemove(const ConsoleArgs& consoleArgs)
-{
-	vector<string>* filesToRemove = new vector<string>(consoleArgs.paths.begin() + 1, consoleArgs.paths.end());
-
-	if (filesToRemove->size() == 0)
-		throw exception("No file(s) provided to remove from the archive.");
-
-	return filesToRemove;
-}
-
-ArchiveFile* ConsoleRemove::checkAndOpenArchive(const ConsoleArgs& consoleArgs)
-{
-	if (consoleArgs.paths.size() == 0)
-		throw exception("No archive filename provided.");
-
-	const string archiveFilename = consoleArgs.paths[0];
-
-	return ConsoleHelper::openArchive(archiveFilename);
-}
-
-void ConsoleRemove::removeCommand(const ConsoleArgs& consoleArgs)
-{
-	ArchiveFile* archive = checkAndOpenArchive(consoleArgs);
-	vector<string>* filesToRemove = getFilesToRemove(consoleArgs);
-
-	checkFilesAvailableToRemove(archive, *filesToRemove, consoleArgs.consoleSettings.quiet);
-
-	const vector<string>* archiveInternalFilenames = removeFilenames(archive, *filesToRemove);
-
-	const string directory = ConsoleHelper::createTempDirectory();
-
-	for (size_t i = 0; i < archiveInternalFilenames->size(); ++i)
-	{
-		string filename(archiveInternalFilenames->at(i));
-		int index = archive->GetInternalFileIndex(filename.c_str());
-		string pathToExtractTo = XFile::appendSubDirectory(filename, directory);
-		if (!archive->ExtractFile(index, pathToExtractTo.c_str()))
-		{
-			XFile::deletePath(directory);
-			throw exception(("Unable to extract file " + filename + " from original archive. Operation Aborted.").c_str());
-		}
-	}
-
-	string archiveFilename = archive->GetVolumeFileName();
-	delete archive;
-
-	XFile::deletePath(archiveFilename);
-
-	vector<string> filenames = XFile::getFilesFromDirectory(directory);
-
-	ConsoleCreate consoleCreate;
-	consoleCreate.createArchiveFile(archiveFilename, filenames, consoleArgs.consoleSettings);
-
-	delete archiveInternalFilenames;
-	XFile::deletePath(directory);
-
-	delete filesToRemove;
 }
