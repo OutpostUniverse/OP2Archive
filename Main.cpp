@@ -123,7 +123,8 @@ void selectCommand(const ConsoleArgs& consoleArgs)
 		addCommand(consoleArgs);
 		break;
 	case ConsoleCommand::Remove:
-		removeCommand(consoleArgs);
+		ConsoleRemove consoleRemove;
+		consoleRemove.removeCommand(consoleArgs);
 		break;
 	}
 }

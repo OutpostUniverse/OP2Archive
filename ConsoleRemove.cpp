@@ -1,9 +1,10 @@
+#include "ConsoleCreate.h"
 #include "ConsoleRemove.h"
 #include "ConsoleExtract.h"
-#include "ConsoleCreate.h"
+#include "ConsoleHelper.h"
 #include <iostream>
 
-vector<string>* removeMatchingStrings(const vector<string>& strings, const vector<string>& stringsToRemove)
+vector<string>* ConsoleRemove::removeMatchingStrings(const vector<string>& strings, const vector<string>& stringsToRemove)
 {
 	vector<string>* stringsToReturn = new vector<string>(strings.begin(), strings.end());
 
@@ -17,7 +18,7 @@ vector<string>* removeMatchingStrings(const vector<string>& strings, const vecto
 	return stringsToReturn;
 }
 
-vector<string>* removeFilenames(ArchiveFile* archive, const vector<string>& filesToRemove)
+vector<string>* ConsoleRemove::removeFilenames(ArchiveFile* archive, const vector<string>& filesToRemove)
 {
 	vector<string> internalFilenames;
 
@@ -27,7 +28,7 @@ vector<string>* removeFilenames(ArchiveFile* archive, const vector<string>& file
 	return removeMatchingStrings(internalFilenames, filesToRemove);
 }
 
-void throwUnfoundFileDuringRemoveException(vector<string>* unfoundFilenames)
+void ConsoleRemove::throwUnfoundFileDuringRemoveException(vector<string>* unfoundFilenames)
 {
 	string exceptionString("The Following filename(s) were not found in the archive:");
 
@@ -46,7 +47,7 @@ void throwUnfoundFileDuringRemoveException(vector<string>* unfoundFilenames)
 	throw exception(exceptionString.c_str());
 }
 
-void checkFilesAvailableToRemove(ArchiveFile* archive, const vector<string>& filesToRemove, bool quiet)
+void ConsoleRemove::checkFilesAvailableToRemove(ArchiveFile* archive, const vector<string>& filesToRemove, bool quiet)
 {
 	vector<string> internalFilenames;
 
@@ -64,7 +65,7 @@ void checkFilesAvailableToRemove(ArchiveFile* archive, const vector<string>& fil
 	delete unfoundFilenames;
 }
 
-vector<string>* getFilesToRemove(const ConsoleArgs& consoleArgs)
+vector<string>* ConsoleRemove::getFilesToRemove(const ConsoleArgs& consoleArgs)
 {
 	vector<string>* filesToRemove = new vector<string>(consoleArgs.paths.begin() + 1, consoleArgs.paths.end());
 
@@ -74,7 +75,7 @@ vector<string>* getFilesToRemove(const ConsoleArgs& consoleArgs)
 	return filesToRemove;
 }
 
-ArchiveFile* checkAndOpenArchive(const ConsoleArgs& consoleArgs)
+ArchiveFile* ConsoleRemove::checkAndOpenArchive(const ConsoleArgs& consoleArgs)
 {
 	if (consoleArgs.paths.size() == 0)
 		throw exception("No archive filename provided.");
@@ -84,7 +85,7 @@ ArchiveFile* checkAndOpenArchive(const ConsoleArgs& consoleArgs)
 	return openArchive(archiveFilename);
 }
 
-void removeCommand(const ConsoleArgs& consoleArgs)
+void ConsoleRemove::removeCommand(const ConsoleArgs& consoleArgs)
 {
 	ArchiveFile* archive = checkAndOpenArchive(consoleArgs);
 	vector<string>* filesToRemove = getFilesToRemove(consoleArgs);
@@ -120,16 +121,4 @@ void removeCommand(const ConsoleArgs& consoleArgs)
 	XFile::deletePath(directory);
 
 	delete filesToRemove;
-}
-
-string createTempDirectory()
-{
-	srand((int)time(NULL)); // For creating a unique directory.
-	int number = rand();
-
-	string directory("./OP2ArchiveTemp-" + to_string(number));
-
-	XFile::createDirectory(directory);
-
-	return directory;
 }
