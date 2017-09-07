@@ -14,16 +14,16 @@ void ConsoleRemove::removeCommand(const ConsoleArgs& consoleArgs)
 
 	const vector<string>* archiveInternalFilenames = removeMatchingFilenames(archive, *filesToRemove);
 
-	const string directory = ConsoleHelper::createTempDirectory();
+	const string tempDirectory = ConsoleHelper::createTempDirectory();
 
 	for (size_t i = 0; i < archiveInternalFilenames->size(); ++i)
 	{
 		string filename(archiveInternalFilenames->at(i));
 		int index = archive->GetInternalFileIndex(filename.c_str());
-		string pathToExtractTo = XFile::appendSubDirectory(filename, directory);
+		string pathToExtractTo = XFile::appendSubDirectory(filename, tempDirectory);
 		if (!archive->ExtractFile(index, pathToExtractTo.c_str()))
 		{
-			XFile::deletePath(directory);
+			XFile::deletePath(tempDirectory);
 			throw exception(("Unable to extract file " + filename + " from original archive. Operation Aborted.").c_str());
 		}
 	}
@@ -32,13 +32,13 @@ void ConsoleRemove::removeCommand(const ConsoleArgs& consoleArgs)
 
 	XFile::deletePath(archiveFilename);
 
-	vector<string> filenames = XFile::getFilesFromDirectory(directory);
+	vector<string> filenames = XFile::getFilesFromDirectory(tempDirectory);
 
 	ConsoleCreate consoleCreate;
 	consoleCreate.createArchiveFile(archiveFilename, filenames, consoleArgs.consoleSettings);
 
 	delete archiveInternalFilenames;
-	XFile::deletePath(directory);
+	XFile::deletePath(tempDirectory);
 
 	delete filesToRemove;
 }
