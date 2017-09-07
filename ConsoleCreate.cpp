@@ -2,37 +2,29 @@
 #include "ConsoleHelper.h"
 #include <iostream>
 
-ArchiveFile* ConsoleCreate::createArchiveTemplate(const string& archiveFilename)
+void ConsoleCreate::createCommand(const ConsoleArgs& consoleArgs)
 {
-	ArchiveFile* archiveFile;
+	ConsoleHelper::checkIfPathsEmpty(consoleArgs);
 
-	if (XFile::extensionMatches(archiveFilename, "VOL"))
-		archiveFile = new VolFile("VolTemplate.vol");
-	else if (XFile::extensionMatches(archiveFilename, "CLM"))
-		archiveFile = new ClmFile("ClmTemplate.clm");
-	else
-		throw exception("An archive filename must be provided (.vol|.clm).");
+	string archiveFilename = consoleArgs.paths[0];
 
-	return archiveFile;
-}
+	if (!ConsoleHelper::isArchiveExtension(archiveFilename))
+		throw exception("A .vol or .clm filename must be provided to create an archive.");
 
-void ConsoleCreate::outputCreateBegan(const string& archiveFilename, int packedFileCount)
-{
-	cout << "Creating archive " << archiveFilename << ", containing " << packedFileCount << " file(s)." << endl;
-	cout << ConsoleHelper::dashedLine << endl;
-}
+	checkCreateOverwrite(archiveFilename, consoleArgs.consoleSettings.overwrite, consoleArgs.consoleSettings.quiet);
 
-void ConsoleCreate::outputCreateResults(bool success, int packedFileCount)
-{
-	if (success)
+	if (consoleArgs.paths.size() == 1)
 	{
-		cout << "Archive created." << endl;
+		if (false) // Brett 23AUG17: Currently no way to specify to use the default source directory.
+			createUsingDefaultDirectory(archiveFilename, consoleArgs.consoleSettings);
 
-		if (packedFileCount < 1)
-			cout << "Caution: Created archive is empty (contains no files)." << endl;
+		createArchiveFile(archiveFilename, vector<string>(), consoleArgs.consoleSettings);
 	}
 	else
-		cerr << "Error creating archive." << endl;
+	{
+		vector<string> filenames = gatherFilesForArchive(consoleArgs.paths);
+		createArchiveFile(archiveFilename, filenames, consoleArgs.consoleSettings);
+	}
 }
 
 void ConsoleCreate::createArchiveFile(const string& archiveFilename, const vector<string>& filenames, const ConsoleSettings& consoleSettings)
@@ -45,7 +37,7 @@ void ConsoleCreate::createArchiveFile(const string& archiveFilename, const vecto
 		internalFilenames.push_back(XFile::getFilename(filename));
 
 	if (!consoleSettings.quiet)
-		outputCreateBegan(archiveFilename, filenames.size());
+		outputInitialCreateMessage(archiveFilename, filenames.size());
 
 	const char** filenamesCArray = StringHelper::vectorToCharArray(filenames);
 	const char** internalFilenamesCArray = StringHelper::vectorToCharArray(internalFilenames);
@@ -56,8 +48,25 @@ void ConsoleCreate::createArchiveFile(const string& archiveFilename, const vecto
 	delete internalFilenamesCArray;
 	delete archiveFile;
 
+	if (!success)
+		throw(exception("Error creating archive."));
+
 	if (!consoleSettings.quiet)
-		outputCreateResults(success, filenames.size());
+		outputCreateResults(filenames.size());
+}
+
+ArchiveFile* ConsoleCreate::createArchiveTemplate(const string& archiveFilename)
+{
+	ArchiveFile* archiveFile;
+
+	if (XFile::extensionMatches(archiveFilename, "VOL"))
+		archiveFile = new VolFile("VolTemplate.vol");
+	else if (XFile::extensionMatches(archiveFilename, "CLM"))
+		archiveFile = new ClmFile("ClmTemplate.clm");
+	else
+		throw exception("An archive filename must be provided (.vol|.clm).");
+
+	return archiveFile;
 }
 
 void ConsoleCreate::createUsingDefaultDirectory(const string& archiveFilename, const ConsoleSettings& consoleSettings)
@@ -101,27 +110,16 @@ void ConsoleCreate::checkCreateOverwrite(const string& archiveFilename, bool ove
 	}
 }
 
-void ConsoleCreate::createCommand(const ConsoleArgs& consoleArgs)
+void ConsoleCreate::outputInitialCreateMessage(const string& archiveFilename, int packedFileCount)
 {
-	ConsoleHelper::checkIfPathsEmpty(consoleArgs);
+	cout << "Creating archive " << archiveFilename << ", containing " << packedFileCount << " file(s)." << endl;
+	cout << ConsoleHelper::dashedLine << endl;
+}
 
-	string archiveFilename = consoleArgs.paths[0];
+void ConsoleCreate::outputCreateResults(int packedFileCount)
+{
+		cout << "Archive created." << endl;
 
-	if (!ConsoleHelper::isArchiveExtension(archiveFilename))
-		throw exception("A .vol or .clm filename must be provided to create an archive.");
-
-	checkCreateOverwrite(archiveFilename, consoleArgs.consoleSettings.overwrite, consoleArgs.consoleSettings.quiet);
-
-	if (consoleArgs.paths.size() == 1)
-	{
-		if (false) // Brett 23AUG17: Currently no way to specify to use the default source directory.
-			createUsingDefaultDirectory(archiveFilename, consoleArgs.consoleSettings);
-
-		createArchiveFile(archiveFilename, vector<string>(), consoleArgs.consoleSettings);
-	}
-	else
-	{
-		vector<string> filenames = gatherFilesForArchive(consoleArgs.paths);
-		createArchiveFile(archiveFilename, filenames, consoleArgs.consoleSettings);
-	}
+		if (packedFileCount < 1)
+			cout << "Caution: Created archive is empty (contains no files)." << endl;
 }

@@ -15,9 +15,9 @@ public:
 
 private:
 	ArchiveFile* createArchiveTemplate(const string& archiveFilename);
-	void outputCreateBegan(const string& archiveFilename, int packedFileCount);
-	void outputCreateResults(bool success, int packedFileCount);
 	void createUsingDefaultDirectory(const string& archiveFilename, const ConsoleSettings& consoleSettings);
 	vector<string> gatherFilesForArchive(const vector<string>& paths);
 	void checkCreateOverwrite(const string& archiveFilename, bool overwrite, bool quiet);
+	void outputInitialCreateMessage(const string& archiveFilename, int packedFileCount);
+	void outputCreateResults(int packedFileCount);
 };
