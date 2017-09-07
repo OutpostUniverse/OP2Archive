@@ -1,7 +1,9 @@
 #include "ConsoleAdd.h"
 #include "ConsoleHelper.h"
 #include "ConsoleExtract.h"
+#include "ConsoleCreate.h"
 #include "OP2Utility.h"
+#include <iostream>
 
 using namespace Archives;
 
@@ -10,14 +12,31 @@ void ConsoleAdd::addCommand(const ConsoleArgs& consoleArgs)
 	string archiveFilename = getArchiveName(consoleArgs);
 	
 	vector<string>* filesToAdd = getFilesToModify(consoleArgs);
-
-	//TODO: Check Files to add exist on hard drive.
+	checkFilesExist(*filesToAdd);
 
 	string tempDirectory = ConsoleHelper::createTempDirectory();
 
 	extractCurrentArchiveContents(archiveFilename, tempDirectory);
 
-	
+	vector<string> extractedFiles = XFile::getFilesFromDirectory(tempDirectory);
+
+	filesToAdd->insert(filesToAdd->end(), extractedFiles.begin(), extractedFiles.end());
+
+	try
+	{
+		ConsoleCreate consoleCreate;
+		consoleCreate.createArchiveFile(archiveFilename, *filesToAdd, consoleArgs.consoleSettings);
+
+		if (!consoleArgs.consoleSettings.quiet)
+			cout << "Files added to archive " + archiveFilename << endl;
+	}
+	catch (exception e)
+	{
+		cleanup(tempDirectory, filesToAdd);
+		throw exception(e.what());
+	}
+
+	cleanup(tempDirectory, filesToAdd);
 }
 
 void ConsoleAdd::extractCurrentArchiveContents(const string& archiveFilename, const string& tempDirectory)
@@ -34,7 +53,17 @@ void ConsoleAdd::extractCurrentArchiveContents(const string& archiveFilename, co
 	}
 }
 
-//void ConsoleAdd::checkFilesExist(const vector<string>& filenames)
-//{
-//
-//}
+void ConsoleAdd::checkFilesExist(const vector<string>& filenames)
+{
+	for (string filename : filenames)
+	{
+		if (!XFile::isFile(filename))
+			throw exception((filename + " was not found. Operation aborted.").c_str());
+	}
+}
+
+void ConsoleAdd::cleanup(const string& tempDirectory, vector<string>* filesToAdd)
+{
+	XFile::deletePath(tempDirectory);
+	delete filesToAdd;
+}

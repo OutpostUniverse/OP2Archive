@@ -10,4 +10,6 @@ public:
 
 private:
 	void extractCurrentArchiveContents(const string& archiveFilename, const string& tempDirectory);
+	void checkFilesExist(const vector<string>& filenames);
+	void cleanup(const string& tempDirectory, vector<string>* filesToAdd);
 };
