@@ -35,7 +35,7 @@ void ConsoleRemove::removeCommand(const ConsoleArgs& consoleArgs)
 	vector<string> filenames = XFile::getFilesFromDirectory(tempDirectory);
 
 	ConsoleCreate consoleCreate;
-	consoleCreate.createArchiveFile(archiveFilename, filenames, consoleArgs.consoleSettings);
+	consoleCreate.createArchiveFile(archiveFilename, filenames, consoleArgs.consoleSettings.quiet);
 
 	delete archiveInternalFilenames;
 	XFile::deletePath(tempDirectory);

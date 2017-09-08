@@ -1,4 +1,5 @@
 #include "ConsoleAdd.h"
+#include "ArchiveConsoleListing.h"
 #include "ConsoleHelper.h"
 #include "ConsoleExtract.h"
 #include "ConsoleCreate.h"
@@ -12,6 +13,13 @@ void ConsoleAdd::addCommand(const ConsoleArgs& consoleArgs)
 	string archiveFilename = getArchiveName(consoleArgs);
 	
 	vector<string> filesToAdd = getFilesToModify(consoleArgs);
+	
+	if (!consoleArgs.consoleSettings.quiet)
+	{
+		cout << "Attempting to add " << filesToAdd.size() << " file(s) to the archive " << archiveFilename << endl;
+		cout << ConsoleHelper::dashedLine << endl;
+	}
+
 	checkFilesExist(filesToAdd);
 
 	string tempDirectory = ConsoleHelper::createTempDirectory();
@@ -25,10 +33,14 @@ void ConsoleAdd::addCommand(const ConsoleArgs& consoleArgs)
 	try
 	{
 		ConsoleCreate consoleCreate;
-		consoleCreate.createArchiveFile(archiveFilename, filesToAdd, consoleArgs.consoleSettings);
+		consoleCreate.createArchiveFile(archiveFilename, filesToAdd, true);
 
 		if (!consoleArgs.consoleSettings.quiet)
-			cout << "Files added to archive " + archiveFilename << endl;
+		{
+			cout << "File(s) successfully added to archive " + archiveFilename << endl << endl;
+			ArchiveConsoleListing listing;
+			listing.listContents(ConsoleHelper::openArchive(archiveFilename));
+		}
 	}
 	catch (exception e)
 	{

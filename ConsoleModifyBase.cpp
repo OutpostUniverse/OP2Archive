@@ -5,7 +5,7 @@ vector<string> ConsoleModifyBase::getFilesToModify(const ConsoleArgs& consoleArg
 	vector<string> filesToRemove(consoleArgs.paths.begin() + 1, consoleArgs.paths.end());
 
 	if (filesToRemove.size() == 0)
-		throw exception("No file(s) provided to remove from the archive.");
+		throw exception("No filename(s) provided to use in modifying the archive.");
 
 	return filesToRemove;
 }
