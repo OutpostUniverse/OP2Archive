@@ -12,5 +12,5 @@ class ConsoleModifyBase
 {
 protected:
 	string getArchiveName(const ConsoleArgs& consoleArgs);
-	vector<string>* getFilesToModify(const ConsoleArgs& consoleArgs);
+	vector<string> getFilesToModify(const ConsoleArgs& consoleArgs);
 };

@@ -11,8 +11,8 @@ void ConsoleAdd::addCommand(const ConsoleArgs& consoleArgs)
 {
 	string archiveFilename = getArchiveName(consoleArgs);
 	
-	vector<string>* filesToAdd = getFilesToModify(consoleArgs);
-	checkFilesExist(*filesToAdd);
+	vector<string> filesToAdd = getFilesToModify(consoleArgs);
+	checkFilesExist(filesToAdd);
 
 	string tempDirectory = ConsoleHelper::createTempDirectory();
 
@@ -20,23 +20,23 @@ void ConsoleAdd::addCommand(const ConsoleArgs& consoleArgs)
 
 	vector<string> extractedFiles = XFile::getFilesFromDirectory(tempDirectory);
 
-	filesToAdd->insert(filesToAdd->end(), extractedFiles.begin(), extractedFiles.end());
+	filesToAdd.insert(filesToAdd.end(), extractedFiles.begin(), extractedFiles.end());
 
 	try
 	{
 		ConsoleCreate consoleCreate;
-		consoleCreate.createArchiveFile(archiveFilename, *filesToAdd, consoleArgs.consoleSettings);
+		consoleCreate.createArchiveFile(archiveFilename, filesToAdd, consoleArgs.consoleSettings);
 
 		if (!consoleArgs.consoleSettings.quiet)
 			cout << "Files added to archive " + archiveFilename << endl;
 	}
 	catch (exception e)
 	{
-		cleanup(tempDirectory, filesToAdd);
+		cleanup(tempDirectory);
 		throw exception(e.what());
 	}
 
-	cleanup(tempDirectory, filesToAdd);
+	cleanup(tempDirectory);
 }
 
 void ConsoleAdd::extractCurrentArchiveContents(const string& archiveFilename, const string& tempDirectory)
@@ -62,8 +62,7 @@ void ConsoleAdd::checkFilesExist(const vector<string>& filenames)
 	}
 }
 
-void ConsoleAdd::cleanup(const string& tempDirectory, vector<string>* filesToAdd)
+void ConsoleAdd::cleanup(const string& tempDirectory)
 {
 	XFile::deletePath(tempDirectory);
-	delete filesToAdd;
 }

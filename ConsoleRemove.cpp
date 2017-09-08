@@ -8,11 +8,11 @@ void ConsoleRemove::removeCommand(const ConsoleArgs& consoleArgs)
 {
 	string archiveFilename = getArchiveName(consoleArgs);
 	ArchiveFile* archive = ConsoleHelper::openArchive(archiveFilename);
-	vector<string>* filesToRemove = getFilesToModify(consoleArgs);
+	vector<string> filesToRemove = getFilesToModify(consoleArgs);
 	
-	checkFilesAvailableToRemove(archive, *filesToRemove, consoleArgs.consoleSettings.quiet);
+	checkFilesAvailableToRemove(archive, filesToRemove, consoleArgs.consoleSettings.quiet);
 
-	const vector<string>* archiveInternalFilenames = removeMatchingFilenames(archive, *filesToRemove);
+	const vector<string>* archiveInternalFilenames = removeMatchingFilenames(archive, filesToRemove);
 
 	const string tempDirectory = ConsoleHelper::createTempDirectory();
 
@@ -39,8 +39,6 @@ void ConsoleRemove::removeCommand(const ConsoleArgs& consoleArgs)
 
 	delete archiveInternalFilenames;
 	XFile::deletePath(tempDirectory);
-
-	delete filesToRemove;
 }
 
 vector<string>* ConsoleRemove::removeMatchingStrings(const vector<string>& strings, const vector<string>& stringsToRemove)
