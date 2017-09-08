@@ -18,16 +18,16 @@ void ConsoleCreate::createCommand(const ConsoleArgs& consoleArgs)
 		if (false) // Brett 23AUG17: Currently no way to specify to use the default source directory.
 			createUsingDefaultDirectory(archiveFilename, consoleArgs.consoleSettings);
 
-		createArchiveFile(archiveFilename, vector<string>(), consoleArgs.consoleSettings);
+		createArchiveFile(archiveFilename, vector<string>(), consoleArgs.consoleSettings.quiet);
 	}
 	else
 	{
 		vector<string> filenames = gatherFilesForArchive(consoleArgs.paths);
-		createArchiveFile(archiveFilename, filenames, consoleArgs.consoleSettings);
+		createArchiveFile(archiveFilename, filenames, consoleArgs.consoleSettings.quiet);
 	}
 }
 
-void ConsoleCreate::createArchiveFile(const string& archiveFilename, const vector<string>& filenames, const ConsoleSettings& consoleSettings)
+void ConsoleCreate::createArchiveFile(const string& archiveFilename, const vector<string>& filenames, bool quiet)
 {
 	ArchiveFile* archiveFile = createArchiveTemplate(archiveFilename);
 
@@ -36,7 +36,7 @@ void ConsoleCreate::createArchiveFile(const string& archiveFilename, const vecto
 	for (string filename : filenames)
 		internalFilenames.push_back(XFile::getFilename(filename));
 
-	if (!consoleSettings.quiet)
+	if (!quiet)
 		outputInitialCreateMessage(archiveFilename, filenames.size());
 
 	const char** filenamesCArray = StringHelper::vectorToCharArray(filenames);
@@ -51,7 +51,7 @@ void ConsoleCreate::createArchiveFile(const string& archiveFilename, const vecto
 	if (!success)
 		throw(exception("Error creating archive."));
 
-	if (!consoleSettings.quiet)
+	if (!quiet)
 		outputCreateResults(filenames.size());
 }
 
@@ -78,7 +78,7 @@ void ConsoleCreate::createUsingDefaultDirectory(const string& archiveFilename, c
 
 	vector<string> filenames = XFile::getFilesFromDirectory(sourceDir);
 
-	createArchiveFile(archiveFilename, filenames, consoleSettings);
+	createArchiveFile(archiveFilename, filenames, consoleSettings.quiet);
 }
 
 vector<string> ConsoleCreate::gatherFilesForArchive(const vector<string>& paths)

@@ -11,7 +11,7 @@ class ConsoleCreate
 {
 public:
 	void createCommand(const ConsoleArgs& consoleArgs);
-	void createArchiveFile(const string& archiveFilename, const vector<string>& filenames, const ConsoleSettings& consoleSettings);
+	void createArchiveFile(const string& archiveFilename, const vector<string>& filenames, bool quiet);
 
 private:
 	ArchiveFile* createArchiveTemplate(const string& archiveFilename);
