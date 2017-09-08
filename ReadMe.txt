@@ -39,16 +39,30 @@ Open a command prompt. Navigate to the directory containing OP2Archive and type 
 
 +++ ARCHIVE (.VOL/.CLM) FILE CREATION BEST PRACTICES +++
 
+The ADD and REMOVE command will create a new temp directory with the name ./OP2ArchiveTemp-(RANDOM INT) to store the contents of the archive file while rebuilding it. The ADD and REMOVE command will also eventually delete the original archive file before rebuilding it. If certain fatal exceptions occur during this process such as a power loss, the original archive file may be lost and/or the temp directory may not be deleted. If you are performing ADD and REMOVE commands on a heavily modifyied archive file, consider keeping a backup of the file somewhere. In case of a fatal error in the critical steps for the ADD and REMOVE coomands, you should be able to just recover the archive file from the Outpost Universe website by redownloading the game.
 
-+++ CLM Files +++
+If you wish to overwrite a file currently in an archive file, use the ADD command and include the optional argument -O / --Overwrite to allow overwriting the original file.
 
-Outpost 2 stores all music tracks in op2.clm.
 
-If you wish to change out the sound tracks in Outpost 2, you must preserve the audio format of .
++++ CLM FILES (AUDIO STORAGE) +++
 
-Recommend starting with the free program Audacity to manipulate the original audio files. 
+Outpost 2 stores all music tracks except for the track that plays on the main menu in the archive file op2.clm.
 
-Internal CLM filenames are clipped down to 8 characters. //.clm .wav
+If you wish to change out the sound tracks in Outpost 2, you must use specific settings and use the WAV file format.
+
+As a starting point for manipulating audio tracks for Outpost 2, consider starting with the free program Audacity (http://www.audacityteam.org/). 
+
+When naming audio files for storage in a CLM archive, the filename will be clipped down to 8 characters. Without siginificant modifications to the Outpost 2 application, you must use the names of the audio tracks provided with the stock download of the game to get modified or new tracks to play in game. 
+
+
++++ COMPRESSION +++
+
+Outpost 2 contains references to 3 types of compression, RLE (Run - Length Encoded), LZ (Lempel - Ziv), and LZH (Lempel - Ziv, with adaptive Huffman encoding). 
+
+Only LZH was used in the final release of Outpost 2 to compress the file sheets.vol. In subsequent releases of Outpost 2, sheets.vol was decompressed and included in the game download in uncompressed format. No other archive file was compressed.
+
+OP2Archive is capable of reading and decompressing archives using LZH compression. However, it currently cannot CREATE archives or modify via the ADD or REMOVE file an archive using LZH compression.
+
 
 +++ RELEASE COMPILATION INSTRUCTIONS +++
 
