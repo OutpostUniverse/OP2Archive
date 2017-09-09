@@ -8,6 +8,12 @@
 
 using namespace Archives;
 
+ConsoleAdd::~ConsoleAdd()
+{
+	if (!tempDirectory.empty())
+		XFile::deletePath(tempDirectory);
+}
+
 void ConsoleAdd::addCommand(const ConsoleArgs& consoleArgs)
 {
 	string archiveFilename = getArchiveName(consoleArgs);
@@ -15,54 +21,64 @@ void ConsoleAdd::addCommand(const ConsoleArgs& consoleArgs)
 	vector<string> filesToAdd = getFilesToModify(consoleArgs);
 	
 	if (!consoleArgs.consoleSettings.quiet)
-	{
-		cout << "Attempting to add " << filesToAdd.size() << " file(s) to the archive " << archiveFilename << endl;
-		cout << ConsoleHelper::dashedLine << endl;
-	}
+		outputInitialAddMessage(archiveFilename, filesToAdd.size());
 
 	checkFilesExist(filesToAdd);
 
-	string tempDirectory = ConsoleHelper::createTempDirectory();
+	tempDirectory = ConsoleHelper::createTempDirectory();
 
-	extractCurrentArchiveContents(archiveFilename, tempDirectory);
-
-	vector<string> extractedFiles = XFile::getFilesFromDirectory(tempDirectory);
+	vector<string> extractedFiles = extractFiles(archiveFilename, tempDirectory, filesToAdd, consoleArgs.consoleSettings.overwrite);
 
 	filesToAdd.insert(filesToAdd.end(), extractedFiles.begin(), extractedFiles.end());
 
-	try
-	{
-		ConsoleCreate consoleCreate;
-		consoleCreate.createArchiveFile(archiveFilename, filesToAdd, true);
-
-		if (!consoleArgs.consoleSettings.quiet)
-		{
-			cout << "File(s) successfully added to archive " + archiveFilename << endl << endl;
-			ArchiveConsoleListing listing;
-			listing.listContents(ConsoleHelper::openArchive(archiveFilename));
-		}
-	}
-	catch (exception e)
-	{
-		cleanup(tempDirectory);
-		throw exception(e.what());
-	}
-
-	cleanup(tempDirectory);
+	createModifiedArchive(archiveFilename, filesToAdd, consoleArgs.consoleSettings.quiet);
 }
 
-void ConsoleAdd::extractCurrentArchiveContents(const string& archiveFilename, const string& tempDirectory)
+void ConsoleAdd::outputInitialAddMessage(const string& archiveFilename, int fileCountToAdd)
+{
+	cout << "Attempting to add " << fileCountToAdd << " file(s) to the archive " << archiveFilename << endl;
+	cout << ConsoleHelper::dashedLine << endl;
+}
+
+bool ConsoleAdd::archivedFileTaggedForOverwrite(const string& internalFilename, const vector<string>& filesToAdd)
+{
+	for (string fileToAdd : filesToAdd)
+	{
+		if (XFile::pathsAreEqual(XFile::getFilename(fileToAdd), internalFilename))
+			return true;
+	}
+
+	return false;
+}
+
+vector<string> ConsoleAdd::extractFiles(const string& archiveFilename, const string& tempDirectory, const vector<string>& filesToAdd, bool overwrite)
 {
 	ArchiveFile* archive = ConsoleHelper::openArchive(archiveFilename);
-	bool success = archive->ExtractAllFiles(tempDirectory.c_str());
 
-	delete archive;
-
-	if (!success)
+	for (int i = 0; i < archive->GetNumberOfPackedFiles(); ++i)
 	{
-		XFile::deletePath(tempDirectory);
-		throw exception(("Error extracting files from archive " + archiveFilename + ". Add operation aborted.").c_str());
+		string internalFilename = archive->GetInternalFileName(i);
+
+		bool taggedForOverwrite = archivedFileTaggedForOverwrite(internalFilename, filesToAdd);
+
+		if (taggedForOverwrite && !overwrite)
+			throw exception(("Attempted ADD of " + archiveFilename + " aborted. " + internalFilename + " is already contained in the archive. If overwrite is desired, add argument -O / --Overwrite to command.").c_str());
+
+		if (!taggedForOverwrite)
+		{
+			bool extractionSuccessful = archive->ExtractFile(i, XFile::appendSubDirectory(internalFilename, tempDirectory).c_str());
+
+			if (!extractionSuccessful)
+			{
+				delete archive;
+				throw exception(("Error extracting " + internalFilename + " from archive " + archiveFilename + ". Add operation aborted.").c_str());
+			}
+		}
 	}
+
+	delete archive;		
+
+	return XFile::getFilesFromDirectory(tempDirectory);
 }
 
 void ConsoleAdd::checkFilesExist(const vector<string>& filenames)
@@ -74,7 +90,22 @@ void ConsoleAdd::checkFilesExist(const vector<string>& filenames)
 	}
 }
 
-void ConsoleAdd::cleanup(const string& tempDirectory)
+void ConsoleAdd::createModifiedArchive(const string& archiveFilename, const vector<string>& filesToAdd, bool quiet)
 {
-	XFile::deletePath(tempDirectory);
+	try
+	{
+		ConsoleCreate consoleCreate;
+		consoleCreate.createArchiveFile(archiveFilename, filesToAdd, true);
+
+		if (!quiet)
+		{
+			cout << "File(s) successfully added to archive " + archiveFilename << endl << endl;
+			ArchiveConsoleListing listing;
+			listing.listContents(ConsoleHelper::openArchive(archiveFilename));
+		}
+	}
+	catch (exception e)
+	{
+		throw exception(e.what());
+	}
 }
