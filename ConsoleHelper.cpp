@@ -15,14 +15,10 @@ void ConsoleHelper::checkIfPathsEmpty(const ConsoleArgs& consoleArgs)
 
 ArchiveFile* ConsoleHelper::openArchive(const string& archivePath)
 {
-	Archives::ArchiveFile* archiveFile;
-
 	if (XFile::extensionMatches(archivePath, "VOL"))
-		archiveFile = new Archives::VolFile(archivePath.c_str());
+		return new Archives::VolFile(archivePath.c_str());
 	else
-		archiveFile = new Archives::ClmFile(archivePath.c_str());
-
-	return archiveFile;
+		return new Archives::ClmFile(archivePath.c_str());
 }
 
 string ConsoleHelper::createTempDirectory()
