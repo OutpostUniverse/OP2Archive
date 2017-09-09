@@ -104,14 +104,14 @@ void selectCommand(const ConsoleArgs& consoleArgs)
 	case ConsoleCommand::List:
 		listCommand(consoleArgs);
 		break;
-	case ConsoleCommand::Add:
+	case ConsoleCommand::Add: {
 		ConsoleAdd consoleAdd;
 		consoleAdd.addCommand(consoleArgs);
-		break;
-	case ConsoleCommand::Remove:
+	}	break;
+	case ConsoleCommand::Remove: {
 		ConsoleRemove consoleRemove;
 		consoleRemove.removeCommand(consoleArgs);
-		break;
+	} break;
 	}
 }
 
