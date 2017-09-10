@@ -77,6 +77,11 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\OP2Utility\Archives;..\OP2Utility\OP2Utility;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <PostBuildEvent>
+      <Command>SET zipNameBegining="OP2Archive Ver1.0.0 Rev"
+REM SET zipName=%25zipNameBegining%25%25svnVersion%25
+REM SET directoryName=$(OutDir)%25zipName%25 </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -98,6 +103,11 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <PostBuildEvent>
+      <Command>SET zipNameBegining="OP2Archive Ver1.0.0 Rev"
+REM SET zipName=%25zipNameBegining%25%25svnVersion%25
+REM SET directoryName=$(OutDir)%25zipName%25 </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
