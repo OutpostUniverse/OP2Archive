@@ -7,6 +7,8 @@
 ConsoleModifyBase::ConsoleModifyBase(const string& successMessage)
 {
 	this->successMessage = successMessage;
+
+	tempDirectory = ConsoleHelper::createTempDirectory();
 }
 
 ConsoleModifyBase::~ConsoleModifyBase()

@@ -12,6 +12,6 @@ public:
 private:
 	void outputInitialAddMessage(const string& archiveFilename, int fileCountToAdd);
 	bool archivedFileTaggedForOverwrite(const string& internalFilename, const vector<string>& filesToAdd);
-	vector<string> extractFiles(const string& archiveFilename, const string& tempDirectory, const vector<string>& filesToAdd, bool overwrite);
+	vector<string> extractFiles(const string& archiveFilename, const vector<string>& internalFilenames, bool overwrite);
 	void checkFilesExist(const vector<string>& filenames);
 };

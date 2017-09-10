@@ -7,30 +7,29 @@
 void ConsoleRemove::removeCommand(const ConsoleArgs& consoleArgs)
 {
 	string archiveFilename = getArchiveName(consoleArgs);
-	ArchiveFile* archive = ConsoleHelper::openArchive(archiveFilename);
 	vector<string> filesToRemove = getFilesToModify(consoleArgs);
 	
+	outputInitialAddMessage(archiveFilename, filesToRemove.size());
+
+	ArchiveFile* archive = ConsoleHelper::openArchive(archiveFilename);
+
 	checkFilesAvailableToRemove(archive, filesToRemove, consoleArgs.consoleSettings.quiet);
 
 	const vector<string> archiveInternalFilenames = removeMatchingFilenames(archive, filesToRemove);
 
-	const string tempDirectory = ConsoleHelper::createTempDirectory();
-
-	for (size_t i = 0; i < archiveInternalFilenames.size(); ++i)
-	{
-		string filename(archiveInternalFilenames[i]);
-		int index = archive->GetInternalFileIndex(filename.c_str());
-		string pathToExtractTo = XFile::appendSubDirectory(filename, tempDirectory);
-
-		if (!archive->ExtractFile(index, pathToExtractTo.c_str()))
-			throw exception(("Unable to extract file " + filename + " from original archive. Operation Aborted.").c_str());
-	}
+	extractFiles(archive, archiveInternalFilenames);
 
 	delete archive;
 
 	vector<string> filenames = XFile::getFilesFromDirectory(tempDirectory);
 
 	createModifiedArchive(archiveFilename, filenames, consoleArgs.consoleSettings.quiet);
+}
+
+void ConsoleRemove::outputInitialAddMessage(const string& archiveFilename, int fileCountToRemove)
+{
+	cout << "Attempting to remove " << fileCountToRemove << " file(s) from the archive " << archiveFilename << endl;
+	cout << ConsoleHelper::dashedLine << endl;
 }
 
 vector<string> ConsoleRemove::removeMatchingFilenames(ArchiveFile* archive, const vector<string>& filesToRemove)
@@ -71,7 +70,17 @@ void ConsoleRemove::checkFilesAvailableToRemove(ArchiveFile* archive, const vect
 
 	if (unfoundFilenames.size() > 0)
 		throwUnfoundFileDuringRemoveException(unfoundFilenames);
+}
 
-	if (!quiet)
-		cout << "All " << filesToRemove.size() << " files requested for removal located in archive." << endl;
+void ConsoleRemove::extractFiles(ArchiveFile* archive, const vector<string> internalFilenames)
+{
+	for (size_t i = 0; i < internalFilenames.size(); ++i)
+	{
+		string filename(internalFilenames[i]);
+		int index = archive->GetInternalFileIndex(filename.c_str());
+		string pathToExtractTo = XFile::appendSubDirectory(filename, tempDirectory);
+
+		if (!archive->ExtractFile(index, pathToExtractTo.c_str()))
+			throw exception(("Unable to extract file " + filename + " from original archive. Operation Aborted.").c_str());
+	}
 }

@@ -17,9 +17,7 @@ void ConsoleAdd::addCommand(const ConsoleArgs& consoleArgs)
 
 	checkFilesExist(filesToAdd);
 
-	tempDirectory = ConsoleHelper::createTempDirectory();
-
-	vector<string> extractedFiles = extractFiles(archiveFilename, tempDirectory, filesToAdd, consoleArgs.consoleSettings.overwrite);
+	vector<string> extractedFiles = extractFiles(archiveFilename, filesToAdd, consoleArgs.consoleSettings.overwrite);
 
 	filesToAdd.insert(filesToAdd.end(), extractedFiles.begin(), extractedFiles.end());
 
@@ -43,7 +41,7 @@ bool ConsoleAdd::archivedFileTaggedForOverwrite(const string& internalFilename, 
 	return false;
 }
 
-vector<string> ConsoleAdd::extractFiles(const string& archiveFilename, const string& tempDirectory, const vector<string>& filesToAdd, bool overwrite)
+vector<string> ConsoleAdd::extractFiles(const string& archiveFilename, const vector<string>& internalFilenames, bool overwrite)
 {
 	ArchiveFile* archive = ConsoleHelper::openArchive(archiveFilename);
 
@@ -51,10 +49,10 @@ vector<string> ConsoleAdd::extractFiles(const string& archiveFilename, const str
 	{
 		string internalFilename = archive->GetInternalFileName(i);
 
-		bool taggedForOverwrite = archivedFileTaggedForOverwrite(internalFilename, filesToAdd);
+		bool taggedForOverwrite = archivedFileTaggedForOverwrite(internalFilename, internalFilenames);
 
 		if (taggedForOverwrite && !overwrite)
-			throw exception(("Attempted ADD of " + archiveFilename + " aborted. " + internalFilename + " is already contained in the archive. If overwrite is desired, add argument -O / --Overwrite to command.").c_str());
+			throw exception(("ADD aborted. " + internalFilename + " is already contained in " + archiveFilename + ". To overwrite, add argument -O.").c_str());
 
 		if (!taggedForOverwrite)
 		{
