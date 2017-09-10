@@ -1,18 +1,10 @@
 #include "ConsoleAdd.h"
-#include "ArchiveConsoleListing.h"
 #include "ConsoleHelper.h"
 #include "ConsoleExtract.h"
-#include "ConsoleCreate.h"
 #include "OP2Utility.h"
 #include <iostream>
 
 using namespace Archives;
-
-ConsoleAdd::~ConsoleAdd()
-{
-	if (!tempDirectory.empty())
-		XFile::deletePath(tempDirectory);
-}
 
 void ConsoleAdd::addCommand(const ConsoleArgs& consoleArgs)
 {
@@ -87,25 +79,5 @@ void ConsoleAdd::checkFilesExist(const vector<string>& filenames)
 	{
 		if (!XFile::isFile(filename))
 			throw exception((filename + " was not found. Operation aborted.").c_str());
-	}
-}
-
-void ConsoleAdd::createModifiedArchive(const string& archiveFilename, const vector<string>& filesToAdd, bool quiet)
-{
-	try
-	{
-		ConsoleCreate consoleCreate;
-		consoleCreate.createArchiveFile(archiveFilename, filesToAdd, true);
-
-		if (!quiet)
-		{
-			cout << "File(s) successfully added to archive " + archiveFilename << endl << endl;
-			ArchiveConsoleListing listing;
-			listing.listContents(ConsoleHelper::openArchive(archiveFilename));
-		}
-	}
-	catch (exception e)
-	{
-		throw exception(e.what());
 	}
 }

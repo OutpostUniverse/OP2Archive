@@ -21,24 +21,18 @@ void ConsoleRemove::removeCommand(const ConsoleArgs& consoleArgs)
 		string filename(archiveInternalFilenames->at(i));
 		int index = archive->GetInternalFileIndex(filename.c_str());
 		string pathToExtractTo = XFile::appendSubDirectory(filename, tempDirectory);
+
 		if (!archive->ExtractFile(index, pathToExtractTo.c_str()))
-		{
-			XFile::deletePath(tempDirectory);
 			throw exception(("Unable to extract file " + filename + " from original archive. Operation Aborted.").c_str());
-		}
 	}
 
 	delete archive;
 
-	XFile::deletePath(archiveFilename);
-
 	vector<string> filenames = XFile::getFilesFromDirectory(tempDirectory);
 
-	ConsoleCreate consoleCreate;
-	consoleCreate.createArchiveFile(archiveFilename, filenames, consoleArgs.consoleSettings.quiet);
+	createModifiedArchive(archiveFilename, filenames, consoleArgs.consoleSettings.quiet);
 
 	delete archiveInternalFilenames;
-	XFile::deletePath(tempDirectory);
 }
 
 vector<string>* ConsoleRemove::removeMatchingStrings(const vector<string>& strings, const vector<string>& stringsToRemove)

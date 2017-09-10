@@ -1,4 +1,19 @@
 #include "ConsoleModifyBase.h"
+#include "ArchiveConsoleListing.h"
+#include "ConsoleCreate.h"
+#include "ConsoleHelper.h"
+#include <iostream>
+
+ConsoleModifyBase::ConsoleModifyBase(const string& successMessage)
+{
+	this->successMessage = successMessage;
+}
+
+ConsoleModifyBase::~ConsoleModifyBase()
+{
+	if (!tempDirectory.empty())
+		XFile::deletePath(tempDirectory);
+}
 
 vector<string> ConsoleModifyBase::getFilesToModify(const ConsoleArgs& consoleArgs)
 {
@@ -16,4 +31,24 @@ string ConsoleModifyBase::getArchiveName(const ConsoleArgs& consoleArgs)
 		throw exception("No archive filename provided.");
 
 	return consoleArgs.paths[0];
+}
+
+void ConsoleModifyBase::createModifiedArchive(const string& archiveFilename, const vector<string>& filenamesToAdd, bool quiet)
+{
+	try
+	{
+		ConsoleCreate consoleCreate;
+		consoleCreate.createArchiveFile(archiveFilename, filenamesToAdd, true);
+
+		if (!quiet)
+		{
+			cout << successMessage + " " + archiveFilename << endl << endl;
+			ArchiveConsoleListing listing;
+			listing.listContents(ConsoleHelper::openArchive(archiveFilename));
+		}
+	}
+	catch (exception e)
+	{
+		throw exception(e.what());
+	}
 }

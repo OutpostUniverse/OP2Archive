@@ -17,8 +17,11 @@ ArchiveFile* ConsoleHelper::openArchive(const string& archivePath)
 {
 	if (XFile::extensionMatches(archivePath, "VOL"))
 		return new Archives::VolFile(archivePath.c_str());
-	else
+	
+	if (XFile::extensionMatches(archivePath, "CLM"))
 		return new Archives::ClmFile(archivePath.c_str());
+
+	throw invalid_argument("Provided filename is not an archive file (.VOL/.CLM)");
 }
 
 string ConsoleHelper::createTempDirectory()

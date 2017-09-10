@@ -12,6 +12,7 @@ using namespace Archives;
 class ConsoleRemove : ConsoleModifyBase
 {
 public:
+	ConsoleRemove() : ConsoleModifyBase("") {};
 	void removeCommand(const ConsoleArgs& consoleArgs);
 
 private:
