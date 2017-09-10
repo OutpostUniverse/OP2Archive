@@ -16,8 +16,7 @@ public:
 	void removeCommand(const ConsoleArgs& consoleArgs);
 
 private:
-	vector<string>* removeMatchingStrings(const vector<string>& strings, const vector<string>& stringsToRemove);
-	vector<string>* removeMatchingFilenames(ArchiveFile* archive, const vector<string>& filesToRemove);
-	void throwUnfoundFileDuringRemoveException(vector<string>* unfoundFilenames);
+	vector<string> removeMatchingFilenames(ArchiveFile* archive, const vector<string>& filesToRemove);
+	void throwUnfoundFileDuringRemoveException(vector<string> unfoundFilenames);
 	void checkFilesAvailableToRemove(ArchiveFile* archive, const vector<string>& filesToRemove, bool quiet);
 };

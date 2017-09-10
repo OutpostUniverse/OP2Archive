@@ -1,5 +1,5 @@
-#include "ConsoleCreate.h"
 #include "ConsoleRemove.h"
+#include "ConsoleCreate.h"
 #include "ConsoleExtract.h"
 #include "ConsoleHelper.h"
 #include <iostream>
@@ -12,13 +12,13 @@ void ConsoleRemove::removeCommand(const ConsoleArgs& consoleArgs)
 	
 	checkFilesAvailableToRemove(archive, filesToRemove, consoleArgs.consoleSettings.quiet);
 
-	const vector<string>* archiveInternalFilenames = removeMatchingFilenames(archive, filesToRemove);
+	const vector<string> archiveInternalFilenames = removeMatchingFilenames(archive, filesToRemove);
 
 	const string tempDirectory = ConsoleHelper::createTempDirectory();
 
-	for (size_t i = 0; i < archiveInternalFilenames->size(); ++i)
+	for (size_t i = 0; i < archiveInternalFilenames.size(); ++i)
 	{
-		string filename(archiveInternalFilenames->at(i));
+		string filename(archiveInternalFilenames[i]);
 		int index = archive->GetInternalFileIndex(filename.c_str());
 		string pathToExtractTo = XFile::appendSubDirectory(filename, tempDirectory);
 
@@ -31,49 +31,31 @@ void ConsoleRemove::removeCommand(const ConsoleArgs& consoleArgs)
 	vector<string> filenames = XFile::getFilesFromDirectory(tempDirectory);
 
 	createModifiedArchive(archiveFilename, filenames, consoleArgs.consoleSettings.quiet);
-
-	delete archiveInternalFilenames;
 }
 
-vector<string>* ConsoleRemove::removeMatchingStrings(const vector<string>& strings, const vector<string>& stringsToRemove)
-{
-	vector<string>* stringsToReturn = new vector<string>(strings.begin(), strings.end());
-
-	auto pred = [&stringsToRemove](const std::string& key) ->bool
-	{
-		return std::find(stringsToRemove.begin(), stringsToRemove.end(), key) != stringsToRemove.end();
-	};
-
-	stringsToReturn->erase(std::remove_if(stringsToReturn->begin(), stringsToReturn->end(), pred), stringsToReturn->end());
-
-	return stringsToReturn;
-}
-
-vector<string>* ConsoleRemove::removeMatchingFilenames(ArchiveFile* archive, const vector<string>& filesToRemove)
+vector<string> ConsoleRemove::removeMatchingFilenames(ArchiveFile* archive, const vector<string>& filesToRemove)
 {
 	vector<string> internalFilenames;
 
 	for (int i = 0; i < archive->GetNumberOfPackedFiles(); ++i)
 		internalFilenames.push_back(archive->GetInternalFileName(i));
 
-	return removeMatchingStrings(internalFilenames, filesToRemove);
+	return StringHelper::removeMatchingStrings(internalFilenames, filesToRemove);
 }
 
-void ConsoleRemove::throwUnfoundFileDuringRemoveException(vector<string>* unfoundFilenames)
+void ConsoleRemove::throwUnfoundFileDuringRemoveException(vector<string> unfoundFilenames)
 {
 	string exceptionString("The Following filename(s) were not found in the archive:");
 
-	for (size_t i = 0; i < unfoundFilenames->size(); ++i)
+	for (size_t i = 0; i < unfoundFilenames.size(); ++i)
 	{
-		exceptionString += " " + unfoundFilenames->at(i);
+		exceptionString += " " + unfoundFilenames[i];
 
-		if (i < unfoundFilenames->size() - 1)
+		if (i < unfoundFilenames.size() - 1)
 			exceptionString += ",";
 	}
 
 	exceptionString += ".";
-
-	delete unfoundFilenames;
 
 	throw exception(exceptionString.c_str());
 }
@@ -85,13 +67,11 @@ void ConsoleRemove::checkFilesAvailableToRemove(ArchiveFile* archive, const vect
 	for (int i = 0; i < archive->GetNumberOfPackedFiles(); ++i)
 		internalFilenames.push_back(archive->GetInternalFileName(i));
 
-	vector<string>* unfoundFilenames = removeMatchingStrings(filesToRemove, internalFilenames);
+	vector<string> unfoundFilenames = StringHelper::removeMatchingStrings(filesToRemove, internalFilenames);
 
-	if (unfoundFilenames->size() > 0)
+	if (unfoundFilenames.size() > 0)
 		throwUnfoundFileDuringRemoveException(unfoundFilenames);
 
 	if (!quiet)
 		cout << "All " << filesToRemove.size() << " files requested for removal located in archive." << endl;
-
-	delete unfoundFilenames;
 }
