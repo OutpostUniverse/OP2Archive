@@ -3,6 +3,7 @@
 #include "ConsoleAdd.h"
 #include "ConsoleCreate.h"
 #include "ConsoleExtract.h"
+#include "ConsoleList.h"
 #include "ConsoleRemove.h"
 #include "ConsoleHelper.h"
 #include "ConsoleSettings.h"
@@ -18,31 +19,6 @@ using namespace ConsoleArgumentParser;
 void outputHelp();
 
 static string version = "0.1.0";
-
-ArchiveConsoleListing archiveConsoleListing;
-
-void listArchiveContent(const string& filename)
-{
-	unique_ptr<ArchiveFile> archive = ConsoleHelper::openArchive(filename);
-	archiveConsoleListing.listContents(*archive);
-}
-
-void listAllArchivesInDirectory(const string& directory)
-{
-	ResourceManager resourceManager(directory);
-	vector<string> volFilenames = resourceManager.getAllFilenamesOfType(directory, ".vol", false);
-	vector<string> clmFilenames = resourceManager.getAllFilenames(directory, ".clm", false);
-
-	cout << volFilenames.size() << " vol archive file(s) located." << endl;
-	cout << clmFilenames.size() << " clm archive file(s) located." << endl;
-	cout << ConsoleHelper::dashedLine << endl << endl;
-
-	for (const string& filename : volFilenames)
-		listArchiveContent(filename);
-
-	for (const string& filename : clmFilenames)
-		listArchiveContent(filename);
-}
 
 void locateFileInArchives(const string& path)
 {
@@ -66,21 +42,6 @@ void locateCommand(const ConsoleArgs& consoleArgs)
 		locateFileInArchives(path);
 }
 
-void listCommand(const ConsoleArgs& consoleArgs)
-{
-	ConsoleHelper::checkIfPathsEmpty(consoleArgs);
-
-	for (string path : consoleArgs.paths)
-	{
-		if (XFile::isDirectory(path))
-			listAllArchivesInDirectory(path);
-		else if (ConsoleHelper::isArchiveExtension(path))
-			listArchiveContent(path);
-		else
-			throw exception("You must provide either a directory or a file of type (.vol|.clm).");
-	}
-}
-
 void selectCommand(const ConsoleArgs& consoleArgs)
 {
 	switch (consoleArgs.consoleCommand)
@@ -99,9 +60,10 @@ void selectCommand(const ConsoleArgs& consoleArgs)
 	case ConsoleCommand::Find:
 		locateCommand(consoleArgs);
 		break;
-	case ConsoleCommand::List:
-		listCommand(consoleArgs);
-		break;
+	case ConsoleCommand::List: {
+		ConsoleList consoleList;
+		consoleList.listCommand(consoleArgs);
+	}	break;
 	case ConsoleCommand::Add: {
 		ConsoleAdd consoleAdd;
 		consoleAdd.addCommand(consoleArgs);
@@ -109,7 +71,7 @@ void selectCommand(const ConsoleArgs& consoleArgs)
 	case ConsoleCommand::Remove: {
 		ConsoleRemove consoleRemove;
 		consoleRemove.removeCommand(consoleArgs);
-	} break;
+	}   break;
 	}
 }
 
