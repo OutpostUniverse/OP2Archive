@@ -4,8 +4,8 @@
 #include "ConsoleCreate.h"
 #include "ConsoleExtract.h"
 #include "ConsoleList.h"
+#include "ConsoleLocate.h"
 #include "ConsoleRemove.h"
-#include "ConsoleHelper.h"
 #include "ConsoleSettings.h"
 #include "OP2Utility.h"
 #include <string>
@@ -20,58 +20,37 @@ void outputHelp();
 
 static string version = "0.1.0";
 
-void locateFileInArchives(const string& path)
-{
-	ResourceManager resourceManager(XFile::getDirectory(path));
-
-	string filename = XFile::getFilename(path);
-
-	string archiveFilename = resourceManager.findContainingArchiveFile(filename);
-
-	if (archiveFilename == "")
-		cout << "The file " << filename << " is not located in an archive at the supplied directory." << endl << endl;
-	else
-		cout << "The file " << filename << " is located in the archive " << archiveFilename << "." << endl << endl;
-}
-
-void locateCommand(const ConsoleArgs& consoleArgs)
-{
-	ConsoleHelper::checkIfPathsEmpty(consoleArgs);
-
-	for (string path : consoleArgs.paths)
-		locateFileInArchives(path);
-}
-
 void selectCommand(const ConsoleArgs& consoleArgs)
 {
 	switch (consoleArgs.consoleCommand)
 	{
-	case ConsoleCommand::Help:
+	case ConsoleCommand::Help: {
 		outputHelp();
-		break;
-	case ConsoleCommand::Create:
+	}break;
+	case ConsoleCommand::Create: {
 		ConsoleCreate consoleCreate;
 		consoleCreate.createCommand(consoleArgs);
-		break;
-	case ConsoleCommand::Extract:
+	}break;
+	case ConsoleCommand::Extract: {
 		ConsoleExtract consoleExtract;
 		consoleExtract.extractCommand(consoleArgs);
-		break;
-	case ConsoleCommand::Find:
-		locateCommand(consoleArgs);
-		break;
+	}break;
+	case ConsoleCommand::Find: {
+		ConsoleLocate consoleLocate;
+		consoleLocate.locateCommand(consoleArgs);
+	}break;
 	case ConsoleCommand::List: {
 		ConsoleList consoleList;
 		consoleList.listCommand(consoleArgs);
-	}	break;
+	}break;
 	case ConsoleCommand::Add: {
 		ConsoleAdd consoleAdd;
 		consoleAdd.addCommand(consoleArgs);
-	}	break;
+	}break;
 	case ConsoleCommand::Remove: {
 		ConsoleRemove consoleRemove;
 		consoleRemove.removeCommand(consoleArgs);
-	}   break;
+	}break;
 	}
 }
 
