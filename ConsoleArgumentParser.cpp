@@ -141,6 +141,7 @@ namespace ConsoleArgumentParser
 	void parseHelp(const char* value, ConsoleArgs& consoleArgs)
 	{
 		consoleArgs.consoleSettings.helpRequested = true;
+		consoleArgs.consoleCommand = ConsoleCommand::Help;
 	}
 
 	void parseQuiet(const char* value, ConsoleArgs& consoleArgs)
