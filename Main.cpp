@@ -14,9 +14,33 @@
 using namespace std;
 using namespace ConsoleArgumentParser;
 
+int main(int argc, char **argv);
+void selectCommand(const ConsoleArgs& consoleArgs);
 void outputHelp();
+void debugPause();
 
 static string version = "0.1.0";
+
+int main(int argc, char **argv)
+{
+	try
+	{
+		ConsoleArgs consoleArgs = sortArguments(argc, argv);
+		selectCommand(consoleArgs);
+	}
+	catch (exception e) {
+		cerr << e.what() << endl;
+		cerr << "Run without arguments to see usage message." << endl << endl;
+
+		debugPause();
+
+		return 1;
+	}
+
+	debugPause();
+
+	return 0;
+}
 
 void selectCommand(const ConsoleArgs& consoleArgs)
 {
@@ -52,34 +76,6 @@ void selectCommand(const ConsoleArgs& consoleArgs)
 	}
 }
 
-void debugPause()
-{
-#if defined _DEBUG
-	getchar();
-#endif
-}
-
-int main(int argc, char **argv)
-{
-	try
-	{
-		ConsoleArgs consoleArgs = sortArguments(argc, argv);
-		selectCommand(consoleArgs);
-	}
-	catch (exception e) {
-		cerr << e.what() << endl;
-		cerr << "Run without arguments to see usage message." << endl << endl;
-
-		debugPause();
-
-		return 1;
-	}
-
-	debugPause();
-
-	return 0;
-}
-
 void outputHelp()
 {
 	cout << endl;
@@ -111,4 +107,11 @@ void outputHelp()
 	cout << endl;
 	cout << "For more information about Outpost 2 visit the Outpost Universe (http://outpost2.net/)." << endl;
 	cout << endl;
+}
+
+void debugPause()
+{
+#if defined _DEBUG
+	getchar();
+#endif
 }
