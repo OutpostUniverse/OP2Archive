@@ -29,30 +29,28 @@ void ConsoleExtract::consoleExtractFiles(const ConsoleArgs& consoleArgs)
 
 void ConsoleExtract::extractSpecificArchive(const ConsoleArgs& consoleArgs)
 {
-	ArchiveFile* archiveFile = ConsoleHelper::openArchive(consoleArgs.paths[0]);
+	unique_ptr<ArchiveFile> archiveFile = ConsoleHelper::openArchive(consoleArgs.paths[0]);
 
 	// If no files provided, extract entire contents of archive.
 	if (consoleArgs.paths.size() == 1)
 	{
-		extractAllFilesSpecificArchive(archiveFile, consoleArgs.consoleSettings);
+		extractAllFilesSpecificArchive(*archiveFile, consoleArgs.consoleSettings);
 		return;
 	}
 
 	// If specific files provided, only extract provided files.
 	for (size_t i = 1; i < consoleArgs.paths.size(); ++i)
-		extractFileSpecificArchive(archiveFile, consoleArgs.paths[i], consoleArgs.consoleSettings);
-
-	delete archiveFile;
+		extractFileSpecificArchive(*archiveFile, consoleArgs.paths[i], consoleArgs.consoleSettings);
 }
 
 
-void ConsoleExtract::extractFileSpecificArchive(ArchiveFile* archiveFile, const string& filename, const ConsoleSettings& consoleSettings)
+void ConsoleExtract::extractFileSpecificArchive(ArchiveFile& archiveFile, const string& filename, const ConsoleSettings& consoleSettings)
 {
 	if (!XFile::pathExists(consoleSettings.destDirectory))
 		XFile::createDirectory(consoleSettings.destDirectory);
 
-	bool success = archiveFile->ExtractFile(
-		archiveFile->GetInternalFileIndex(filename.c_str()),
+	bool success = archiveFile.ExtractFile(
+		archiveFile.GetInternalFileIndex(filename.c_str()),
 		XFile::replaceFilename(consoleSettings.destDirectory, filename).c_str());
 
 	if (consoleSettings.quiet)
@@ -64,13 +62,13 @@ void ConsoleExtract::extractFileSpecificArchive(ArchiveFile* archiveFile, const 
 		cout << "Error extracting " << filename << endl;
 }
 
-void ConsoleExtract::extractAllFilesSpecificArchive(ArchiveFile* archiveFile, const ConsoleSettings& consoleSettings)
+void ConsoleExtract::extractAllFilesSpecificArchive(ArchiveFile& archiveFile, const ConsoleSettings& consoleSettings)
 {
 	if (!consoleSettings.quiet)
-		cout << "Extracting all " << archiveFile->GetNumberOfPackedFiles() << " file(s) from archive " << archiveFile->GetVolumeFileName() << "." << endl;
+		cout << "Extracting all " << archiveFile.GetNumberOfPackedFiles() << " file(s) from archive " << archiveFile.GetVolumeFileName() << "." << endl;
 
-	for (int i = 0; i < archiveFile->GetNumberOfPackedFiles(); ++i)
-		extractFileSpecificArchive(archiveFile, archiveFile->GetInternalFileName(i), consoleSettings);
+	for (int i = 0; i < archiveFile.GetNumberOfPackedFiles(); ++i)
+		extractFileSpecificArchive(archiveFile, archiveFile.GetInternalFileName(i), consoleSettings);
 
 	if (!consoleSettings.quiet)
 		cout << "Extraction Finished." << endl;
@@ -78,30 +76,29 @@ void ConsoleExtract::extractAllFilesSpecificArchive(ArchiveFile* archiveFile, co
 
 void ConsoleExtract::consoleExtractDirectory(const string& directory, const ConsoleSettings& consoleSettings)
 {
-	vector<ArchiveFile*> archives = openArchivesInDirectory(directory);
+	vector<unique_ptr<ArchiveFile>> archives = openArchivesInDirectory(directory);
 
-	for (ArchiveFile* archive : archives)
+	for (size_t i = 0; i < archives.size(); i++)
 	{
-		extractAllFilesSpecificArchive(archive, consoleSettings);
-		delete archive;
+		extractAllFilesSpecificArchive(*archives[i], consoleSettings);
 	}
 }
 
 void ConsoleExtract::consoleExtractFile(const string& internalFilename, const ConsoleSettings& consoleSettings)
 {
-	vector<ArchiveFile*> archives = openArchivesInDirectory("./");
+	vector<unique_ptr<ArchiveFile>> archives = openArchivesInDirectory("./");
 
 	// TODO: Change to ResourceManager...
 }
 
-vector<ArchiveFile*> ConsoleExtract::openArchivesInDirectory(const string& directory)
+vector<unique_ptr<ArchiveFile>> ConsoleExtract::openArchivesInDirectory(const string& directory)
 {
 	vector<string> archiveFilenames = XFile::getFilesFromDirectory("./", "vol");
 	vector<string> clmFilenames = XFile::getFilesFromDirectory("./", "clm");
 
 	archiveFilenames.insert(std::end(archiveFilenames), std::begin(clmFilenames), std::end(clmFilenames));
 
-	vector<ArchiveFile*> archives;
+	vector<unique_ptr<ArchiveFile>> archives;
 
 	for (string filename : archiveFilenames)
 		archives.push_back(ConsoleHelper::openArchive(filename));

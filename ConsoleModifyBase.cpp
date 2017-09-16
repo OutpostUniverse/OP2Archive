@@ -3,6 +3,7 @@
 #include "ConsoleCreate.h"
 #include "ConsoleHelper.h"
 #include <iostream>
+#include <memory>
 
 ConsoleModifyBase::ConsoleModifyBase(const string& successMessage)
 {
@@ -46,7 +47,8 @@ void ConsoleModifyBase::createModifiedArchive(const string& archiveFilename, con
 		{
 			cout << successMessage + " " + archiveFilename << endl << endl;
 			ArchiveConsoleListing listing;
-			listing.listContents(ConsoleHelper::openArchive(archiveFilename));
+			unique_ptr<ArchiveFile> archive = ConsoleHelper::openArchive(archiveFilename);
+			listing.listContents(*archive);
 		}
 	}
 	catch (exception e)

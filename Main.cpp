@@ -23,10 +23,8 @@ ArchiveConsoleListing archiveConsoleListing;
 
 void listArchiveContent(const string& filename)
 {
-	if (XFile::extensionMatches(filename, ".vol"))
-		archiveConsoleListing.listContents(new VolFile(filename.c_str()));
-	else if (XFile::extensionMatches(filename, ".clm"))
-		archiveConsoleListing.listContents(new ClmFile(filename.c_str()));
+	unique_ptr<ArchiveFile> archive = ConsoleHelper::openArchive(filename);
+	archiveConsoleListing.listContents(*archive);
 }
 
 void listAllArchivesInDirectory(const string& directory)

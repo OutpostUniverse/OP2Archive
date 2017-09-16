@@ -17,8 +17,8 @@ public:
 
 private:
 	void outputInitialAddMessage(const string& archiveFilename, int fileCountToRemove);
-	vector<string> removeMatchingFilenames(ArchiveFile* archive, const vector<string>& filesToRemove);
+	vector<string> removeMatchingFilenames(ArchiveFile& archive, const vector<string>& filesToRemove);
 	void throwUnfoundFileDuringRemoveException(vector<string> unfoundFilenames);
-	void checkFilesAvailableToRemove(ArchiveFile* archive, const vector<string>& filesToRemove, bool quiet);
-	void extractFiles(ArchiveFile* archive, const vector<string> internalFilenames);
+	void checkFilesAvailableToRemove(ArchiveFile& archive, const vector<string>& filesToRemove, bool quiet);
+	void extractFiles(ArchiveFile& archive, const vector<string> internalFilenames);
 };

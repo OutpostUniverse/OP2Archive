@@ -13,13 +13,13 @@ void ConsoleHelper::checkIfPathsEmpty(const ConsoleArgs& consoleArgs)
 		throw exception("You must provide at least one file or directory. To provide the current directory, enter './'.");
 }
 
-ArchiveFile* ConsoleHelper::openArchive(const string& archivePath)
+unique_ptr<ArchiveFile> ConsoleHelper::openArchive(const string& archivePath)
 {
 	if (XFile::extensionMatches(archivePath, "VOL"))
-		return new Archives::VolFile(archivePath.c_str());
+		return make_unique<VolFile>(archivePath.c_str());
 	
 	if (XFile::extensionMatches(archivePath, "CLM"))
-		return new Archives::ClmFile(archivePath.c_str());
+		return make_unique<ClmFile>(archivePath.c_str());
 
 	throw invalid_argument("Provided filename is not an archive file (.VOL/.CLM)");
 }

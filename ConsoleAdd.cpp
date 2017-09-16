@@ -3,6 +3,7 @@
 #include "ConsoleExtract.h"
 #include "OP2Utility.h"
 #include <iostream>
+#include <memory>
 
 using namespace Archives;
 
@@ -43,7 +44,7 @@ bool ConsoleAdd::archivedFileTaggedForOverwrite(const string& internalFilename, 
 
 vector<string> ConsoleAdd::extractFiles(const string& archiveFilename, const vector<string>& internalFilenames, bool overwrite)
 {
-	ArchiveFile* archive = ConsoleHelper::openArchive(archiveFilename);
+	unique_ptr<ArchiveFile> archive = ConsoleHelper::openArchive(archiveFilename);
 
 	for (int i = 0; i < archive->GetNumberOfPackedFiles(); ++i)
 	{
@@ -59,14 +60,9 @@ vector<string> ConsoleAdd::extractFiles(const string& archiveFilename, const vec
 			bool extractionSuccessful = archive->ExtractFile(i, XFile::appendSubDirectory(internalFilename, tempDirectory).c_str());
 
 			if (!extractionSuccessful)
-			{
-				delete archive;
 				throw exception(("Error extracting " + internalFilename + " from archive " + archiveFilename + ". Add operation aborted.").c_str());
-			}
 		}
-	}
-
-	delete archive;		
+	}		
 
 	return XFile::getFilesFromDirectory(tempDirectory);
 }
