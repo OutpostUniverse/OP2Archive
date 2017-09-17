@@ -20,5 +20,4 @@ private:
 
 	void extractAllFiles(ArchiveFile& archive, const ConsoleSettings& consoleSettings);
 	void extractSpecificFile(ArchiveFile& archive, const string& filename, const ConsoleSettings& consoleSettings);
-	vector<string> getArchiveFilenames(const string& directory);
 };

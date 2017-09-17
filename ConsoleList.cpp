@@ -1,6 +1,8 @@
 #include "ConsoleList.h"
 #include "ConsoleHelper.h"
 #include <iostream>
+#include <vector>
+#include <memory>
 
 void ConsoleList::listCommand(const ConsoleArgs& consoleArgs)
 {
@@ -25,17 +27,11 @@ void ConsoleList::listArchiveContent(const string& filename)
 
 void ConsoleList::listAllArchivesInDirectory(const string& directory)
 {
-	ResourceManager resourceManager(directory);
-	vector<string> volFilenames = resourceManager.getAllFilenamesOfType(directory, ".vol", false);
-	vector<string> clmFilenames = resourceManager.getAllFilenames(directory, ".clm", false);
+	vector<string> archiveFilenames = ConsoleHelper::getArchiveFilenames(directory);
 
-	cout << volFilenames.size() << " vol archive file(s) located." << endl;
-	cout << clmFilenames.size() << " clm archive file(s) located." << endl;
+	cout << archiveFilenames.size() << " archive file(s) located." << endl;
 	cout << ConsoleHelper::dashedLine << endl << endl;
 
-	for (const string& filename : volFilenames)
-		listArchiveContent(filename);
-
-	for (const string& filename : clmFilenames)
+	for (const string& filename : archiveFilenames)
 		listArchiveContent(filename);
 }

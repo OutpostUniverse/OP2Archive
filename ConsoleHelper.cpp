@@ -24,6 +24,16 @@ unique_ptr<ArchiveFile> ConsoleHelper::openArchive(const string& archivePath)
 	throw invalid_argument("Provided filename is not an archive file (.VOL/.CLM)");
 }
 
+vector<string> ConsoleHelper::getArchiveFilenames(const string& directory)
+{
+	vector<string> archiveFilenames = XFile::getFilesFromDirectory(directory, "vol");
+	vector<string> clmFilenames = XFile::getFilesFromDirectory(directory, "clm");
+
+	archiveFilenames.insert(std::end(archiveFilenames), std::begin(clmFilenames), std::end(clmFilenames));
+
+	return archiveFilenames;
+}
+
 string ConsoleHelper::createTempDirectory()
 {
 	srand(static_cast<int>(time(NULL))); // For creating a unique directory.

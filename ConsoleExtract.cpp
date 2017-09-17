@@ -26,7 +26,7 @@ void ConsoleExtract::extractCommand(const ConsoleArgs& consoleArgs)
 
 void ConsoleExtract::extractFromDirectory(const string& directory, const ConsoleSettings& consoleSettings)
 {
-	vector<string> archiveFilenames = getArchiveFilenames(directory);
+	vector<string> archiveFilenames = ConsoleHelper::getArchiveFilenames(directory);
 
 	for (string archiveFilename : archiveFilenames)
 	{
@@ -80,14 +80,4 @@ void ConsoleExtract::extractSpecificFile(ArchiveFile& archiveFile, const string&
 		cout << filename << " extracted." << endl;
 	else
 		cout << "Error extracting " << filename << endl;
-}
-
-vector<string> ConsoleExtract::getArchiveFilenames(const string& directory)
-{
-	vector<string> archiveFilenames = XFile::getFilesFromDirectory(directory, "vol");
-	vector<string> clmFilenames = XFile::getFilesFromDirectory(directory, "clm");
-
-	archiveFilenames.insert(std::end(archiveFilenames), std::begin(clmFilenames), std::end(clmFilenames));
-
-	return archiveFilenames;
 }
