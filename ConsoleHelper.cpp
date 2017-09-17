@@ -7,9 +7,9 @@ bool ConsoleHelper::isArchiveExtension(const string& filename)
 	return XFile::extensionMatches(filename, "VOL") || XFile::extensionMatches(filename, "CLM");
 }
 
-void ConsoleHelper::checkIfPathsEmpty(const ConsoleArgs& consoleArgs)
+void ConsoleHelper::checkIfPathsEmpty(const vector<string>& paths)
 {
-	if (consoleArgs.paths.size() == 0)
+	if (paths.size() == 0)
 		throw exception("You must provide at least one file or directory. To provide the current directory, enter './'.");
 }
 

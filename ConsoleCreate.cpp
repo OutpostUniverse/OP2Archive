@@ -4,7 +4,7 @@
 
 void ConsoleCreate::createCommand(const ConsoleArgs& consoleArgs)
 {
-	ConsoleHelper::checkIfPathsEmpty(consoleArgs);
+	ConsoleHelper::checkIfPathsEmpty(consoleArgs.paths);
 
 	string archiveFilename = consoleArgs.paths[0];
 

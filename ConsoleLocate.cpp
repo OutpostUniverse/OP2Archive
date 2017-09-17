@@ -4,7 +4,7 @@
 
 void ConsoleLocate::locateCommand(const ConsoleArgs& consoleArgs)
 {
-	ConsoleHelper::checkIfPathsEmpty(consoleArgs);
+	ConsoleHelper::checkIfPathsEmpty(consoleArgs.paths);
 
 	for (string path : consoleArgs.paths)
 		locateFileInArchives(path);
