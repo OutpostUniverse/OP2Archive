@@ -61,7 +61,7 @@ unique_ptr<vector<string>> ArchiveConsoleListing::formatFileSizes(ArchiveFile& a
 	stringstream buffer;
 	buffer.imbue(locale(""));
 
-	for (size_t i = 0; i < (size_t)archiveFile.GetNumberOfPackedFiles(); ++i) //TODO: Switch to proper casting.
+	for (size_t i = 0; i < static_cast<size_t>(archiveFile.GetNumberOfPackedFiles()); ++i)
 	{
 		buffer << archiveFile.GetInternalFileSize(i);
 

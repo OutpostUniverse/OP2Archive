@@ -26,7 +26,7 @@ unique_ptr<ArchiveFile> ConsoleHelper::openArchive(const string& archivePath)
 
 string ConsoleHelper::createTempDirectory()
 {
-	srand((int)time(NULL)); // For creating a unique directory.
+	srand(static_cast<int>(time(NULL))); // For creating a unique directory.
 	int number = rand();
 
 	string directory("./OP2ArchiveTemp-" + to_string(number));
