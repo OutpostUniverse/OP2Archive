@@ -3,6 +3,8 @@
 #include "ConsoleSettings.h"
 #include "OP2Utility.h"
 #include <string>
+#include <vector>
+#include <memory>
 
 using namespace std;
 using namespace Archives;
@@ -14,7 +16,7 @@ public:
 	void createArchiveFile(const string& archiveFilename, const vector<string>& filenames, bool quiet);
 
 private:
-	ArchiveFile* createArchiveTemplate(const string& archiveFilename);
+	unique_ptr<ArchiveFile> createArchiveTemplate(const string& archiveFilename);
 	void createUsingDefaultDirectory(const string& archiveFilename, const ConsoleSettings& consoleSettings);
 	vector<string> gatherFilesForArchive(const vector<string>& paths);
 	void checkCreateOverwrite(const string& archiveFilename, bool overwrite, bool quiet);

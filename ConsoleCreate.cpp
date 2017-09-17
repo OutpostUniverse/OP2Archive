@@ -29,7 +29,7 @@ void ConsoleCreate::createCommand(const ConsoleArgs& consoleArgs)
 
 void ConsoleCreate::createArchiveFile(const string& archiveFilename, const vector<string>& filenames, bool quiet)
 {
-	ArchiveFile* archiveFile = createArchiveTemplate(archiveFilename);
+	unique_ptr<ArchiveFile> archiveFile = createArchiveTemplate(archiveFilename);
 
 	vector<string> internalFilenames;
 
@@ -46,7 +46,6 @@ void ConsoleCreate::createArchiveFile(const string& archiveFilename, const vecto
 
 	delete filenamesCArray;
 	delete internalFilenamesCArray;
-	delete archiveFile;
 
 	if (!success)
 		throw(exception("Error creating archive."));
@@ -55,18 +54,15 @@ void ConsoleCreate::createArchiveFile(const string& archiveFilename, const vecto
 		outputCreateResults(filenames.size());
 }
 
-ArchiveFile* ConsoleCreate::createArchiveTemplate(const string& archiveFilename)
+unique_ptr<ArchiveFile> ConsoleCreate::createArchiveTemplate(const string& archiveFilename)
 {
-	ArchiveFile* archiveFile;
-
 	if (XFile::extensionMatches(archiveFilename, "VOL"))
-		archiveFile = new VolFile("VolTemplate.vol");
-	else if (XFile::extensionMatches(archiveFilename, "CLM"))
-		archiveFile = new ClmFile("ClmTemplate.clm");
-	else
-		throw exception("An archive filename must be provided (.vol|.clm).");
+		return make_unique<VolFile>("VolTemplate.vol");
 
-	return archiveFile;
+	if (XFile::extensionMatches(archiveFilename, "CLM"))
+		return make_unique<ClmFile>("ClmTemplate.clm");
+
+	throw exception("Unable to open archive template files VolTemplate.vol and/or ClmTemplate.clm. Ensure both files exist in same directory as OP2Archive.exe and are not open in another application.");
 }
 
 void ConsoleCreate::createUsingDefaultDirectory(const string& archiveFilename, const ConsoleSettings& consoleSettings)
