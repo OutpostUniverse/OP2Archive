@@ -2,6 +2,8 @@
 
 #include "ConsoleModifyBase.h"
 #include "ConsoleSettings.h"
+#include <string>
+#include <vector>
 
 class ConsoleAdd : ConsoleModifyBase
 {
