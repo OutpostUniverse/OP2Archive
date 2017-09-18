@@ -78,9 +78,23 @@
       <AdditionalIncludeDirectories>..\OP2Utility\Archives;..\OP2Utility\OP2Utility;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <PostBuildEvent>
-      <Command>SET zipNameBegining="OP2Archive Ver1.0.0 Rev"
-REM SET zipName=%25zipNameBegining%25%25svnVersion%25
-REM SET directoryName=$(OutDir)%25zipName%25 </Command>
+      <Command>SET zipName="OP2Archive Ver1.0.0"
+SET directoryName=$(OutDir)%25zipName%25 
+
+if $(ConfigurationName) == Release (
+    mkdir %25directoryName%25
+
+    xcopy /y /d "$(ProjectDir)ReadMe.txt" %25directoryName%25
+    xcopy /y /d "$(ProjectDir)VolTemplate.vol" %25directoryName%25
+    xcopy /y /d "$(ProjectDir)ClmTemplate.clm" %25directoryName%25
+    xcopy /y /d "$(OutDir)$(TargetFileName)" %25directoryName%25
+
+    REM Use 7Zip to zip final version
+    7za a -tzip $(OutDir)%25zipName%25.zip %25directoryName%25
+    
+    DEL /q %25directoryName%25\*.*
+    RMDIR %25directoryName%25 /s /q
+)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -104,9 +118,23 @@ REM SET directoryName=$(OutDir)%25zipName%25 </Command>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PostBuildEvent>
-      <Command>SET zipNameBegining="OP2Archive Ver1.0.0 Rev"
-REM SET zipName=%25zipNameBegining%25%25svnVersion%25
-REM SET directoryName=$(OutDir)%25zipName%25 </Command>
+      <Command>SET zipName="OP2Archive Ver1.0.0"
+SET directoryName=$(OutDir)%25zipName%25 
+
+if $(ConfigurationName) == Release (
+    mkdir %25directoryName%25
+
+    xcopy /y /d "$(ProjectDir)ReadMe.txt" %25directoryName%25
+    xcopy /y /d "$(ProjectDir)VolTemplate.vol" %25directoryName%25
+    xcopy /y /d "$(ProjectDir)ClmTemplate.clm" %25directoryName%25
+    xcopy /y /d "$(OutDir)$(TargetFileName)" %25directoryName%25
+
+    REM Use 7Zip to zip final version
+    7za a -tzip $(OutDir)%25zipName%25.zip %25directoryName%25
+    
+    DEL /q %25directoryName%25\*.*
+    RMDIR %25directoryName%25 /s /q
+)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

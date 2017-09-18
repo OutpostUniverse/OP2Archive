@@ -14,6 +14,6 @@ public:
 private:
 	ArchiveConsoleListing archiveConsoleListing;
 
-	void listArchiveContent(const string& filename);
+	void listArchiveContents(const string& filename);
 	void listAllArchivesInDirectory(const string& directory);
 };
