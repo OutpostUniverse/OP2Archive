@@ -86,5 +86,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
+    <Text Include="CompileInstructions.txt" />
   </ItemGroup>
 </Project>

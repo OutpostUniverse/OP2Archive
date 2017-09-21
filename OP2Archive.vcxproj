@@ -182,6 +182,7 @@ if $(ConfigurationName) == Release (
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Text Include="CompileInstructions.txt" />
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
