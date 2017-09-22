@@ -38,35 +38,18 @@ namespace ConsoleArgumentParser
 	{
 		ConsoleArgs consoleArgs;
 
-		if (argc < 2)
+		if (checkTooFewArguments(argc))
 		{
 			consoleArgs.consoleCommand = ConsoleCommand::Help;
 			return consoleArgs;
 		}
 
-		consoleArgs.consoleCommand = parseCommand(argv[1]);
-
-		ConsoleSwitch currentSwitch;
+		string commandStr = argv[1];
+		consoleArgs.consoleCommand = parseCommand(commandStr);		
 
 		for (int i = 2; i < argc; ++i)
 		{
-			bool switchFound = findSwitch(argv[i], currentSwitch);
-
-			if (switchFound)
-			{
-				checkForMissingSwitchArgument(i, argc, currentSwitch.numberOfArgs);
-
-				if (currentSwitch.numberOfArgs == 0)
-					currentSwitch.parseFunction(argv[i], consoleArgs);
-				else
-					currentSwitch.parseFunction(argv[i + 1], consoleArgs);
-
-				i = i + currentSwitch.numberOfArgs;
-			}
-			else
-			{
-				consoleArgs.paths.push_back(argv[i]);
-			}
+			parseArgument(argv, i, argc, consoleArgs);
 		}
 
 		return consoleArgs;
@@ -97,10 +80,33 @@ namespace ConsoleArgumentParser
 		if (commandStrUpper == "REMOVE")
 			return ConsoleCommand::Remove;
 
-		throw exception("A valid command was not provided.");
+		throw invalid_argument("A valid command was not provided.");
 	}
 
-	Archives::CompressionType parseCompression(const string& compressionStr)
+	void parseArgument(char** argv, int i, int argc, ConsoleArgs& consoleArgs)
+	{
+		ConsoleSwitch currentSwitch;
+
+		bool switchFound = findSwitch(argv[i], currentSwitch);
+
+		if (switchFound)
+		{
+			checkForMissingSwitchArgument(i, argc, currentSwitch.numberOfArgs);
+
+			if (currentSwitch.numberOfArgs == 0)
+				currentSwitch.parseFunction(argv[i], consoleArgs);
+			else
+				currentSwitch.parseFunction(argv[i + 1], consoleArgs);
+
+			i += currentSwitch.numberOfArgs;
+		}
+		else
+		{
+			consoleArgs.paths.push_back(argv[i]);
+		}
+	}
+
+	CompressionType parseCompression(const string& compressionStr)
 	{
 		string compressionStrUpper = StringHelper::convertToUpper(compressionStr);
 
@@ -116,10 +122,10 @@ namespace ConsoleArgumentParser
 		if (compressionStrUpper == "RLE")
 			return Archives::CompressionType::RLE;
 
-		throw exception("Unable to determine compression type. Try None, LZ, LZH, or RLE.");
+		throw invalid_argument("Unable to determine compression type. Try None, LZ, LZH, or RLE.");
 	}
 
-	bool ParseBool(const string& str)
+	bool parseBool(const string& str)
 	{
 		string upperStr = StringHelper::convertToUpper(str);
 
@@ -135,7 +141,7 @@ namespace ConsoleArgumentParser
 	void checkForMissingSwitchArgument(int index, int argc, int numberOfArgsToPass)
 	{
 		if (index + numberOfArgsToPass >= argc)
-			throw exception("Missing the final argument for the supplied switch.");
+			throw range_error("Missing the final argument for the supplied switch.");
 	}
 
 	void parseHelp(const char* value, ConsoleArgs& consoleArgs)
@@ -167,5 +173,10 @@ namespace ConsoleArgumentParser
 	void parseSourceDirectory(const char* value, ConsoleArgs& consoleArgs)
 	{
 		consoleArgs.consoleSettings.sourceDirectory = value;
+	}
+
+	bool checkTooFewArguments(int numberOfArguments)
+	{
+		return numberOfArguments < 2;
 	}
 }
