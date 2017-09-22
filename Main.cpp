@@ -104,9 +104,8 @@ void outputHelp()
 	cout << "  -H / --Help / -?: Displays help information." << endl;
 	cout << "  -Q / --Quiet: [Default false] Prevents application from issuing console messages." << endl;
 	cout << "  -O / --Overwrite: [Default false] Allows application to overwrite existing files." << endl;
-	cout << "  -D / --DestinationDirectory: [Default for single file is './', Default for all files is archive's filename]. " << endl;
-	cout << "                               Sets the destination directory for extracted file(s)." << endl;
-	cout << "  -S / --SourceDirectory: CREATE: [Deafault is archive's filename]. Sets the source directory when creating an archive." << endl;
+	cout << "  -D / --DestinationDirectory: [Default is './']. Sets the destination directory for extracted file(s)." << endl;
+	cout << "  -S / --SourceDirectory: [Deafault is archive's filename]. Sets the source directory when creating an archive." << endl;
 	// Compression is currently not available when creating archives.
 	// cout << "  -C / --Compression: [Default None]. Sets the compression alghorithim used when creating an archive (None|LZH)." << endl;
 	cout << endl;

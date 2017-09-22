@@ -4,25 +4,33 @@ Developed by Hooman and Brett208 (Vagabond)
 Allows examining, creating, and extracting files from Outpost 2 .vol and .clm archives.
 
 +++ COMMANDS +++
-    * OP2Archive LIST (archivename.(vol|clm) | directory)...
-    * OP2Archive FIND filename...
-    * OP2Archive CREATE archivename.(vol|clm) [filename | directory]... [-q] [-o] [-c None|LZH]
-      * If no filename(s) or directory(s) provided,
-        archives all contents of the default source directory (./archiveFilename).
-    * OP2Archive EXTRACT archivename.(vol|clm) [filename]... [-q] [-d destDirectory] [-o]
-      * If no filename(s) provided, extracts the entire vol file.
-      * Defaults destination for entire vol file is ./archiveFilename.
-    * OP2Archive ADD archiveName.[vol|clm] filename...
-    * OP2Archive REMOVE archiveName.[vol|clm] filename...
+  * OP2Archive LIST (archivename.(vol|clm) | directory)...
+    * Lists the contents and size of all files contained in provided archives.
+
+  * OP2Archive FIND filename...
+    * Determines which archive contains the file. Stops searching at first instance.
+    * Pulls archives from the directory appended to the provided filename to search.
+
+  * OP2Archive CREATE archivename.(vol|clm) [filename | directory]... [-q] [-o]
+    * If no filename(s) or directory(s) provided,
+      archives all contents of the default source directory (./archiveFilename).
+
+  * OP2Archive EXTRACT archivename.(vol|clm) [filename]... [-q] [-d destDirectory] [-o]
+    * If no filename(s) provided, extracts entire contents of archive.
+
+  * OP2Archive EXTRACT directoryname [-q] [-d destDirectory] [-o].
+    * Extracts entire contents of all archives in the provided directory.
+
+  * OP2Archive ADD archiveName.[vol|clm] filename... [-q] [-o]
+
+  * OP2Archive REMOVE archiveName.[vol|clm] filename... [-q] [-o]
 
 +++ OPTIONAL ARGUMENTS +++
-    -H / --Help / -?: Displays help information." << endl;
-    -Q / --Quiet: [Default false] Prevents application from issuing console messages.
-    -O / --Overwrite: [Default false] Allows application to overwrite existing files.
-    -D / --DestinationDirectory: [Default for single file is './', Default for all files is archive's filename].
-                                Sets the destination directory for extracted file(s).
-    -S / --SourceDirectory: CREATE: [Deafault is archive's filename]. Sets the source directory when creating an archive.
-    -C / --Compression: [Default None]. Sets the compression alghorithim used when creating an archive (None|LZH).
+  -H / --Help / -?: Displays help information.
+  -Q / --Quiet: [Default false] Prevents application from issuing console messages.
+  -O / --Overwrite: [Default false] Allows application to overwrite existing files.
+  -D / --DestinationDirectory: [Default is './']. Sets the destination directory for extracted file(s).
+  -S / --SourceDirectory: [Deafault is archive's filename]. Sets the source directory when creating an archive.
 
 For more information about Outpost 2 visit the Outpost Universe (http://outpost2.net/).
 
