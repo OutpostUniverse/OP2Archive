@@ -9,8 +9,13 @@
 using namespace std;
 using namespace Archives;
 
-namespace ConsoleArgumentParser
+class ConsoleArgumentParser
 {
+public:
+	ConsoleArgumentParser();
+	ConsoleArgs sortArguments(int argc, char **argv);
+
+private:
 	// Represents an argument (switch) passed into the console application from the command line.
 	struct ConsoleSwitch
 	{
@@ -35,19 +40,22 @@ namespace ConsoleArgumentParser
 		}
 	};
 
-	ConsoleArgs sortArguments(int argc, char **argv);
+	vector<ConsoleSwitch> consoleSwitches;
 
 	ConsoleCommand parseCommand(const string& commandStr);
 	bool checkTooFewArguments(int numberOfArguments);
 	void parseArgument(char** argv, int i, int argc, ConsoleArgs& consoleArgs);
-	CompressionType parseCompression(const string& compressionStr);
+
 	void checkForMissingSwitchArgument(int index, int argc, int numberOfArgsToPass);
 	bool findSwitch(char* argumentChar, ConsoleSwitch& currentSwitch);
 
-	void parseQuiet(const char* value, ConsoleArgs& consoleArgs);
-	void parseDestDirectory(const char* value, ConsoleArgs& consoleArgs);
-	void parseHelp(const char* value, ConsoleArgs& consoleArgs);
-	void parseOverwrite(const char* value, ConsoleArgs& consoleArgs);
-	void parseCompressionFormat(const char* value, ConsoleArgs& consoleArgs);
-	void parseSourceDirectory(const char* value, ConsoleArgs& consoleArgs);
-}
+	static void parseHelp(const char* value, ConsoleArgs& consoleArgs);
+	static void parseQuiet(const char* value, ConsoleArgs& consoleArgs);
+	static void parseDestDirectory(const char* value, ConsoleArgs& consoleArgs);
+	static void parseOverwrite(const char* value, ConsoleArgs& consoleArgs);
+	static void parseCompressionFormat(const char* value, ConsoleArgs& consoleArgs);
+	static void parseSourceDirectory(const char* value, ConsoleArgs& consoleArgs);
+
+	static CompressionType parseCompression(const string& compressionStr);
+	bool parseBool(const string& str);
+};

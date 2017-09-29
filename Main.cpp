@@ -2,6 +2,7 @@
 #include "ConsoleAdd.h"
 #include "ConsoleCreate.h"
 #include "ConsoleExtract.h"
+#include "ConsoleArgumentParser.h"
 #include "ConsoleList.h"
 #include "ConsoleLocate.h"
 #include "ConsoleRemove.h"
@@ -12,7 +13,6 @@
 #include <iostream>
 
 using namespace std;
-using namespace ConsoleArgumentParser;
 
 int main(int argc, char **argv);
 void selectCommand(const ConsoleArgs& consoleArgs);
@@ -25,7 +25,8 @@ int main(int argc, char **argv)
 {
 	try
 	{
-		ConsoleArgs consoleArgs = sortArguments(argc, argv);
+		ConsoleArgumentParser consoleArgumentParser;
+		ConsoleArgs consoleArgs = consoleArgumentParser.sortArguments(argc, argv);
 		selectCommand(consoleArgs);
 	}
 	catch (exception e) {
