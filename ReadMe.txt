@@ -81,7 +81,7 @@ OP2Archive is capable of reading and decompressing archives using LZH compressio
 
 +++ SOURCE CODE LOCATION AND COMPILIATION +++
 
-Source code may be found at: https://github.com/OutpostUniverse/OP2Archive. See the file CompileInstructions.txt in the source code for specific instructions.
+Source code may be found at: https://github.com/OutpostUniverse/OP2Archive. See the file DeveloperReadMe.txt in the source code for specific instructions.
 
 
 +++ CHANGE LOG +++
