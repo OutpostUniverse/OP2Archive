@@ -7,9 +7,7 @@
 #include "ConsoleFind.h"
 #include "ConsoleRemove.h"
 #include "ConsoleSettings.h"
-#include "OP2Utility.h"
 #include <string>
-#include <vector>
 #include <iostream>
 
 using namespace std;
@@ -19,7 +17,7 @@ void selectCommand(const ConsoleArgs& consoleArgs);
 void outputHelp();
 void debugPause();
 
-static string version = "0.1.0";
+static string version = "1.0.0";
 
 int main(int argc, char **argv)
 {
