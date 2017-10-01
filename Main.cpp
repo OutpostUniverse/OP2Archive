@@ -58,7 +58,7 @@ void selectCommand(const ConsoleArgs& consoleArgs)
 	}break;
 	case ConsoleCommand::Find: {
 		ConsoleFind consoleFind;
-		consoleFind.locateCommand(consoleArgs);
+		consoleFind.findCommand(consoleArgs);
 	}break;
 	case ConsoleCommand::List: {
 		ConsoleList consoleList;

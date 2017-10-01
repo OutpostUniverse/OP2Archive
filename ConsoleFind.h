@@ -3,12 +3,14 @@
 #include "ConsoleSettings.h"
 #include <string>
 
+using namespace std;
+
 class ConsoleFind
 {
 public:
-	void locateCommand(const ConsoleArgs& consoleArgs);
+	void findCommand(const ConsoleArgs& consoleArgs);
 
 private:
-	void locateFileInArchives(const string& path);
+	void findFileInArchives(const string& path);
 };
 
