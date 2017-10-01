@@ -75,7 +75,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\OP2Utility\Archives;..\OP2Utility\OP2Utility;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\OP2Utility\Archives;..\OP2Utility\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <PostBuildEvent>
       <Command>SET zipName="OP2Archive Ver1.0.0"
@@ -111,7 +111,7 @@ if $(ConfigurationName) == Release (
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\OP2Utility\Archives;..\OP2Utility\OP2Utility;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\OP2Utility\Archives;..\OP2Utility\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -177,13 +177,13 @@ if $(ConfigurationName) == Release (
     <ClInclude Include="ConsoleSettings.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OP2Utility\OP2Utility\OP2Utility.vcxproj">
-      <Project>{980d53d9-f9e2-4682-9307-1303c9e42313}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Text Include="CompileInstructions.txt" />
     <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OP2Utility\OP2Utility.vcxproj">
+      <Project>{980d53d9-f9e2-4682-9307-1303c9e42313}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

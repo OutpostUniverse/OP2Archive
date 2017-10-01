@@ -10,7 +10,8 @@ void ConsoleRemove::removeCommand(const ConsoleArgs& consoleArgs)
 	string archiveFilename = getArchiveName(consoleArgs);
 	vector<string> filesToRemove = getFilesToModify(consoleArgs);
 	
-	outputInitialAddMessage(archiveFilename, filesToRemove.size());
+	if (!consoleArgs.consoleSettings.quiet)
+		outputInitialAddMessage(archiveFilename, filesToRemove.size());
 
 	unique_ptr<ArchiveFile> archive = ConsoleHelper::openArchive(archiveFilename);
 
