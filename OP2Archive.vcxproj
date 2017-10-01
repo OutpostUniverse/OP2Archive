@@ -177,7 +177,7 @@ if $(ConfigurationName) == Release (
     <ClInclude Include="ConsoleSettings.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="CompileInstructions.txt" />
+    <Text Include="DeveloperReadMe.txt" />
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>

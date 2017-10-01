@@ -9,7 +9,6 @@ ConsoleArgumentParser::ConsoleArgumentParser()
 	consoleSwitches.push_back(ConsoleSwitch("-Q", "--QUIET", parseQuiet, 0));
 	consoleSwitches.push_back(ConsoleSwitch("-O", "--OVERWRITE", parseOverwrite, 0));
 	consoleSwitches.push_back(ConsoleSwitch("-C", "--COMPRESSION", parseCompressionFormat, 1));
-	consoleSwitches.push_back(ConsoleSwitch("-S", "--SOURCEDIRECTORY", parseSourceDirectory, 1));
 }
 
 bool ConsoleArgumentParser::findSwitch(char* argumentChar, ConsoleSwitch& currentSwitch)
@@ -166,11 +165,6 @@ void ConsoleArgumentParser::parseDestDirectory(const char* value, ConsoleArgs& c
 void ConsoleArgumentParser::parseCompressionFormat(const char* value, ConsoleArgs& consoleArgs)
 {
 	consoleArgs.consoleSettings.compression = parseCompression(value);
-}
-
-void ConsoleArgumentParser::parseSourceDirectory(const char* value, ConsoleArgs& consoleArgs)
-{
-	consoleArgs.consoleSettings.sourceDirectory = value;
 }
 
 bool ConsoleArgumentParser::checkTooFewArguments(int numberOfArguments)

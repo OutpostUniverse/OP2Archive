@@ -54,7 +54,6 @@ private:
 	static void parseDestDirectory(const char* value, ConsoleArgs& consoleArgs);
 	static void parseOverwrite(const char* value, ConsoleArgs& consoleArgs);
 	static void parseCompressionFormat(const char* value, ConsoleArgs& consoleArgs);
-	static void parseSourceDirectory(const char* value, ConsoleArgs& consoleArgs);
 
 	static CompressionType parseCompression(const string& compressionStr);
 	bool parseBool(const string& str);

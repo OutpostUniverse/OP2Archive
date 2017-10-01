@@ -7,7 +7,6 @@
 struct ConsoleSettings
 {
 	string destDirectory = "./";
-	string sourceDirectory = "./";
 	bool overwrite = false;
 	bool quiet = false;
 	bool helpRequested = false;

@@ -90,7 +90,7 @@ void outputHelp()
 	cout << "    * Lists the contents and size of all files contained in provided archives." << endl;
 	cout << "  * OP2Archive FIND filename..." << endl;
 	cout << "    * Determines which archive contains the file. Stops searching at first instance." << endl;
-	cout << "    * Pulls archives from the directory appended to the provided filename to search." << endl;
+	cout << "    * All archives in the same directory as the provided filename are searched." << endl;
 	cout << "  * OP2Archive CREATE archivename.(vol|clm) [filename | directory]... [-q] [-o]" << endl; //If compression added [-c None|LZH]
 	cout << "    * If no filename(s) or directory(s) provided," << endl;
 	cout << "      archives all contents of the default source directory (./archiveFilename)." << endl;
@@ -106,7 +106,6 @@ void outputHelp()
 	cout << "  -Q / --Quiet: [Default false] Prevents application from issuing console messages." << endl;
 	cout << "  -O / --Overwrite: [Default false] Allows application to overwrite existing files." << endl;
 	cout << "  -D / --DestinationDirectory: [Default is './']. Sets the destination directory for extracted file(s)." << endl;
-	cout << "  -S / --SourceDirectory: [Deafault is archive's filename]. Sets the source directory when creating an archive." << endl;
 	// Compression is currently not available when creating archives.
 	// cout << "  -C / --Compression: [Default None]. Sets the compression alghorithim used when creating an archive (None|LZH)." << endl;
 	cout << endl;
