@@ -1,7 +1,7 @@
 OP2Archive - Outpost 2 Archive Access and Maintenance
 Developed by Hooman and Brett208 (Vagabond)
 
-Allows examining, creating, and extracting files from Outpost 2 .vol and .clm archives.
+Allows examining, creating, and extracting files from Outpost 2 .vol and .clm archives. Check the OP2Archive landing page for the newest version at https://wiki.outpost2.net/doku.php?id=outpost_2:helper_programs:op2archive.
 
 +++ COMMANDS +++
   * OP2Archive LIST (archivename.(vol|clm) | directory)...
@@ -9,7 +9,7 @@ Allows examining, creating, and extracting files from Outpost 2 .vol and .clm ar
 
   * OP2Archive FIND filename...
     * Determines which archive contains the file. Stops searching at first instance.
-    * Pulls archives from the directory appended to the provided filename to search.
+    * All archives in the same directory as the provided filename are searched.
 
   * OP2Archive CREATE archivename.(vol|clm) [filename | directory]... [-q] [-o]
     * If no filename(s) or directory(s) provided,
@@ -30,6 +30,7 @@ Allows examining, creating, and extracting files from Outpost 2 .vol and .clm ar
   -Q / --Quiet: [Default false] Prevents application from issuing console messages.
   -O / --Overwrite: [Default false] Allows application to overwrite existing files.
   -D / --DestinationDirectory: [Default is './']. Sets the destination directory for extracted file(s).
+  -S / --SourceDirectory: [Deafault is archive's filename]. Sets the source directory when creating an archive.
 
 For more information about Outpost 2 visit the Outpost Universe (http://outpost2.net/).
 
