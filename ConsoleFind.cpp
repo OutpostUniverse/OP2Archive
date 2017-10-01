@@ -1,8 +1,8 @@
-#include "ConsoleLocate.h"
+#include "ConsoleFind.h"
 #include "ConsoleHelper.h"
 #include <iostream>
 
-void ConsoleLocate::locateCommand(const ConsoleArgs& consoleArgs)
+void ConsoleFind::locateCommand(const ConsoleArgs& consoleArgs)
 {
 	ConsoleHelper::checkIfPathsEmpty(consoleArgs.paths);
 
@@ -10,7 +10,7 @@ void ConsoleLocate::locateCommand(const ConsoleArgs& consoleArgs)
 		locateFileInArchives(path);
 }
 
-void ConsoleLocate::locateFileInArchives(const string& path)
+void ConsoleFind::locateFileInArchives(const string& path)
 {
 	string directory = XFile::getDirectory(path);
 	ResourceManager resourceManager(directory);

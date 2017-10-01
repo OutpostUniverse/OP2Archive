@@ -3,7 +3,7 @@
 #include "ConsoleSettings.h"
 #include <string>
 
-class ConsoleLocate
+class ConsoleFind
 {
 public:
 	void locateCommand(const ConsoleArgs& consoleArgs);

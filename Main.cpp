@@ -4,7 +4,7 @@
 #include "ConsoleExtract.h"
 #include "ConsoleArgumentParser.h"
 #include "ConsoleList.h"
-#include "ConsoleLocate.h"
+#include "ConsoleFind.h"
 #include "ConsoleRemove.h"
 #include "ConsoleSettings.h"
 #include "OP2Utility.h"
@@ -59,8 +59,8 @@ void selectCommand(const ConsoleArgs& consoleArgs)
 		consoleExtract.extractCommand(consoleArgs);
 	}break;
 	case ConsoleCommand::Find: {
-		ConsoleLocate consoleLocate;
-		consoleLocate.locateCommand(consoleArgs);
+		ConsoleFind consoleFind;
+		consoleFind.locateCommand(consoleArgs);
 	}break;
 	case ConsoleCommand::List: {
 		ConsoleList consoleList;
