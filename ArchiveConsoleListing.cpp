@@ -6,15 +6,17 @@
 
 void ArchiveConsoleListing::listContents(ArchiveFile& archiveFile)
 {
+	string filename = XFile::getFilename(archiveFile.GetVolumeFileName());
+
 	if (archiveFile.GetNumberOfPackedFiles() == 0)
 	{
-		cout << archiveFile.GetVolumeFileName() << " is empty." << endl;
+		cout << filename << " is empty." << endl << endl;
 		return;
 	}
 
 	int filenameColumnSize = findMaxFilenameSize(archiveFile);
 
-	cout << "Contents of " << XFile::getFilename(archiveFile.GetVolumeFileName()) << ", " << archiveFile.GetNumberOfPackedFiles() << " file(s)." << endl << endl;
+	cout << "Contents of " << filename << ", " << archiveFile.GetNumberOfPackedFiles() << " file(s)." << endl << endl;
 	cout << "ID  " << "NAME" << string(filenameColumnSize - 4, ' ') << "  SIZE (Bytes)" << endl;
 	cout << "--------------------------------------------------" << endl;
 
