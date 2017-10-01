@@ -1,5 +1,4 @@
 #include "ConsoleModifyBase.h"
-#include "ArchiveConsoleListing.h"
 #include "ConsoleCreate.h"
 #include "ConsoleHelper.h"
 #include <iostream>
@@ -46,9 +45,7 @@ void ConsoleModifyBase::createModifiedArchive(const string& archiveFilename, con
 		if (!quiet)
 		{
 			cout << successMessage + " " + archiveFilename << endl << endl;
-			ArchiveConsoleListing listing;
-			unique_ptr<ArchiveFile> archive = ConsoleHelper::openArchive(archiveFilename);
-			listing.listContents(*archive);
+			ConsoleHelper::listContentsOfArchive(archiveFilename);
 		}
 	}
 	catch (exception e)

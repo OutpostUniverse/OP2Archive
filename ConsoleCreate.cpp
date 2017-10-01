@@ -51,7 +51,7 @@ void ConsoleCreate::createArchiveFile(const string& archiveFilename, const vecto
 		throw(exception("Error creating archive."));
 
 	if (!quiet)
-		outputCreateResults(filenames.size());
+		outputCreateResults(filenames.size(), archiveFilename);
 }
 
 unique_ptr<ArchiveFile> ConsoleCreate::createArchiveTemplate(const string& archiveFilename)
@@ -102,7 +102,7 @@ void ConsoleCreate::checkCreateOverwrite(const string& archiveFilename, bool ove
 		if (!overwrite)
 			throw exception("Archive file already exists at specified path. If overwrite is desired add argument -o.");
 		else if (overwrite && !quiet)
-			cout << "An archive file already exists at the specified path. Overwrite authorized by user." << endl;
+			cout << "An archive file already exists at the specified path. Overwrite authorized by user." << endl << endl;
 	}
 }
 
@@ -112,10 +112,12 @@ void ConsoleCreate::outputInitialCreateMessage(const string& archiveFilename, in
 	cout << ConsoleHelper::dashedLine << endl;
 }
 
-void ConsoleCreate::outputCreateResults(int packedFileCount)
+void ConsoleCreate::outputCreateResults(int packedFileCount, const string& archiveFilename)
 {
-		cout << "Archive created." << endl;
+		cout << "Archive created." << endl << endl;
 
 		if (packedFileCount < 1)
 			cout << "Caution: Created archive is empty (contains no files)." << endl;
+		else
+			ConsoleHelper::listContentsOfArchive(archiveFilename);
 }

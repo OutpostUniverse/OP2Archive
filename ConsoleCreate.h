@@ -21,5 +21,5 @@ private:
 	vector<string> gatherFilesForArchive(const vector<string>& paths);
 	void checkCreateOverwrite(const string& archiveFilename, bool overwrite, bool quiet);
 	void outputInitialCreateMessage(const string& archiveFilename, int packedFileCount);
-	void outputCreateResults(int packedFileCount);
+	void outputCreateResults(int packedFileCount, const string& archiveFilename);
 };

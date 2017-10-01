@@ -1,4 +1,5 @@
 #include "ConsoleHelper.h"
+#include "ArchiveConsoleListing.h"
 
 string ConsoleHelper::dashedLine = "--------------------------------------------------";
 
@@ -44,4 +45,11 @@ string ConsoleHelper::createTempDirectory()
 	XFile::createDirectory(directory);
 
 	return directory;
+}
+
+void ConsoleHelper::listContentsOfArchive(const string& archiveFilename)
+{
+	ArchiveConsoleListing listing;
+	unique_ptr<ArchiveFile> archive = ConsoleHelper::openArchive(archiveFilename);
+	listing.listContents(*archive);
 }

@@ -12,7 +12,8 @@ void ConsoleLocate::locateCommand(const ConsoleArgs& consoleArgs)
 
 void ConsoleLocate::locateFileInArchives(const string& path)
 {
-	ResourceManager resourceManager(XFile::getDirectory(path));
+	string directory = XFile::getDirectory(path);
+	ResourceManager resourceManager(directory);
 
 	string filename = XFile::getFilename(path);
 

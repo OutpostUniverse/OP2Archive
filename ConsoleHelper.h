@@ -18,4 +18,5 @@ public:
 	static vector<string> getArchiveFilenames(const string& directory);
 	static void ConsoleHelper::checkIfPathsEmpty(const vector<string>& paths);
 	static string createTempDirectory();
+	static void listContentsOfArchive(const string& archiveFilename);
 };
