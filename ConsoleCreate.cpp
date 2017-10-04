@@ -1,6 +1,7 @@
 #include "ConsoleCreate.h"
 #include "ConsoleHelper.h"
 #include <iostream>
+#include <stdexcept>
 
 void ConsoleCreate::createCommand(const ConsoleArgs& consoleArgs)
 {
@@ -9,7 +10,7 @@ void ConsoleCreate::createCommand(const ConsoleArgs& consoleArgs)
 	string archiveFilename = consoleArgs.paths[0];
 
 	if (!ConsoleHelper::isArchiveExtension(archiveFilename))
-		throw exception("A .vol or .clm filename must be provided to create an archive.");
+		throw runtime_error("A .vol or .clm filename must be provided to create an archive.");
 
 	checkCreateOverwrite(archiveFilename, consoleArgs.consoleSettings.overwrite, consoleArgs.consoleSettings.quiet);
 
@@ -48,7 +49,7 @@ void ConsoleCreate::createArchiveFile(const string& archiveFilename, const vecto
 	delete internalFilenamesCArray;
 
 	if (!success)
-		throw(exception("Error creating archive."));
+		throw runtime_error("Error creating archive.");
 
 	if (!quiet)
 		outputCreateResults(filenames.size(), archiveFilename);
@@ -62,7 +63,7 @@ unique_ptr<ArchiveFile> ConsoleCreate::createArchiveTemplate(const string& archi
 	if (XFile::extensionMatches(archiveFilename, "CLM"))
 		return make_unique<ClmFile>("ClmTemplate.clm");
 
-	throw exception("Unable to open archive template files VolTemplate.vol and/or ClmTemplate.clm. Ensure both files exist in same directory as OP2Archive.exe and are not open in another application.");
+	throw runtime_error("Unable to open archive template files VolTemplate.vol and/or ClmTemplate.clm. Ensure both files exist in same directory as OP2Archive.exe and are not open in another application.");
 }
 
 void ConsoleCreate::createUsingDefaultDirectory(const string& archiveFilename, const ConsoleSettings& consoleSettings)
@@ -70,7 +71,7 @@ void ConsoleCreate::createUsingDefaultDirectory(const string& archiveFilename, c
 	string sourceDir = XFile::changeFileExtension(archiveFilename, "");
 
 	if (!XFile::isDirectory(sourceDir))
-		throw exception(("The directory " + sourceDir + " does not exist. Either create this directory or explicity specify the source directory/files.").c_str());
+		throw runtime_error("The directory " + sourceDir + " does not exist. Either create this directory or explicity specify the source directory/files.");
 
 	vector<string> filenames = XFile::getFilesFromDirectory(sourceDir);
 
@@ -100,7 +101,7 @@ void ConsoleCreate::checkCreateOverwrite(const string& archiveFilename, bool ove
 	if (XFile::pathExists(archiveFilename))
 	{
 		if (!overwrite)
-			throw exception("Archive file already exists at specified path. If overwrite is desired add argument -o.");
+			throw runtime_error("Archive file already exists at specified path. If overwrite is desired add argument -o.");
 		else if (overwrite && !quiet)
 			cout << "An archive file already exists at the specified path. Overwrite authorized by user." << endl << endl;
 	}

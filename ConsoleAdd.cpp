@@ -4,6 +4,7 @@
 #include "OP2Utility.h"
 #include <iostream>
 #include <memory>
+#include <stdexcept>
 
 using namespace Archives;
 
@@ -53,14 +54,14 @@ vector<string> ConsoleAdd::extractFiles(const string& archiveFilename, const vec
 		bool taggedForOverwrite = archivedFileTaggedForOverwrite(internalFilename, internalFilenames);
 
 		if (taggedForOverwrite && !overwrite)
-			throw exception(("ADD aborted. " + internalFilename + " is already contained in " + archiveFilename + ". To overwrite, add argument -O.").c_str());
+			throw runtime_error("ADD aborted. " + internalFilename + " is already contained in " + archiveFilename + ". To overwrite, add argument -O.");
 
 		if (!taggedForOverwrite)
 		{
 			bool extractionSuccessful = archive->ExtractFile(i, XFile::appendSubDirectory(internalFilename, tempDirectory).c_str());
 
 			if (!extractionSuccessful)
-				throw exception(("Error extracting " + internalFilename + " from archive " + archiveFilename + ". Add operation aborted.").c_str());
+				throw runtime_error("Error extracting " + internalFilename + " from archive " + archiveFilename + ". Add operation aborted.");
 		}
 	}		
 
@@ -72,6 +73,6 @@ void ConsoleAdd::checkFilesExist(const vector<string>& filenames)
 	for (string filename : filenames)
 	{
 		if (!XFile::isFile(filename))
-			throw exception((filename + " was not found. Operation aborted.").c_str());
+			throw runtime_error(filename + " was not found. Operation aborted.");
 	}
 }

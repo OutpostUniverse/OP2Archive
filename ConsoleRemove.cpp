@@ -4,6 +4,7 @@
 #include "ConsoleHelper.h"
 #include <iostream>
 #include <memory>
+#include <stdexcept>
 
 void ConsoleRemove::removeCommand(const ConsoleArgs& consoleArgs)
 {
@@ -58,7 +59,7 @@ void ConsoleRemove::throwUnfoundFileDuringRemoveException(vector<string> unfound
 
 	exceptionString += ".";
 
-	throw exception(exceptionString.c_str());
+	throw runtime_error(exceptionString);
 }
 
 void ConsoleRemove::checkFilesAvailableToRemove(ArchiveFile& archive, const vector<string>& filesToRemove, bool quiet)
@@ -83,6 +84,6 @@ void ConsoleRemove::extractFiles(ArchiveFile& archive, const vector<string> inte
 		string pathToExtractTo = XFile::appendSubDirectory(filename, tempDirectory);
 
 		if (!archive.ExtractFile(index, pathToExtractTo.c_str()))
-			throw exception(("Unable to extract file " + filename + " from original archive. Operation Aborted.").c_str());
+			throw runtime_error("Unable to extract file " + filename + " from original archive. Operation Aborted.");
 	}
 }

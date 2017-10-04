@@ -1,6 +1,7 @@
 #include "ConsoleExtract.h"
 #include "ConsoleHelper.h"
 #include <iostream>
+#include <stdexcept>
 
 void ConsoleExtract::extractCommand(const ConsoleArgs& consoleArgs)
 {
@@ -20,7 +21,7 @@ void ConsoleExtract::extractCommand(const ConsoleArgs& consoleArgs)
 	}
 	else
 	{
-		throw exception("You must specify either source archive file (.vol|.clm) or directory to extract from.");
+		throw runtime_error("You must specify either source archive file (.vol|.clm) or directory to extract from.");
 	}
 }
 

@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <memory>
+#include <stdexcept>
 
 void ConsoleList::listCommand(const ConsoleArgs& consoleArgs)
 {
@@ -15,7 +16,7 @@ void ConsoleList::listCommand(const ConsoleArgs& consoleArgs)
 		else if (ConsoleHelper::isArchiveExtension(path))
 			listArchiveContents(path);
 		else
-			throw exception("You must provide either a directory or a file of type (.vol|.clm).");
+			throw invalid_argument("You must provide either a directory or a file of type (.vol|.clm).");
 	}
 }
 

@@ -1,5 +1,6 @@
 #include "ConsoleArgumentParser.h"
 #include "StringHelper.h"
+#include <stdexcept>
 
 ConsoleArgumentParser::ConsoleArgumentParser() 
 {

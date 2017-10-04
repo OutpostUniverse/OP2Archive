@@ -3,6 +3,7 @@
 #include "ConsoleHelper.h"
 #include <iostream>
 #include <memory>
+#include <stdexcept>
 
 ConsoleModifyBase::ConsoleModifyBase(const string& successMessage)
 {
@@ -22,7 +23,7 @@ vector<string> ConsoleModifyBase::getFilesToModify(const ConsoleArgs& consoleArg
 	vector<string> filesToRemove(consoleArgs.paths.begin() + 1, consoleArgs.paths.end());
 
 	if (filesToRemove.size() == 0)
-		throw exception("No filename(s) provided to use in modifying the archive.");
+		throw runtime_error("No filename(s) provided to use in modifying the archive.");
 
 	return filesToRemove;
 }
@@ -30,26 +31,19 @@ vector<string> ConsoleModifyBase::getFilesToModify(const ConsoleArgs& consoleArg
 string ConsoleModifyBase::getArchiveName(const ConsoleArgs& consoleArgs)
 {
 	if (consoleArgs.paths.size() == 0)
-		throw exception("No archive filename provided.");
+		throw runtime_error("No archive filename provided.");
 
 	return consoleArgs.paths[0];
 }
 
 void ConsoleModifyBase::createModifiedArchive(const string& archiveFilename, const vector<string>& filenamesToAdd, bool quiet)
 {
-	try
-	{
-		ConsoleCreate consoleCreate;
-		consoleCreate.createArchiveFile(archiveFilename, filenamesToAdd, true);
+	ConsoleCreate consoleCreate;
+	consoleCreate.createArchiveFile(archiveFilename, filenamesToAdd, true);
 
-		if (!quiet)
-		{
-			cout << successMessage + " " + archiveFilename << endl << endl;
-			ConsoleHelper::listContentsOfArchive(archiveFilename);
-		}
-	}
-	catch (exception e)
+	if (!quiet)
 	{
-		throw exception(e.what());
+		cout << successMessage + " " + archiveFilename << endl << endl;
+		ConsoleHelper::listContentsOfArchive(archiveFilename);
 	}
 }
