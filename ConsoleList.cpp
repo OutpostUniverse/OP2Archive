@@ -6,6 +6,7 @@
 #include <stdexcept>
 
 using namespace std;
+using namespace Archives;
 
 void ConsoleList::listCommand(const ConsoleArgs& consoleArgs)
 {

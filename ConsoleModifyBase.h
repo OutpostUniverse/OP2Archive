@@ -9,7 +9,7 @@
 class ConsoleModifyBase
 {
 public:
-	ConsoleModifyBase(const string& successMessage);
+	ConsoleModifyBase(const std::string& successMessage);
 	virtual ~ConsoleModifyBase();
 
 protected:

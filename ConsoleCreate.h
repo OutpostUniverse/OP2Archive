@@ -10,7 +10,7 @@ class ConsoleCreate
 {
 public:
 	void createCommand(const ConsoleArgs& consoleArgs);
-	void createArchiveFile(const string& archiveFilename, const std::vector<std::string>& filenames, bool quiet);
+	void createArchiveFile(const std::string& archiveFilename, const std::vector<std::string>& filenames, bool quiet);
 
 private:
 	std::unique_ptr<Archives::ArchiveFile> createArchiveTemplate(const std::string& archiveFilename);
