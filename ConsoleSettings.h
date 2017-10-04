@@ -6,7 +6,7 @@
 
 struct ConsoleSettings
 {
-	string destDirectory = "./";
+	std::string destDirectory = "./";
 	bool overwrite = false;
 	bool quiet = false;
 	bool helpRequested = false;
@@ -28,5 +28,5 @@ struct ConsoleArgs
 {
 	ConsoleCommand consoleCommand = ConsoleCommand::Help;
 	ConsoleSettings consoleSettings;
-	vector<string> paths;
+	std::vector<std::string> paths;
 };

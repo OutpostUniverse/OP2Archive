@@ -4,8 +4,6 @@
 #include <string>
 #include <vector>
 
-using namespace std;
-
 // Base class for ConsoleRemove and ConsoleAdd. Contains code common to a console 
 // application providing ArchiveFile manipulation (not simple create or extract).
 class ConsoleModifyBase
@@ -15,10 +13,10 @@ public:
 	virtual ~ConsoleModifyBase();
 
 protected:
-	string successMessage;
-	string tempDirectory;
+	std::string successMessage;
+	std::string tempDirectory;
 
-	string getArchiveName(const ConsoleArgs& consoleArgs);
-	vector<string> getFilesToModify(const ConsoleArgs& consoleArgs);
-	void createModifiedArchive(const string& archiveFilename, const vector<string>& filenamesToAdd, bool quiet);
+	std::string getArchiveName(const ConsoleArgs& consoleArgs);
+	std::vector<std::string> getFilesToModify(const ConsoleArgs& consoleArgs);
+	void createModifiedArchive(const std::string& archiveFilename, const std::vector<std::string>& filenamesToAdd, bool quiet);
 };

@@ -2,6 +2,10 @@
 #include "ConsoleHelper.h"
 #include <iostream>
 #include <stdexcept>
+#include <memory>
+
+using namespace std;
+using namespace Archives;
 
 void ConsoleExtract::extractCommand(const ConsoleArgs& consoleArgs)
 {

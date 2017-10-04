@@ -2,6 +2,9 @@
 #include "ArchiveConsoleListing.h"
 #include <stdexcept>
 
+using namespace std;
+using namespace Archives;
+
 string ConsoleHelper::dashedLine = "--------------------------------------------------";
 
 bool ConsoleHelper::isArchiveExtension(const string& filename)
@@ -17,24 +20,13 @@ void ConsoleHelper::checkIfPathsEmpty(const vector<string>& paths)
 
 unique_ptr<ArchiveFile> ConsoleHelper::openArchive(const string& archivePath)
 {
-	unique_ptr<ArchiveFile> archiveFile;
+	if (XFile::extensionMatches(archivePath, "VOL"))
+		return make_unique<VolFile>(archivePath.c_str());
 
-	try
-	{
-		if (XFile::extensionMatches(archivePath, "VOL"))
-			archiveFile = make_unique<VolFile>(archivePath.c_str());
+	if (XFile::extensionMatches(archivePath, "CLM"))
+		return make_unique<ClmFile>(archivePath.c_str());
 
-		if (XFile::extensionMatches(archivePath, "CLM"))
-			archiveFile = make_unique<ClmFile>(archivePath.c_str());
-
-		throw invalid_argument("Provided filename is not an archive file (.VOL/.CLM)");
-	}
-	catch (exception e)
-	{
-		throw invalid_argument("Provided filename either does not exist or cannot be parsed as an archive.");
-	}
-
-	return archiveFile;
+	throw invalid_argument("Provided filename is not an archive file (.VOL/.CLM)");
 }
 
 vector<string> ConsoleHelper::getArchiveFilenames(const string& directory)

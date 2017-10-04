@@ -6,20 +6,17 @@
 #include <vector>
 #include <memory>
 
-using namespace std;
-using namespace Archives;
-
 class ConsoleCreate
 {
 public:
 	void createCommand(const ConsoleArgs& consoleArgs);
-	void createArchiveFile(const string& archiveFilename, const vector<string>& filenames, bool quiet);
+	void createArchiveFile(const string& archiveFilename, const std::vector<std::string>& filenames, bool quiet);
 
 private:
-	unique_ptr<ArchiveFile> createArchiveTemplate(const string& archiveFilename);
-	void createUsingDefaultDirectory(const string& archiveFilename, const ConsoleSettings& consoleSettings);
-	vector<string> gatherFilesForArchive(const vector<string>& paths);
-	void checkCreateOverwrite(const string& archiveFilename, bool overwrite, bool quiet);
-	void outputInitialCreateMessage(const string& archiveFilename, int packedFileCount);
-	void outputCreateResults(int packedFileCount, const string& archiveFilename);
+	std::unique_ptr<Archives::ArchiveFile> createArchiveTemplate(const std::string& archiveFilename);
+	void createUsingDefaultDirectory(const std::string& archiveFilename, const ConsoleSettings& consoleSettings);
+	std::vector<std::string> gatherFilesForArchive(const std::vector<std::string>& paths);
+	void checkCreateOverwrite(const std::string& archiveFilename, bool overwrite, bool quiet);
+	void outputInitialCreateMessage(const std::string& archiveFilename, int packedFileCount);
+	void outputCreateResults(int packedFileCount, const std::string& archiveFilename);
 };

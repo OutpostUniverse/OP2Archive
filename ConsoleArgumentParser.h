@@ -6,9 +6,6 @@
 #include <vector>
 #include <functional>
 
-using namespace std;
-using namespace Archives;
-
 class ConsoleArgumentParser
 {
 public:
@@ -21,7 +18,7 @@ private:
 	{
 		ConsoleSwitch() { }
 
-		ConsoleSwitch(string shortSwitch, string longSwitch, function<void(const char* value, ConsoleArgs&)> parseFunction, int numberOfArgs)
+		ConsoleSwitch(std::string shortSwitch, std::string longSwitch, std::function<void(const char* value, ConsoleArgs&)> parseFunction, int numberOfArgs)
 		{
 			this->shortSwitch = shortSwitch;
 			this->longSwitch = longSwitch;
@@ -29,20 +26,20 @@ private:
 			this->numberOfArgs = numberOfArgs;
 		}
 
-		string shortSwitch;
-		string longSwitch;
-		function<void(const char*, ConsoleArgs&)> parseFunction;
+		std::string shortSwitch;
+		std::string longSwitch;
+		std::function<void(const char*, ConsoleArgs&)> parseFunction;
 		int numberOfArgs; // The switch statement itself does not count as an argument.
 
-		bool argumentMatch(string argument)
+		bool argumentMatch(std::string argument)
 		{
 			return argument == shortSwitch || argument == longSwitch;
 		}
 	};
 
-	vector<ConsoleSwitch> consoleSwitches;
+	std::vector<ConsoleSwitch> consoleSwitches;
 
-	ConsoleCommand parseCommand(const string& commandStr);
+	ConsoleCommand parseCommand(const std::string& commandStr);
 	bool checkTooFewArguments(int numberOfArguments);
 	void parseArgument(char** argv, int i, int argc, ConsoleArgs& consoleArgs);
 
@@ -55,6 +52,6 @@ private:
 	static void parseOverwrite(const char* value, ConsoleArgs& consoleArgs);
 	static void parseCompressionFormat(const char* value, ConsoleArgs& consoleArgs);
 
-	static CompressionType parseCompression(const string& compressionStr);
-	bool parseBool(const string& str);
+	static CompressionType parseCompression(const std::string& compressionStr);
+	bool parseBool(const std::string& str);
 };

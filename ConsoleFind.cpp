@@ -2,6 +2,8 @@
 #include "ConsoleHelper.h"
 #include <iostream>
 
+using namespace std;
+
 void ConsoleFind::findCommand(const ConsoleArgs& consoleArgs)
 {
 	ConsoleHelper::checkIfPathsEmpty(consoleArgs.paths);

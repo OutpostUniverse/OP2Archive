@@ -6,6 +6,7 @@
 #include <memory>
 #include <stdexcept>
 
+using namespace std;
 using namespace Archives;
 
 void ConsoleAdd::addCommand(const ConsoleArgs& consoleArgs)

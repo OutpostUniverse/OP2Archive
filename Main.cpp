@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 		ConsoleArgs consoleArgs = consoleArgumentParser.sortArguments(argc, argv);
 		selectCommand(consoleArgs);
 	}
-	catch (exception e) {
+	catch (const exception& e) {
 		cerr << e.what() << endl;
 		cerr << "Run without arguments to see usage message." << endl << endl;
 

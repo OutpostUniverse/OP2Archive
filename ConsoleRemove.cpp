@@ -6,6 +6,9 @@
 #include <memory>
 #include <stdexcept>
 
+using namespace std;
+using namespace Archives;
+
 void ConsoleRemove::removeCommand(const ConsoleArgs& consoleArgs)
 {
 	string archiveFilename = getArchiveName(consoleArgs);

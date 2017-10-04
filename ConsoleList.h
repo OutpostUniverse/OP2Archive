@@ -4,8 +4,6 @@
 #include "ConsoleSettings.h"
 #include <string>
 
-using namespace std;
-
 class ConsoleList
 {
 public:
@@ -14,6 +12,6 @@ public:
 private:
 	ArchiveConsoleListing archiveConsoleListing;
 
-	void listArchiveContents(const string& filename);
-	void listAllArchivesInDirectory(const string& directory);
+	void listArchiveContents(const std::string& filename);
+	void listAllArchivesInDirectory(const std::string& directory);
 };

@@ -5,6 +5,8 @@
 #include <memory>
 #include <stdexcept>
 
+using namespace std;
+
 ConsoleModifyBase::ConsoleModifyBase(const string& successMessage)
 {
 	this->successMessage = successMessage;

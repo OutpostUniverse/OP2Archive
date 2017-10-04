@@ -2,6 +2,9 @@
 #include "StringHelper.h"
 #include <stdexcept>
 
+using namespace std;
+using namespace Archives;
+
 ConsoleArgumentParser::ConsoleArgumentParser() 
 {
 	consoleSwitches.push_back(ConsoleSwitch("-H", "--HELP", parseHelp, 0));

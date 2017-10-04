@@ -3,6 +3,9 @@
 #include <iostream>
 #include <stdexcept>
 
+using namespace std;
+using namespace Archives;
+
 void ConsoleCreate::createCommand(const ConsoleArgs& consoleArgs)
 {
 	ConsoleHelper::checkIfPathsEmpty(consoleArgs.paths);

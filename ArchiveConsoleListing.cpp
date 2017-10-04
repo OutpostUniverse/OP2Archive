@@ -4,6 +4,9 @@
 #include <string>
 #include <sstream>
 
+using namespace std;
+using namespace Archives;
+
 void ArchiveConsoleListing::listContents(ArchiveFile& archiveFile)
 {
 	string filename = XFile::getFilename(archiveFile.GetVolumeFileName());

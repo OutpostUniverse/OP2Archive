@@ -5,6 +5,8 @@
 #include <memory>
 #include <stdexcept>
 
+using namespace std;
+
 void ConsoleList::listCommand(const ConsoleArgs& consoleArgs)
 {
 	ConsoleHelper::checkIfPathsEmpty(consoleArgs.paths);

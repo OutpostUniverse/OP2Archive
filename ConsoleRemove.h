@@ -6,9 +6,6 @@
 #include <vector>
 #include <string>
 
-using namespace std;
-using namespace Archives;
-
 class ConsoleRemove : ConsoleModifyBase
 {
 public:
@@ -16,9 +13,9 @@ public:
 	void removeCommand(const ConsoleArgs& consoleArgs);
 
 private:
-	void outputInitialAddMessage(const string& archiveFilename, int fileCountToRemove);
-	vector<string> removeMatchingFilenames(ArchiveFile& archive, const vector<string>& filesToRemove);
-	void throwUnfoundFileDuringRemoveException(vector<string> unfoundFilenames);
-	void checkFilesAvailableToRemove(ArchiveFile& archive, const vector<string>& filesToRemove, bool quiet);
-	void extractFiles(ArchiveFile& archive, const vector<string> internalFilenames);
+	void outputInitialAddMessage(const std::string& archiveFilename, int fileCountToRemove);
+	std::vector<std::string> removeMatchingFilenames(Archives::ArchiveFile& archive, const std::vector<std::string>& filesToRemove);
+	void throwUnfoundFileDuringRemoveException(std::vector<std::string> unfoundFilenames);
+	void checkFilesAvailableToRemove(Archives::ArchiveFile& archive, const std::vector<std::string>& filesToRemove, bool quiet);
+	void extractFiles(Archives::ArchiveFile& archive, const std::vector<std::string> internalFilenames);
 };
