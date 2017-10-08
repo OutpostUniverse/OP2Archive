@@ -85,5 +85,5 @@ Source code may be found at: https://github.com/OutpostUniverse/OP2Archive. See 
 
 +++ CHANGE LOG +++
 
-Ver 1.0.0 (XXSep2017)
+Ver 1.0.0 (07Oct2017)
  * Initial Release
