@@ -30,7 +30,6 @@ Allows examining, creating, and extracting files from Outpost 2 .vol and .clm ar
   -Q / --Quiet: [Default false] Prevents application from issuing console messages.
   -O / --Overwrite: [Default false] Allows application to overwrite existing files.
   -D / --DestinationDirectory: [Default is './']. Sets the destination directory for extracted file(s).
-  -S / --SourceDirectory: [Deafault is archive's filename]. Sets the source directory when creating an archive.
 
 For more information about Outpost 2 visit the Outpost Universe (http://outpost2.net/).
 
