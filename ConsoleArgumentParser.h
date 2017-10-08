@@ -41,7 +41,7 @@ private:
 
 	ConsoleCommand parseCommand(const std::string& commandStr);
 	bool checkTooFewArguments(int numberOfArguments);
-	void parseArgument(char** argv, int i, int argc, ConsoleArgs& consoleArgs);
+	void parseArgument(char** argv, int& i, int argc, ConsoleArgs& consoleArgs);
 
 	void checkForMissingSwitchArgument(int index, int argc, int numberOfArgsToPass);
 	bool findSwitch(char* argumentChar, ConsoleSwitch& currentSwitch);

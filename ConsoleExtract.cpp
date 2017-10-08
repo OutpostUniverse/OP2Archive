@@ -74,15 +74,39 @@ void ConsoleExtract::extractSpecificFile(ArchiveFile& archiveFile, const string&
 	if (!XFile::pathExists(consoleSettings.destDirectory))
 		XFile::createDirectory(consoleSettings.destDirectory);
 
-	string destDirectory = XFile::replaceFilename(consoleSettings.destDirectory, filename).c_str();
+	string destPath = XFile::replaceFilename(consoleSettings.destDirectory, filename).c_str();
 	int archiveFileIndex = archiveFile.GetInternalFileIndex(filename.c_str());
-	bool success = archiveFile.ExtractFile(archiveFileIndex, destDirectory.c_str());
+	
+	if (!consoleSettings.overwrite)
+	{
+		if (checkIfFileExists(destPath, consoleSettings.quiet))
+			return;
+	}
+		
 
-	if (consoleSettings.quiet)
-		return;
+	bool success = archiveFile.ExtractFile(archiveFileIndex, destPath.c_str());
 
+	if (!consoleSettings.quiet)
+		outputExtractionMessage(success, filename);
+}
+
+bool ConsoleExtract::checkIfFileExists(string path, bool quiet)
+{
+	if (XFile::pathExists(path))
+	{
+		if (!quiet)
+			cerr << "A file with the same name already exists at " + path + "." << endl;
+
+		return true;
+	}
+
+	return false;
+}
+
+void ConsoleExtract::outputExtractionMessage(bool success, string filename)
+{
 	if (success)
 		cout << filename << " extracted." << endl;
 	else
-		cout << "Error extracting " << filename << endl;
+		cerr << "Error extracting " << filename << endl;
 }

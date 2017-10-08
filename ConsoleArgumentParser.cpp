@@ -84,7 +84,7 @@ ConsoleCommand ConsoleArgumentParser::parseCommand(const string& commandStr)
 	throw invalid_argument("A valid command was not provided.");
 }
 
-void ConsoleArgumentParser::parseArgument(char** argv, int i, int argc, ConsoleArgs& consoleArgs)
+void ConsoleArgumentParser::parseArgument(char** argv, int& i, int argc, ConsoleArgs& consoleArgs)
 {
 	ConsoleSwitch currentSwitch;
 
