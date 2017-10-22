@@ -79,13 +79,14 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <PostBuildEvent>
-      <Command>SET zipName="OP2Archive Ver1.0.0"
+      <Command>SET zipName="OP2Archive Ver1.0.1"
 SET directoryName=$(OutDir)%25zipName%25 
 
 if $(ConfigurationName) == Release (
     mkdir %25directoryName%25
 
     xcopy /y /d "$(ProjectDir)ReadMe.txt" %25directoryName%25
+    xcopy /y /d "$(ProjectDir)OP2Archive License - MIT.txt" %25directoryName%25
     xcopy /y /d "$(ProjectDir)VolTemplate.vol" %25directoryName%25
     xcopy /y /d "$(ProjectDir)ClmTemplate.clm" %25directoryName%25
     xcopy /y /d "$(OutDir)$(TargetFileName)" %25directoryName%25
@@ -120,13 +121,14 @@ if $(ConfigurationName) == Release (
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PostBuildEvent>
-      <Command>SET zipName="OP2Archive Ver1.0.0"
+      <Command>SET zipName="OP2Archive Ver1.0.1"
 SET directoryName=$(OutDir)%25zipName%25 
 
 if $(ConfigurationName) == Release (
     mkdir %25directoryName%25
 
     xcopy /y /d "$(ProjectDir)ReadMe.txt" %25directoryName%25
+    xcopy /y /d "$(ProjectDir)OP2Archive License - MIT.txt" %25directoryName%25
     xcopy /y /d "$(ProjectDir)VolTemplate.vol" %25directoryName%25
     xcopy /y /d "$(ProjectDir)ClmTemplate.clm" %25directoryName%25
     xcopy /y /d "$(OutDir)$(TargetFileName)" %25directoryName%25

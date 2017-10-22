@@ -17,7 +17,7 @@ void selectCommand(const ConsoleArgs& consoleArgs);
 void outputHelp();
 void debugPause();
 
-static string version = "1.0.0";
+static string version = "1.0.1";
 
 int main(int argc, char **argv)
 {

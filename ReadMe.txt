@@ -3,6 +3,8 @@ Developed by Hooman and Brett208 (Vagabond)
 
 Allows examining, creating, and extracting files from Outpost 2 .vol and .clm archives. Check the OP2Archive landing page for the newest version at https://wiki.outpost2.net/doku.php?id=outpost_2:helper_programs:op2archive.
 
+OP2Archive is released under a MIT license. See OP2Archive License - MIT.txt for details.
+
 +++ COMMANDS +++
   * OP2Archive LIST (archivename.(vol|clm) | directory)...
     * Lists the contents and size of all files contained in provided archives.
@@ -87,3 +89,6 @@ Source code may be found at: https://github.com/OutpostUniverse/OP2Archive. See 
 
 Ver 1.0.0 (07Oct2017)
  * Initial Release
+
+Ver 1.0.1 (22Oct2017)
+ * Added OP2Archive Lisence - MIT.txt and referenced lisence in ReadMe.txt. 
