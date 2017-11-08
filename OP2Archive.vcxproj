@@ -82,7 +82,7 @@
       <Command>SET zipName="OP2Archive Ver1.0.1"
 SET directoryName=$(OutDir)%25zipName%25 
 
-SET pdbDirectoryName=$(OutDir)%25zipName%" PDB"
+SET pdbDirectoryName=$(OutDir)%25zipName%"_PDB"
 
 if $(ConfigurationName) == Release (
     mkdir %25directoryName%25
@@ -102,7 +102,7 @@ if $(ConfigurationName) == Release (
     DEL /q %25directoryName%25\*.*
     RMDIR %25directoryName%25 /s /q
 
-    7za a -tzip $(OutDir)%25zipName%25" PDB".zip %25pdbDirectoryName%25
+    7za a -tzip $(OutDir)%25zipName%25"_PDB".zip %25pdbDirectoryName%25
     DEL /q %25pdbDirectoryName%25\*.*
     RMDIR %25pdbDirectoryName%25 /s /q
 )</Command>
@@ -133,7 +133,7 @@ if $(ConfigurationName) == Release (
       <Command>SET zipName="OP2Archive Ver1.0.1"
 SET directoryName=$(OutDir)%25zipName%25 
 
-SET pdbDirectoryName=$(OutDir)%25zipName%" PDB"
+SET pdbDirectoryName=$(OutDir)%25zipName%"_PDB"
 
 if $(ConfigurationName) == Release (
     mkdir %25directoryName%25
@@ -153,7 +153,7 @@ if $(ConfigurationName) == Release (
     DEL /q %25directoryName%25\*.*
     RMDIR %25directoryName%25 /s /q
 
-    7za a -tzip $(OutDir)%25zipName%25" PDB".zip %25pdbDirectoryName%25
+    7za a -tzip $(OutDir)%25zipName%25"_PDB".zip %25pdbDirectoryName%25
     DEL /q %25pdbDirectoryName%25\*.*
     RMDIR %25pdbDirectoryName%25 /s /q
 )</Command>
