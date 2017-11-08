@@ -1,7 +1,7 @@
 OP2Archive Compilation Instructions
 Developed by Hooman and Brett208 (Vagabond)
 
-If you wish to edit and compile OP2Archive's source code, read this document first. See ReadMe.txt for a basic description of the project, change log, and instructions on use once compiled. OP2Archive is released under a MIT license. See OP2Archive License - MIT.txt for details.
+If you wish to edit and compile OP2Archive's source code, read this document first. See ReadMe.txt for a basic description of the project, change log, and instructions on use once compiled. OP2Archive is released under a MIT license. See License.txt for details.
 
 Source code may be found at: https://github.com/OutpostUniverse/OP2Archive and https://github.com/OutpostUniverse/OP2Utility.
 
