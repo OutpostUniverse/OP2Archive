@@ -87,6 +87,9 @@ Source code may be found at: https://github.com/OutpostUniverse/OP2Archive. See 
 
 +++ CHANGE LOG +++
 
+Ver 1.0.2
+ * Fix bug where program crashes when attempting to extract a directory from a vol file.
+
 Ver 1.0.1 (07Nov2017)
  * Added MIT License to project in file Licence.txt.
 
