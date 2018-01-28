@@ -7,15 +7,15 @@ using namespace Archives;
 
 ConsoleArgumentParser::ConsoleArgumentParser() 
 {
-	consoleSwitches.push_back(ConsoleSwitch("-H", "--HELP", parseHelp, 0));
-	consoleSwitches.push_back(ConsoleSwitch("-?", "--?", parseHelp, 0));
-	consoleSwitches.push_back(ConsoleSwitch("-D", "--DESTINATIONDIRECTORY", parseDestDirectory, 1));
-	consoleSwitches.push_back(ConsoleSwitch("-Q", "--QUIET", parseQuiet, 0));
-	consoleSwitches.push_back(ConsoleSwitch("-O", "--OVERWRITE", parseOverwrite, 0));
-	consoleSwitches.push_back(ConsoleSwitch("-C", "--COMPRESSION", parseCompressionFormat, 1));
+	consoleSwitches.push_back(ConsoleSwitch("-H", "--HELP", ParseHelp, 0));
+	consoleSwitches.push_back(ConsoleSwitch("-?", "--?", ParseHelp, 0));
+	consoleSwitches.push_back(ConsoleSwitch("-D", "--DESTINATIONDIRECTORY", ParseDestDirectory, 1));
+	consoleSwitches.push_back(ConsoleSwitch("-Q", "--QUIET", ParseQuiet, 0));
+	consoleSwitches.push_back(ConsoleSwitch("-O", "--OVERWRITE", ParseOverwrite, 0));
+	consoleSwitches.push_back(ConsoleSwitch("-C", "--COMPRESSION", ParseCompressionFormat, 1));
 }
 
-bool ConsoleArgumentParser::findSwitch(char* argumentChar, ConsoleSwitch& currentSwitch)
+bool ConsoleArgumentParser::FindSwitch(char* argumentChar, ConsoleSwitch& currentSwitch)
 {
 	string argument = StringHelper::convertToUpper(argumentChar);
 
@@ -25,7 +25,7 @@ bool ConsoleArgumentParser::findSwitch(char* argumentChar, ConsoleSwitch& curren
 
 	for (ConsoleSwitch consoleSwitch : consoleSwitches)
 	{
-		if (consoleSwitch.argumentMatch(argument))
+		if (consoleSwitch.ArgumentMatch(argument))
 		{
 			currentSwitch = consoleSwitch;
 			return true;
@@ -35,28 +35,28 @@ bool ConsoleArgumentParser::findSwitch(char* argumentChar, ConsoleSwitch& curren
 	return false;
 }
 
-ConsoleArgs ConsoleArgumentParser::sortArguments(int argc, char **argv)
+ConsoleArgs ConsoleArgumentParser::SortArguments(int argc, char **argv)
 {
 	ConsoleArgs consoleArgs;
 
-	if (checkTooFewArguments(argc))
+	if (CheckTooFewArguments(argc))
 	{
 		consoleArgs.consoleCommand = ConsoleCommand::Help;
 		return consoleArgs;
 	}
 
 	string commandStr = argv[1];
-	consoleArgs.consoleCommand = parseCommand(commandStr);
+	consoleArgs.consoleCommand = ParseCommand(commandStr);
 
 	for (int i = 2; i < argc; ++i)
 	{
-		parseArgument(argv, i, argc, consoleArgs);
+		ParseArgument(argv, i, argc, consoleArgs);
 	}
 
 	return consoleArgs;
 }
 
-ConsoleCommand ConsoleArgumentParser::parseCommand(const string& commandStr)
+ConsoleCommand ConsoleArgumentParser::ParseCommand(const string& commandStr)
 {
 	string commandStrUpper = StringHelper::convertToUpper(commandStr);
 
@@ -84,15 +84,15 @@ ConsoleCommand ConsoleArgumentParser::parseCommand(const string& commandStr)
 	throw invalid_argument("A valid command was not provided.");
 }
 
-void ConsoleArgumentParser::parseArgument(char** argv, int& i, int argc, ConsoleArgs& consoleArgs)
+void ConsoleArgumentParser::ParseArgument(char** argv, int& i, int argc, ConsoleArgs& consoleArgs)
 {
 	ConsoleSwitch currentSwitch;
 
-	bool switchFound = findSwitch(argv[i], currentSwitch);
+	bool switchFound = FindSwitch(argv[i], currentSwitch);
 
 	if (switchFound)
 	{
-		checkForMissingSwitchArgument(i, argc, currentSwitch.numberOfArgs);
+		CheckForMissingSwitchArgument(i, argc, currentSwitch.numberOfArgs);
 
 		if (currentSwitch.numberOfArgs == 0)
 			currentSwitch.parseFunction(argv[i], consoleArgs);
@@ -107,7 +107,7 @@ void ConsoleArgumentParser::parseArgument(char** argv, int& i, int argc, Console
 	}
 }
 
-CompressionType ConsoleArgumentParser::parseCompression(const string& compressionStr)
+CompressionType ConsoleArgumentParser::ParseCompression(const string& compressionStr)
 {
 	string compressionStrUpper = StringHelper::convertToUpper(compressionStr);
 
@@ -126,7 +126,7 @@ CompressionType ConsoleArgumentParser::parseCompression(const string& compressio
 	throw invalid_argument("Unable to determine compression type. Try None, LZ, LZH, or RLE.");
 }
 
-bool ConsoleArgumentParser::parseBool(const string& str)
+bool ConsoleArgumentParser::ParseBool(const string& str)
 {
 	string upperStr = StringHelper::convertToUpper(str);
 
@@ -139,39 +139,39 @@ bool ConsoleArgumentParser::parseBool(const string& str)
 	throw invalid_argument("Unable to parse argument into a valid boolean (True/False).");
 }
 
-void ConsoleArgumentParser::checkForMissingSwitchArgument(int index, int argc, int numberOfArgsToPass)
+void ConsoleArgumentParser::CheckForMissingSwitchArgument(int index, int argc, int numberOfArgsToPass)
 {
 	if (index + numberOfArgsToPass >= argc)
 		throw range_error("Missing the final argument for the supplied switch.");
 }
 
-void ConsoleArgumentParser::parseHelp(const char* value, ConsoleArgs& consoleArgs)
+void ConsoleArgumentParser::ParseHelp(const char* value, ConsoleArgs& consoleArgs)
 {
 	consoleArgs.consoleSettings.helpRequested = true;
 	consoleArgs.consoleCommand = ConsoleCommand::Help;
 }
 
-void ConsoleArgumentParser::parseQuiet(const char* value, ConsoleArgs& consoleArgs)
+void ConsoleArgumentParser::ParseQuiet(const char* value, ConsoleArgs& consoleArgs)
 {
 	consoleArgs.consoleSettings.quiet = true;
 }
 
-void ConsoleArgumentParser::parseOverwrite(const char* value, ConsoleArgs& consoleArgs)
+void ConsoleArgumentParser::ParseOverwrite(const char* value, ConsoleArgs& consoleArgs)
 {
 	consoleArgs.consoleSettings.overwrite = true;
 }
 
-void ConsoleArgumentParser::parseDestDirectory(const char* value, ConsoleArgs& consoleArgs)
+void ConsoleArgumentParser::ParseDestDirectory(const char* value, ConsoleArgs& consoleArgs)
 {
 	consoleArgs.consoleSettings.destDirectory = value;
 }
 
-void ConsoleArgumentParser::parseCompressionFormat(const char* value, ConsoleArgs& consoleArgs)
+void ConsoleArgumentParser::ParseCompressionFormat(const char* value, ConsoleArgs& consoleArgs)
 {
-	consoleArgs.consoleSettings.compression = parseCompression(value);
+	consoleArgs.consoleSettings.compression = ParseCompression(value);
 }
 
-bool ConsoleArgumentParser::checkTooFewArguments(int numberOfArguments)
+bool ConsoleArgumentParser::CheckTooFewArguments(int numberOfArguments)
 {
 	return numberOfArguments < 2;
 }

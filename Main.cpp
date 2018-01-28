@@ -13,9 +13,9 @@
 using namespace std;
 
 int main(int argc, char **argv);
-void selectCommand(const ConsoleArgs& consoleArgs);
-void outputHelp();
-void debugPause();
+void SelectCommand(const ConsoleArgs& consoleArgs);
+void OutputHelp();
+void DebugPause();
 
 static string version = "1.0.2";
 
@@ -24,58 +24,58 @@ int main(int argc, char **argv)
 	try
 	{
 		ConsoleArgumentParser consoleArgumentParser;
-		ConsoleArgs consoleArgs = consoleArgumentParser.sortArguments(argc, argv);
-		selectCommand(consoleArgs);
+		ConsoleArgs consoleArgs = consoleArgumentParser.SortArguments(argc, argv);
+		SelectCommand(consoleArgs);
 	}
 	catch (const exception& e) {
 		cerr << e.what() << endl;
 		cerr << "Run without arguments to see usage message." << endl << endl;
 
-		debugPause();
+		DebugPause();
 
 		return 1;
 	}
 
-	debugPause();
+	DebugPause();
 
 	return 0;
 }
 
-void selectCommand(const ConsoleArgs& consoleArgs)
+void SelectCommand(const ConsoleArgs& consoleArgs)
 {
 	switch (consoleArgs.consoleCommand)
 	{
 	case ConsoleCommand::Help: {
-		outputHelp();
+		OutputHelp();
 	}break;
 	case ConsoleCommand::Create: {
 		ConsoleCreate consoleCreate;
-		consoleCreate.createCommand(consoleArgs);
+		consoleCreate.CreateCommand(consoleArgs);
 	}break;
 	case ConsoleCommand::Extract: {
 		ConsoleExtract consoleExtract;
-		consoleExtract.extractCommand(consoleArgs);
+		consoleExtract.ExtractCommand(consoleArgs);
 	}break;
 	case ConsoleCommand::Find: {
 		ConsoleFind consoleFind;
-		consoleFind.findCommand(consoleArgs);
+		consoleFind.FindCommand(consoleArgs);
 	}break;
 	case ConsoleCommand::List: {
 		ConsoleList consoleList;
-		consoleList.listCommand(consoleArgs);
+		consoleList.ListCommand(consoleArgs);
 	}break;
 	case ConsoleCommand::Add: {
 		ConsoleAdd consoleAdd;
-		consoleAdd.addCommand(consoleArgs);
+		consoleAdd.AddCommand(consoleArgs);
 	}break;
 	case ConsoleCommand::Remove: {
 		ConsoleRemove consoleRemove;
-		consoleRemove.removeCommand(consoleArgs);
+		consoleRemove.RemoveCommand(consoleArgs);
 	}break;
 	}
 }
 
-void outputHelp()
+void OutputHelp()
 {
 	cout << endl;
 	cout << "OP2Archive Ver " << version << " - Outpost 2 Archive Access and Maintenance" << endl;
@@ -111,7 +111,7 @@ void outputHelp()
 	cout << endl;
 }
 
-void debugPause()
+void DebugPause()
 {
 #if defined _DEBUG
 	getchar();

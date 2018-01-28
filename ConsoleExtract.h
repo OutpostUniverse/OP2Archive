@@ -8,15 +8,15 @@
 class ConsoleExtract
 {
 public:
-	void extractCommand(const ConsoleArgs& consoleArgs);
+	void ExtractCommand(const ConsoleArgs& consoleArgs);
 
 private:
-	void extractFromArchive(const std::string& archiveFilename, const std::vector<std::string>& filesToExtract, const ConsoleSettings& consoleSettings);
-	void extractFromDirectory(const std::string& directory, const ConsoleSettings& consoleSettings);
+	void ExtractFromArchive(const std::string& archiveFilename, const std::vector<std::string>& filesToExtract, const ConsoleSettings& consoleSettings);
+	void ExtractFromDirectory(const std::string& directory, const ConsoleSettings& consoleSettings);
 
-	void extractAllFiles(Archives::ArchiveFile& archive, const ConsoleSettings& consoleSettings);
-	void extractSpecificFile(Archives::ArchiveFile& archive, const std::string& filename, const ConsoleSettings& consoleSettings);
+	void ExtractAllFiles(Archives::ArchiveFile& archive, const ConsoleSettings& consoleSettings);
+	void ExtractSpecificFile(Archives::ArchiveFile& archive, const std::string& filename, const ConsoleSettings& consoleSettings);
 
-	bool checkIfFileExists(std::string path, bool quiet);
-	void outputExtractionMessage(bool success, std::string filename);
+	bool CheckIfFileExists(std::string path, bool quiet);
+	void OutputExtractionMessage(bool success, std::string filename);
 };

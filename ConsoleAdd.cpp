@@ -9,31 +9,31 @@
 using namespace std;
 using namespace Archives;
 
-void ConsoleAdd::addCommand(const ConsoleArgs& consoleArgs)
+void ConsoleAdd::AddCommand(const ConsoleArgs& consoleArgs)
 {
-	string archiveFilename = getArchiveName(consoleArgs);
+	string archiveFilename = GetArchiveName(consoleArgs);
 	
-	vector<string> filesToAdd = getFilesToModify(consoleArgs);
+	vector<string> filesToAdd = GetFilesToModify(consoleArgs);
 	
 	if (!consoleArgs.consoleSettings.quiet)
-		outputInitialAddMessage(archiveFilename, filesToAdd.size());
+		OutputInitialAddMessage(archiveFilename, filesToAdd.size());
 
-	checkFilesExist(filesToAdd);
+	CheckFilesExist(filesToAdd);
 
-	vector<string> extractedFiles = extractFiles(archiveFilename, filesToAdd, consoleArgs.consoleSettings.overwrite);
+	vector<string> extractedFiles = ExtractFiles(archiveFilename, filesToAdd, consoleArgs.consoleSettings.overwrite);
 
 	filesToAdd.insert(filesToAdd.end(), extractedFiles.begin(), extractedFiles.end());
 
-	createModifiedArchive(archiveFilename, filesToAdd, consoleArgs.consoleSettings.quiet);
+	CreateModifiedArchive(archiveFilename, filesToAdd, consoleArgs.consoleSettings.quiet);
 }
 
-void ConsoleAdd::outputInitialAddMessage(const string& archiveFilename, int fileCountToAdd)
+void ConsoleAdd::OutputInitialAddMessage(const string& archiveFilename, int fileCountToAdd)
 {
 	cout << "Attempting to add " << fileCountToAdd << " file(s) to the archive " << archiveFilename << endl;
 	cout << ConsoleHelper::dashedLine << endl;
 }
 
-bool ConsoleAdd::archivedFileTaggedForOverwrite(const string& internalFilename, const vector<string>& filesToAdd)
+bool ConsoleAdd::ArchivedFileTaggedForOverwrite(const string& internalFilename, const vector<string>& filesToAdd)
 {
 	for (string fileToAdd : filesToAdd)
 	{
@@ -44,15 +44,15 @@ bool ConsoleAdd::archivedFileTaggedForOverwrite(const string& internalFilename, 
 	return false;
 }
 
-vector<string> ConsoleAdd::extractFiles(const string& archiveFilename, const vector<string>& internalFilenames, bool overwrite)
+vector<string> ConsoleAdd::ExtractFiles(const string& archiveFilename, const vector<string>& internalFilenames, bool overwrite)
 {
-	unique_ptr<ArchiveFile> archive = ConsoleHelper::openArchive(archiveFilename);
+	unique_ptr<ArchiveFile> archive = ConsoleHelper::OpenArchive(archiveFilename);
 
 	for (int i = 0; i < archive->GetNumberOfPackedFiles(); ++i)
 	{
 		string internalFilename = archive->GetInternalFileName(i);
 
-		bool taggedForOverwrite = archivedFileTaggedForOverwrite(internalFilename, internalFilenames);
+		bool taggedForOverwrite = ArchivedFileTaggedForOverwrite(internalFilename, internalFilenames);
 
 		if (taggedForOverwrite && !overwrite)
 			throw runtime_error("ADD aborted. " + internalFilename + " is already contained in " + archiveFilename + ". To overwrite, add argument -O.");
@@ -69,7 +69,7 @@ vector<string> ConsoleAdd::extractFiles(const string& archiveFilename, const vec
 	return XFile::getFilesFromDirectory(tempDirectory);
 }
 
-void ConsoleAdd::checkFilesExist(const vector<string>& filenames)
+void ConsoleAdd::CheckFilesExist(const vector<string>& filenames)
 {
 	for (string filename : filenames)
 	{

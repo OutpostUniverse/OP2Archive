@@ -8,12 +8,12 @@
 class ArchiveConsoleListing
 {
 public:
-	void listContents(Archives::ArchiveFile& archiveFile);
+	void ListContents(Archives::ArchiveFile& archiveFile);
 
 private:
 	const size_t maxFilenameSize = 40;
 	
-	int findMaxFilenameSize(Archives::ArchiveFile& archiveFile);
-	std::unique_ptr<std::vector<std::string>> formatFileSizes(Archives::ArchiveFile& archiveFile, size_t& maxCharsInSize);
+	int FindMaxFilenameSize(Archives::ArchiveFile& archiveFile);
+	std::unique_ptr<std::vector<std::string>> FormatFileSizes(Archives::ArchiveFile& archiveFile, size_t& maxCharsInSize);
 	std::string CreateBlankChars(size_t stringSize, int columnSize);
 };

@@ -7,42 +7,42 @@ using namespace std;
 using namespace Archives;
 
 // Cannot exist inside the class definition and work as a function object for passing into std::stable_sort.
-bool comparePathFilenames(const std::string path1, const std::string path2);
+bool ComparePathFilenames(const std::string path1, const std::string path2);
 
-void ConsoleCreate::createCommand(const ConsoleArgs& consoleArgs)
+void ConsoleCreate::CreateCommand(const ConsoleArgs& consoleArgs)
 {
-	ConsoleHelper::checkIfPathsEmpty(consoleArgs.paths);
+	ConsoleHelper::CheckIfPathsEmpty(consoleArgs.paths);
 
 	string archiveFilename = consoleArgs.paths[0];
 
-	if (!ConsoleHelper::isArchiveExtension(archiveFilename))
+	if (!ConsoleHelper::IsArchiveExtension(archiveFilename))
 		throw runtime_error("A .vol or .clm filename must be provided to create an archive.");
 
-	checkCreateOverwrite(archiveFilename, consoleArgs.consoleSettings.overwrite, consoleArgs.consoleSettings.quiet);
+	CheckCreateOverwrite(archiveFilename, consoleArgs.consoleSettings.overwrite, consoleArgs.consoleSettings.quiet);
 
 	if (consoleArgs.paths.size() == 1)
 	{
 		if (false) // Brett 23AUG17: Currently no way to specify to use the default source directory.
-			createUsingDefaultDirectory(archiveFilename, consoleArgs.consoleSettings);
+			CreateUsingDefaultDirectory(archiveFilename, consoleArgs.consoleSettings);
 
-		createArchiveFile(archiveFilename, vector<string>(), consoleArgs.consoleSettings.quiet);
+		CreateArchiveFile(archiveFilename, vector<string>(), consoleArgs.consoleSettings.quiet);
 	}
 	else
 	{
-		vector<string> filenames = gatherFilesForArchive(consoleArgs.paths);
-		createArchiveFile(archiveFilename, filenames, consoleArgs.consoleSettings.quiet);
+		vector<string> filenames = GatherFilesForArchive(consoleArgs.paths);
+		CreateArchiveFile(archiveFilename, filenames, consoleArgs.consoleSettings.quiet);
 	}
 }
 
-void ConsoleCreate::createArchiveFile(const string& archiveFilename, const vector<string>& paths, bool quiet)
+void ConsoleCreate::CreateArchiveFile(const string& archiveFilename, const vector<string>& paths, bool quiet)
 {
-	vector<string> sortedPaths = sortPathsByFilename(paths);
-	vector<string> filenames = getFilenamesFromPaths(sortedPaths);
+	vector<string> sortedPaths = SortPathsByFilename(paths);
+	vector<string> filenames = GetFilenamesFromPaths(sortedPaths);
 
-	unique_ptr<ArchiveFile> archiveFile = createArchiveTemplate(archiveFilename);
+	unique_ptr<ArchiveFile> archiveFile = CreateArchiveTemplate(archiveFilename);
 
 	if (!quiet) {
-		outputInitialCreateMessage(archiveFilename, sortedPaths.size());
+		OutputInitialCreateMessage(archiveFilename, sortedPaths.size());
 	}
 
 	const char** pathsCArray = StringHelper::vectorToCharArray(sortedPaths);
@@ -58,11 +58,11 @@ void ConsoleCreate::createArchiveFile(const string& archiveFilename, const vecto
 	}
 
 	if (!quiet) {
-		outputCreateResults(sortedPaths.size(), archiveFilename);
+		OutputCreateResults(sortedPaths.size(), archiveFilename);
 	}
 }
 
-unique_ptr<ArchiveFile> ConsoleCreate::createArchiveTemplate(const string& archiveFilename)
+unique_ptr<ArchiveFile> ConsoleCreate::CreateArchiveTemplate(const string& archiveFilename)
 {
 	if (XFile::extensionMatches(archiveFilename, "VOL"))
 		return make_unique<VolFile>("VolTemplate.vol");
@@ -73,7 +73,7 @@ unique_ptr<ArchiveFile> ConsoleCreate::createArchiveTemplate(const string& archi
 	throw runtime_error("Unable to open archive template files VolTemplate.vol and/or ClmTemplate.clm. Ensure both files exist in same directory as OP2Archive.exe and are not open in another application.");
 }
 
-void ConsoleCreate::createUsingDefaultDirectory(const string& archiveFilename, const ConsoleSettings& consoleSettings)
+void ConsoleCreate::CreateUsingDefaultDirectory(const string& archiveFilename, const ConsoleSettings& consoleSettings)
 {
 	string sourceDir = XFile::changeFileExtension(archiveFilename, "");
 
@@ -82,10 +82,10 @@ void ConsoleCreate::createUsingDefaultDirectory(const string& archiveFilename, c
 
 	vector<string> filenames = XFile::getFilesFromDirectory(sourceDir);
 
-	createArchiveFile(archiveFilename, filenames, consoleSettings.quiet);
+	CreateArchiveFile(archiveFilename, filenames, consoleSettings.quiet);
 }
 
-vector<string> ConsoleCreate::gatherFilesForArchive(const vector<string>& paths)
+vector<string> ConsoleCreate::GatherFilesForArchive(const vector<string>& paths)
 {
 	vector<string> filenames;
 
@@ -103,7 +103,7 @@ vector<string> ConsoleCreate::gatherFilesForArchive(const vector<string>& paths)
 	return filenames;
 }
 
-void ConsoleCreate::checkCreateOverwrite(const string& archiveFilename, bool overwrite, bool quiet)
+void ConsoleCreate::CheckCreateOverwrite(const string& archiveFilename, bool overwrite, bool quiet)
 {
 	if (XFile::pathExists(archiveFilename))
 	{
@@ -114,38 +114,38 @@ void ConsoleCreate::checkCreateOverwrite(const string& archiveFilename, bool ove
 	}
 }
 
-void ConsoleCreate::outputInitialCreateMessage(const string& archiveFilename, int packedFileCount)
+void ConsoleCreate::OutputInitialCreateMessage(const string& archiveFilename, int packedFileCount)
 {
 	cout << "Creating archive " << archiveFilename << ", containing " << packedFileCount << " file(s)." << endl;
 	cout << ConsoleHelper::dashedLine << endl;
 }
 
-void ConsoleCreate::outputCreateResults(int packedFileCount, const string& archiveFilename)
+void ConsoleCreate::OutputCreateResults(int packedFileCount, const string& archiveFilename)
 {
 		cout << "Archive created." << endl << endl;
 
 		if (packedFileCount < 1)
 			cout << "Caution: Created archive is empty (contains no files)." << endl;
 		else
-			ConsoleHelper::listContentsOfArchive(archiveFilename);
+			ConsoleHelper::ListContentsOfArchive(archiveFilename);
 }
 
-vector<string> ConsoleCreate::sortPathsByFilename(vector<string> paths)
+vector<string> ConsoleCreate::SortPathsByFilename(vector<string> paths)
 {
 	vector<string> sortedPaths(paths);
-	stable_sort(sortedPaths.begin(), sortedPaths.end(), comparePathFilenames);
+	stable_sort(sortedPaths.begin(), sortedPaths.end(), ComparePathFilenames);
 
 	return sortedPaths;
 }
 
 // Compares 2 filenames to determine which comes first alphabetically.
 // Does not compare the entire path, but only the filename.
-bool comparePathFilenames(const string path1, const string path2)
+bool ComparePathFilenames(const string path1, const string path2)
 {
 	return XFile::getFilename(path1) < XFile::getFilename(path2);
 }
 
-vector<string> ConsoleCreate::getFilenamesFromPaths(vector<string> paths)
+vector<string> ConsoleCreate::GetFilenamesFromPaths(vector<string> paths)
 {
 	vector<string> filenames;
 

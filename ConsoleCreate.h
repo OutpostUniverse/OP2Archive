@@ -9,17 +9,17 @@
 class ConsoleCreate
 {
 public:
-	void createCommand(const ConsoleArgs& consoleArgs);
-	void createArchiveFile(const std::string& archiveFilename, const std::vector<std::string>& filenames, bool quiet);
+	void CreateCommand(const ConsoleArgs& consoleArgs);
+	void CreateArchiveFile(const std::string& archiveFilename, const std::vector<std::string>& filenames, bool quiet);
 
 private:
-	std::unique_ptr<Archives::ArchiveFile> createArchiveTemplate(const std::string& archiveFilename);
-	void createUsingDefaultDirectory(const std::string& archiveFilename, const ConsoleSettings& consoleSettings);
-	std::vector<std::string> gatherFilesForArchive(const std::vector<std::string>& paths);
-	void checkCreateOverwrite(const std::string& archiveFilename, bool overwrite, bool quiet);
-	void outputInitialCreateMessage(const std::string& archiveFilename, int packedFileCount);
-	void outputCreateResults(int packedFileCount, const std::string& archiveFilename);
+	std::unique_ptr<Archives::ArchiveFile> CreateArchiveTemplate(const std::string& archiveFilename);
+	void CreateUsingDefaultDirectory(const std::string& archiveFilename, const ConsoleSettings& consoleSettings);
+	std::vector<std::string> GatherFilesForArchive(const std::vector<std::string>& paths);
+	void CheckCreateOverwrite(const std::string& archiveFilename, bool overwrite, bool quiet);
+	void OutputInitialCreateMessage(const std::string& archiveFilename, int packedFileCount);
+	void OutputCreateResults(int packedFileCount, const std::string& archiveFilename);
 
-	std::vector<std::string> sortPathsByFilename(std::vector<std::string> paths);
-	std::vector<std::string> getFilenamesFromPaths(std::vector<std::string> paths);
+	std::vector<std::string> SortPathsByFilename(std::vector<std::string> paths);
+	std::vector<std::string> GetFilenamesFromPaths(std::vector<std::string> paths);
 };

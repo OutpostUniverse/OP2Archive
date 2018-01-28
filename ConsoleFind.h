@@ -6,9 +6,9 @@
 class ConsoleFind
 {
 public:
-	void findCommand(const ConsoleArgs& consoleArgs);
+	void FindCommand(const ConsoleArgs& consoleArgs);
 
 private:
-	void findFileInArchives(const std::string& path);
+	void FindFileInArchives(const std::string& path);
 };
 

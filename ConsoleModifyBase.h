@@ -16,7 +16,7 @@ protected:
 	std::string successMessage;
 	std::string tempDirectory;
 
-	std::string getArchiveName(const ConsoleArgs& consoleArgs);
-	std::vector<std::string> getFilesToModify(const ConsoleArgs& consoleArgs);
-	void createModifiedArchive(const std::string& archiveFilename, const std::vector<std::string>& filenamesToAdd, bool quiet);
+	std::string GetArchiveName(const ConsoleArgs& consoleArgs);
+	std::vector<std::string> GetFilesToModify(const ConsoleArgs& consoleArgs);
+	void CreateModifiedArchive(const std::string& archiveFilename, const std::vector<std::string>& filenamesToAdd, bool quiet);
 };

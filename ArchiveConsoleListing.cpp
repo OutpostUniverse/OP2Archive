@@ -7,7 +7,7 @@
 using namespace std;
 using namespace Archives;
 
-void ArchiveConsoleListing::listContents(ArchiveFile& archiveFile)
+void ArchiveConsoleListing::ListContents(ArchiveFile& archiveFile)
 {
 	string filename = XFile::getFilename(archiveFile.GetVolumeFileName());
 
@@ -17,14 +17,14 @@ void ArchiveConsoleListing::listContents(ArchiveFile& archiveFile)
 		return;
 	}
 
-	int filenameColumnSize = findMaxFilenameSize(archiveFile);
+	int filenameColumnSize = FindMaxFilenameSize(archiveFile);
 
 	cout << "Contents of " << filename << ", " << archiveFile.GetNumberOfPackedFiles() << " file(s)." << endl << endl;
 	cout << "ID  " << "NAME" << string(filenameColumnSize - 4, ' ') << "  SIZE (Bytes)" << endl;
 	cout << "--------------------------------------------------" << endl;
 
 	size_t maxCharsInFileSize;
-	unique_ptr<vector<string>> fileSizes = formatFileSizes(archiveFile, maxCharsInFileSize);
+	unique_ptr<vector<string>> fileSizes = FormatFileSizes(archiveFile, maxCharsInFileSize);
 
 	for (int i = 0; i < archiveFile.GetNumberOfPackedFiles(); ++i)
 	{
@@ -44,7 +44,7 @@ void ArchiveConsoleListing::listContents(ArchiveFile& archiveFile)
 	cout << endl;
 }
 
-int ArchiveConsoleListing::findMaxFilenameSize(ArchiveFile& archiveFile)
+int ArchiveConsoleListing::FindMaxFilenameSize(ArchiveFile& archiveFile)
 {
 	size_t largestFilenameSize = 0;
 
@@ -58,7 +58,7 @@ int ArchiveConsoleListing::findMaxFilenameSize(ArchiveFile& archiveFile)
 	return largestFilenameSize;
 }
 
-unique_ptr<vector<string>> ArchiveConsoleListing::formatFileSizes(ArchiveFile& archiveFile, size_t& maxCharsInSize)
+unique_ptr<vector<string>> ArchiveConsoleListing::FormatFileSizes(ArchiveFile& archiveFile, size_t& maxCharsInSize)
 {
 	maxCharsInSize = 0;
 	unique_ptr<vector<string>> fileSizes = make_unique<vector<string>>();

@@ -10,10 +10,10 @@ class ConsoleHelper
 public: 
 	static std::string dashedLine;
 
-	static bool isArchiveExtension(const std::string& filename);
-	static std::unique_ptr<Archives::ArchiveFile> openArchive(const std::string& archivePath);
-	static std::vector<std::string> getArchiveFilenames(const std::string& directory);
-	static void ConsoleHelper::checkIfPathsEmpty(const std::vector<std::string>& paths);
-	static std::string createTempDirectory();
-	static void listContentsOfArchive(const std::string& archiveFilename);
+	static bool IsArchiveExtension(const std::string& filename);
+	static std::unique_ptr<Archives::ArchiveFile> OpenArchive(const std::string& archivePath);
+	static std::vector<std::string> GetArchiveFilenames(const std::string& directory);
+	static void ConsoleHelper::CheckIfPathsEmpty(const std::vector<std::string>& paths);
+	static std::string CreateTempDirectory();
+	static void ListContentsOfArchive(const std::string& archiveFilename);
 };

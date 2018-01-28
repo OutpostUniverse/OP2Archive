@@ -10,12 +10,12 @@ class ConsoleRemove : ConsoleModifyBase
 {
 public:
 	ConsoleRemove() : ConsoleModifyBase("File(s) successfully removed from archive") {};
-	void removeCommand(const ConsoleArgs& consoleArgs);
+	void RemoveCommand(const ConsoleArgs& consoleArgs);
 
 private:
-	void outputInitialAddMessage(const std::string& archiveFilename, int fileCountToRemove);
-	std::vector<std::string> removeMatchingFilenames(Archives::ArchiveFile& archive, const std::vector<std::string>& filesToRemove);
-	void throwUnfoundFileDuringRemoveException(std::vector<std::string> unfoundFilenames);
-	void checkFilesAvailableToRemove(Archives::ArchiveFile& archive, const std::vector<std::string>& filesToRemove, bool quiet);
-	void extractFiles(Archives::ArchiveFile& archive, const std::vector<std::string> internalFilenames);
+	void OutputInitialAddMessage(const std::string& archiveFilename, int fileCountToRemove);
+	std::vector<std::string> RemoveMatchingFilenames(Archives::ArchiveFile& archive, const std::vector<std::string>& filesToRemove);
+	void ThrowUnfoundFileDuringRemoveException(std::vector<std::string> unfoundFilenames);
+	void CheckFilesAvailableToRemove(Archives::ArchiveFile& archive, const std::vector<std::string>& filesToRemove, bool quiet);
+	void ExtractFiles(Archives::ArchiveFile& archive, const std::vector<std::string> internalFilenames);
 };

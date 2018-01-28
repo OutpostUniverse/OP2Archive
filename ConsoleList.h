@@ -7,11 +7,11 @@
 class ConsoleList
 {
 public:
-	void listCommand(const ConsoleArgs& consoleArgs);
+	void ListCommand(const ConsoleArgs& consoleArgs);
 
 private:
 	ArchiveConsoleListing archiveConsoleListing;
 
-	void listArchiveContents(const std::string& filename);
-	void listAllArchivesInDirectory(const std::string& directory);
+	void ListArchiveContents(const std::string& filename);
+	void ListAllArchivesInDirectory(const std::string& directory);
 };

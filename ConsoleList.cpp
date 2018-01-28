@@ -8,34 +8,34 @@
 using namespace std;
 using namespace Archives;
 
-void ConsoleList::listCommand(const ConsoleArgs& consoleArgs)
+void ConsoleList::ListCommand(const ConsoleArgs& consoleArgs)
 {
-	ConsoleHelper::checkIfPathsEmpty(consoleArgs.paths);
+	ConsoleHelper::CheckIfPathsEmpty(consoleArgs.paths);
 
 	for (string path : consoleArgs.paths)
 	{
 		if (XFile::isDirectory(path))
-			listAllArchivesInDirectory(path);
-		else if (ConsoleHelper::isArchiveExtension(path))
-			listArchiveContents(path);
+			ListAllArchivesInDirectory(path);
+		else if (ConsoleHelper::IsArchiveExtension(path))
+			ListArchiveContents(path);
 		else
 			throw invalid_argument("You must provide either a directory or a file of type (.vol|.clm).");
 	}
 }
 
-void ConsoleList::listArchiveContents(const string& filename)
+void ConsoleList::ListArchiveContents(const string& filename)
 {
-	unique_ptr<ArchiveFile> archive = ConsoleHelper::openArchive(filename);
-	archiveConsoleListing.listContents(*archive);
+	unique_ptr<ArchiveFile> archive = ConsoleHelper::OpenArchive(filename);
+	archiveConsoleListing.ListContents(*archive);
 }
 
-void ConsoleList::listAllArchivesInDirectory(const string& directory)
+void ConsoleList::ListAllArchivesInDirectory(const string& directory)
 {
-	vector<string> archiveFilenames = ConsoleHelper::getArchiveFilenames(directory);
+	vector<string> archiveFilenames = ConsoleHelper::GetArchiveFilenames(directory);
 
 	cout << archiveFilenames.size() << " archive file(s) located." << endl;
 	cout << ConsoleHelper::dashedLine << endl << endl;
 
 	for (const string& filename : archiveFilenames)
-		listArchiveContents(filename);
+		ListArchiveContents(filename);
 }

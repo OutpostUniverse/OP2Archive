@@ -10,7 +10,7 @@ class ConsoleArgumentParser
 {
 public:
 	ConsoleArgumentParser();
-	ConsoleArgs sortArguments(int argc, char **argv);
+	ConsoleArgs SortArguments(int argc, char **argv);
 
 private:
 	// Represents an argument (switch) passed into the console application from the command line.
@@ -31,7 +31,7 @@ private:
 		std::function<void(const char*, ConsoleArgs&)> parseFunction;
 		int numberOfArgs; // The switch statement itself does not count as an argument.
 
-		bool argumentMatch(std::string argument)
+		bool ArgumentMatch(std::string argument)
 		{
 			return argument == shortSwitch || argument == longSwitch;
 		}
@@ -39,19 +39,19 @@ private:
 
 	std::vector<ConsoleSwitch> consoleSwitches;
 
-	ConsoleCommand parseCommand(const std::string& commandStr);
-	bool checkTooFewArguments(int numberOfArguments);
-	void parseArgument(char** argv, int& i, int argc, ConsoleArgs& consoleArgs);
+	ConsoleCommand ParseCommand(const std::string& commandStr);
+	bool CheckTooFewArguments(int numberOfArguments);
+	void ParseArgument(char** argv, int& i, int argc, ConsoleArgs& consoleArgs);
 
-	void checkForMissingSwitchArgument(int index, int argc, int numberOfArgsToPass);
-	bool findSwitch(char* argumentChar, ConsoleSwitch& currentSwitch);
+	void CheckForMissingSwitchArgument(int index, int argc, int numberOfArgsToPass);
+	bool FindSwitch(char* argumentChar, ConsoleSwitch& currentSwitch);
 
-	static void parseHelp(const char* value, ConsoleArgs& consoleArgs);
-	static void parseQuiet(const char* value, ConsoleArgs& consoleArgs);
-	static void parseDestDirectory(const char* value, ConsoleArgs& consoleArgs);
-	static void parseOverwrite(const char* value, ConsoleArgs& consoleArgs);
-	static void parseCompressionFormat(const char* value, ConsoleArgs& consoleArgs);
+	static void ParseHelp(const char* value, ConsoleArgs& consoleArgs);
+	static void ParseQuiet(const char* value, ConsoleArgs& consoleArgs);
+	static void ParseDestDirectory(const char* value, ConsoleArgs& consoleArgs);
+	static void ParseOverwrite(const char* value, ConsoleArgs& consoleArgs);
+	static void ParseCompressionFormat(const char* value, ConsoleArgs& consoleArgs);
 
-	static Archives::CompressionType parseCompression(const std::string& compressionStr);
-	bool parseBool(const std::string& str);
+	static Archives::CompressionType ParseCompression(const std::string& compressionStr);
+	bool ParseBool(const std::string& str);
 };

@@ -4,15 +4,15 @@
 
 using namespace std;
 
-void ConsoleFind::findCommand(const ConsoleArgs& consoleArgs)
+void ConsoleFind::FindCommand(const ConsoleArgs& consoleArgs)
 {
-	ConsoleHelper::checkIfPathsEmpty(consoleArgs.paths);
+	ConsoleHelper::CheckIfPathsEmpty(consoleArgs.paths);
 
 	for (string path : consoleArgs.paths)
-		findFileInArchives(path);
+		FindFileInArchives(path);
 }
 
-void ConsoleFind::findFileInArchives(const string& path)
+void ConsoleFind::FindFileInArchives(const string& path)
 {
 	string directory = XFile::getDirectory(path);
 	ResourceManager resourceManager(directory);

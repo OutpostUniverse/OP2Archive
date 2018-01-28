@@ -7,21 +7,21 @@
 using namespace std;
 using namespace Archives;
 
-void ConsoleExtract::extractCommand(const ConsoleArgs& consoleArgs)
+void ConsoleExtract::ExtractCommand(const ConsoleArgs& consoleArgs)
 {
-	ConsoleHelper::checkIfPathsEmpty(consoleArgs.paths);
+	ConsoleHelper::CheckIfPathsEmpty(consoleArgs.paths);
 
 	string pathToExtractFrom = consoleArgs.paths[0];
 
 
-	if (ConsoleHelper::isArchiveExtension(pathToExtractFrom))
+	if (ConsoleHelper::IsArchiveExtension(pathToExtractFrom))
 	{
 		vector<string> filesToExtract(consoleArgs.paths.begin() + 1, consoleArgs.paths.end());
-		extractFromArchive(pathToExtractFrom, filesToExtract, consoleArgs.consoleSettings);
+		ExtractFromArchive(pathToExtractFrom, filesToExtract, consoleArgs.consoleSettings);
 	}
 	else if (XFile::isDirectory(pathToExtractFrom))
 	{
-		extractFromDirectory(pathToExtractFrom, consoleArgs.consoleSettings);
+		ExtractFromDirectory(pathToExtractFrom, consoleArgs.consoleSettings);
 	}
 	else
 	{
@@ -29,47 +29,47 @@ void ConsoleExtract::extractCommand(const ConsoleArgs& consoleArgs)
 	}
 }
 
-void ConsoleExtract::extractFromDirectory(const string& directory, const ConsoleSettings& consoleSettings)
+void ConsoleExtract::ExtractFromDirectory(const string& directory, const ConsoleSettings& consoleSettings)
 {
-	vector<string> archiveFilenames = ConsoleHelper::getArchiveFilenames(directory);
+	vector<string> archiveFilenames = ConsoleHelper::GetArchiveFilenames(directory);
 
 	for (string archiveFilename : archiveFilenames)
 	{
 		string archivePath = XFile::appendSubDirectory(archiveFilename, directory);
-		unique_ptr<ArchiveFile> archive = ConsoleHelper::openArchive(archivePath);
-		extractAllFiles(*archive, consoleSettings);
+		unique_ptr<ArchiveFile> archive = ConsoleHelper::OpenArchive(archivePath);
+		ExtractAllFiles(*archive, consoleSettings);
 	}
 }
 
-void ConsoleExtract::extractFromArchive(const string& archiveFilename, const vector<string>& filesToExtract, const ConsoleSettings& consoleSettings)
+void ConsoleExtract::ExtractFromArchive(const string& archiveFilename, const vector<string>& filesToExtract, const ConsoleSettings& consoleSettings)
 {
-	unique_ptr<ArchiveFile> archiveFile = ConsoleHelper::openArchive(archiveFilename);
+	unique_ptr<ArchiveFile> archiveFile = ConsoleHelper::OpenArchive(archiveFilename);
 
 	// If no files provided, extract entire contents of archive.
 	if (filesToExtract.size() == 0)
 	{
-		extractAllFiles(*archiveFile, consoleSettings);
+		ExtractAllFiles(*archiveFile, consoleSettings);
 		return;
 	}
 
 	// If specific files provided, only extract provided files.
 	for (size_t i = 0; i < filesToExtract.size(); ++i)
-		extractSpecificFile(*archiveFile, filesToExtract[i], consoleSettings);
+		ExtractSpecificFile(*archiveFile, filesToExtract[i], consoleSettings);
 }
 
-void ConsoleExtract::extractAllFiles(ArchiveFile& archiveFile, const ConsoleSettings& consoleSettings)
+void ConsoleExtract::ExtractAllFiles(ArchiveFile& archiveFile, const ConsoleSettings& consoleSettings)
 {
 	if (!consoleSettings.quiet)
 		cout << "Extracting all " << archiveFile.GetNumberOfPackedFiles() << " file(s) from archive " << archiveFile.GetVolumeFileName() << "." << endl;
 
 	for (int i = 0; i < archiveFile.GetNumberOfPackedFiles(); ++i)
-		extractSpecificFile(archiveFile, archiveFile.GetInternalFileName(i), consoleSettings);
+		ExtractSpecificFile(archiveFile, archiveFile.GetInternalFileName(i), consoleSettings);
 
 	if (!consoleSettings.quiet)
 		cout << "Extraction Finished." << endl;
 }
 
-void ConsoleExtract::extractSpecificFile(ArchiveFile& archiveFile, const string& filename, const ConsoleSettings& consoleSettings)
+void ConsoleExtract::ExtractSpecificFile(ArchiveFile& archiveFile, const string& filename, const ConsoleSettings& consoleSettings)
 {
 	if (!XFile::pathExists(consoleSettings.destDirectory))
 		XFile::createDirectory(consoleSettings.destDirectory);
@@ -79,18 +79,17 @@ void ConsoleExtract::extractSpecificFile(ArchiveFile& archiveFile, const string&
 	
 	if (!consoleSettings.overwrite)
 	{
-		if (checkIfFileExists(destPath, consoleSettings.quiet))
+		if (CheckIfFileExists(destPath, consoleSettings.quiet))
 			return;
-	}
-		
+	}		
 
 	bool success = archiveFile.ExtractFile(archiveFileIndex, destPath.c_str());
 
 	if (!consoleSettings.quiet)
-		outputExtractionMessage(success, filename);
+		OutputExtractionMessage(success, filename);
 }
 
-bool ConsoleExtract::checkIfFileExists(string path, bool quiet)
+bool ConsoleExtract::CheckIfFileExists(string path, bool quiet)
 {
 	if (XFile::pathExists(path))
 	{
@@ -103,7 +102,7 @@ bool ConsoleExtract::checkIfFileExists(string path, bool quiet)
 	return false;
 }
 
-void ConsoleExtract::outputExtractionMessage(bool success, string filename)
+void ConsoleExtract::OutputExtractionMessage(bool success, string filename)
 {
 	if (success)
 		cout << filename << " extracted." << endl;
