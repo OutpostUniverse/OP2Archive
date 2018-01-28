@@ -22,4 +22,7 @@ private:
 
 	std::vector<std::string> SortPathsByFilename(std::vector<std::string> paths);
 	std::vector<std::string> GetFilenamesFromPaths(std::vector<std::string> paths);
+	
+	// Must be static for passing into the sort alogrithm.
+	static bool ComparePathFilenames(const std::string path1, const std::string path2);
 };

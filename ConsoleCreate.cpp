@@ -6,9 +6,6 @@
 using namespace std;
 using namespace Archives;
 
-// Cannot exist inside the class definition and work as a function object for passing into std::stable_sort.
-bool ComparePathFilenames(const std::string path1, const std::string path2);
-
 void ConsoleCreate::CreateCommand(const ConsoleArgs& consoleArgs)
 {
 	ConsoleHelper::CheckIfPathsEmpty(consoleArgs.paths);
@@ -140,7 +137,7 @@ vector<string> ConsoleCreate::SortPathsByFilename(vector<string> paths)
 
 // Compares 2 filenames to determine which comes first alphabetically.
 // Does not compare the entire path, but only the filename.
-bool ComparePathFilenames(const string path1, const string path2)
+bool ConsoleCreate::ComparePathFilenames(const string path1, const string path2)
 {
 	return XFile::getFilename(path1) < XFile::getFilename(path2);
 }
