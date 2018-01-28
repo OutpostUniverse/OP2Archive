@@ -11,4 +11,3 @@ public:
 private:
 	void FindFileInArchives(const std::string& path);
 };
-
