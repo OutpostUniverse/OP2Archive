@@ -23,7 +23,7 @@ void ConsoleRemove::RemoveCommand(const ConsoleArgs& consoleArgs)
 
 	const vector<string> archiveInternalFilenames = RemoveMatchingFilenames(*archive, filesToRemove);
 
-	ExtractFiles(*archive, archiveInternalFilenames);
+	ExtractFilesFromOriginalArchive(*archive, archiveInternalFilenames);
 
 	archive.reset();
 
@@ -78,7 +78,8 @@ void ConsoleRemove::CheckFilesAvailableToRemove(ArchiveFile& archive, const vect
 		ThrowUnfoundFileDuringRemoveException(unfoundFilenames);
 }
 
-void ConsoleRemove::ExtractFiles(ArchiveFile& archive, const vector<string> internalFilenames)
+// The REMOVE command actually extracts the contents of an archive, deletes the archive, and then recreates the archive.
+void ConsoleRemove::ExtractFilesFromOriginalArchive(ArchiveFile& archive, const vector<string> internalFilenames)
 {
 	for (size_t i = 0; i < internalFilenames.size(); ++i)
 	{

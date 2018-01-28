@@ -20,7 +20,7 @@ void ConsoleAdd::AddCommand(const ConsoleArgs& consoleArgs)
 
 	CheckFilesExist(filesToAdd);
 
-	vector<string> extractedFiles = ExtractFiles(archiveFilename, filesToAdd, consoleArgs.consoleSettings.overwrite);
+	vector<string> extractedFiles = ExtractFilesFromOriginalArchive(archiveFilename, filesToAdd, consoleArgs.consoleSettings.overwrite);
 
 	filesToAdd.insert(filesToAdd.end(), extractedFiles.begin(), extractedFiles.end());
 
@@ -44,7 +44,8 @@ bool ConsoleAdd::ArchivedFileTaggedForOverwrite(const string& internalFilename, 
 	return false;
 }
 
-vector<string> ConsoleAdd::ExtractFiles(const string& archiveFilename, const vector<string>& internalFilenames, bool overwrite)
+// The ADD command actually extracts the contents of an archive, deletes the archive, and then recreates the archive.
+vector<string> ConsoleAdd::ExtractFilesFromOriginalArchive(const string& archiveFilename, const vector<string>& internalFilenames, bool overwrite)
 {
 	unique_ptr<ArchiveFile> archive = ConsoleHelper::OpenArchive(archiveFilename);
 
