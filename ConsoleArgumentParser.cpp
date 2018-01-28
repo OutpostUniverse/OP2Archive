@@ -17,7 +17,7 @@ ConsoleArgumentParser::ConsoleArgumentParser()
 
 bool ConsoleArgumentParser::FindSwitch(char* argumentChar, ConsoleSwitch& currentSwitch)
 {
-	string argument = StringHelper::convertToUpper(argumentChar);
+	string argument = StringHelper::ConvertToUpper(argumentChar);
 
 	// Remove trailing colon from switch statements.
 	if (argument.size() > 0 && argument[argument.size() - 1] == ':')
@@ -58,7 +58,7 @@ ConsoleArgs ConsoleArgumentParser::SortArguments(int argc, char **argv)
 
 ConsoleCommand ConsoleArgumentParser::ParseCommand(const string& commandStr)
 {
-	string commandStrUpper = StringHelper::convertToUpper(commandStr);
+	string commandStrUpper = StringHelper::ConvertToUpper(commandStr);
 
 	if (commandStrUpper == "LIST")
 		return ConsoleCommand::List;
@@ -109,7 +109,7 @@ void ConsoleArgumentParser::ParseArgument(char** argv, int& i, int argc, Console
 
 CompressionType ConsoleArgumentParser::ParseCompression(const string& compressionStr)
 {
-	string compressionStrUpper = StringHelper::convertToUpper(compressionStr);
+	string compressionStrUpper = StringHelper::ConvertToUpper(compressionStr);
 
 	if (compressionStrUpper == "NONE" || compressionStrUpper == "UNCOMPRESSED")
 		return Archives::CompressionType::Uncompressed;
@@ -128,7 +128,7 @@ CompressionType ConsoleArgumentParser::ParseCompression(const string& compressio
 
 bool ConsoleArgumentParser::ParseBool(const string& str)
 {
-	string upperStr = StringHelper::convertToUpper(str);
+	string upperStr = StringHelper::ConvertToUpper(str);
 
 	if (upperStr == "TRUE" || upperStr == "YES")
 		return true;

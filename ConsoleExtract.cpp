@@ -19,7 +19,7 @@ void ConsoleExtract::ExtractCommand(const ConsoleArgs& consoleArgs)
 		vector<string> filesToExtract(consoleArgs.paths.begin() + 1, consoleArgs.paths.end());
 		ExtractFromArchive(pathToExtractFrom, filesToExtract, consoleArgs.consoleSettings);
 	}
-	else if (XFile::isDirectory(pathToExtractFrom))
+	else if (XFile::IsDirectory(pathToExtractFrom))
 	{
 		ExtractFromDirectory(pathToExtractFrom, consoleArgs.consoleSettings);
 	}
@@ -35,7 +35,7 @@ void ConsoleExtract::ExtractFromDirectory(const string& directory, const Console
 
 	for (string archiveFilename : archiveFilenames)
 	{
-		string archivePath = XFile::appendSubDirectory(archiveFilename, directory);
+		string archivePath = XFile::AppendSubDirectory(archiveFilename, directory);
 		unique_ptr<ArchiveFile> archive = ConsoleHelper::OpenArchive(archivePath);
 		ExtractAllFiles(*archive, consoleSettings);
 	}
@@ -71,10 +71,10 @@ void ConsoleExtract::ExtractAllFiles(ArchiveFile& archiveFile, const ConsoleSett
 
 void ConsoleExtract::ExtractSpecificFile(ArchiveFile& archiveFile, const string& filename, const ConsoleSettings& consoleSettings)
 {
-	if (!XFile::pathExists(consoleSettings.destDirectory))
-		XFile::createDirectory(consoleSettings.destDirectory);
+	if (!XFile::PathExists(consoleSettings.destDirectory))
+		XFile::NewDirectory(consoleSettings.destDirectory);
 
-	string destPath = XFile::replaceFilename(consoleSettings.destDirectory, filename).c_str();
+	string destPath = XFile::ReplaceFilename(consoleSettings.destDirectory, filename).c_str();
 	int archiveFileIndex = archiveFile.GetInternalFileIndex(filename.c_str());
 	
 	if (!consoleSettings.overwrite)
@@ -91,7 +91,7 @@ void ConsoleExtract::ExtractSpecificFile(ArchiveFile& archiveFile, const string&
 
 bool ConsoleExtract::CheckIfFileExists(string path, bool quiet)
 {
-	if (XFile::pathExists(path))
+	if (XFile::PathExists(path))
 	{
 		if (!quiet)
 			cerr << "A file with the same name already exists at " + path + "." << endl;

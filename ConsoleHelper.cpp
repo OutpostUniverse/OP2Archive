@@ -9,7 +9,7 @@ string ConsoleHelper::dashedLine = "--------------------------------------------
 
 bool ConsoleHelper::IsArchiveExtension(const string& filename)
 {
-	return XFile::extensionMatches(filename, "VOL") || XFile::extensionMatches(filename, "CLM");
+	return XFile::ExtensionMatches(filename, "VOL") || XFile::ExtensionMatches(filename, "CLM");
 }
 
 void ConsoleHelper::CheckIfPathsEmpty(const vector<string>& paths)
@@ -20,10 +20,10 @@ void ConsoleHelper::CheckIfPathsEmpty(const vector<string>& paths)
 
 unique_ptr<ArchiveFile> ConsoleHelper::OpenArchive(const string& archivePath)
 {
-	if (XFile::extensionMatches(archivePath, "VOL"))
+	if (XFile::ExtensionMatches(archivePath, "VOL"))
 		return make_unique<VolFile>(archivePath.c_str());
 
-	if (XFile::extensionMatches(archivePath, "CLM"))
+	if (XFile::ExtensionMatches(archivePath, "CLM"))
 		return make_unique<ClmFile>(archivePath.c_str());
 
 	throw invalid_argument("Provided filename is not an archive file (.VOL/.CLM)");
@@ -31,8 +31,8 @@ unique_ptr<ArchiveFile> ConsoleHelper::OpenArchive(const string& archivePath)
 
 vector<string> ConsoleHelper::GetArchiveFilenames(const string& directory)
 {
-	vector<string> archiveFilenames = XFile::getFilesFromDirectory(directory, ".vol");
-	vector<string> clmFilenames = XFile::getFilesFromDirectory(directory, ".clm");
+	vector<string> archiveFilenames = XFile::GetFilesFromDirectory(directory, ".vol");
+	vector<string> clmFilenames = XFile::GetFilesFromDirectory(directory, ".clm");
 
 	archiveFilenames.insert(std::end(archiveFilenames), std::begin(clmFilenames), std::end(clmFilenames));
 
@@ -46,7 +46,7 @@ string ConsoleHelper::CreateTempDirectory()
 
 	string directory("./OP2ArchiveTemp-" + to_string(number));
 
-	XFile::createDirectory(directory);
+	XFile::NewDirectory(directory);
 
 	return directory;
 }

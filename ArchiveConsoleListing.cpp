@@ -9,7 +9,7 @@ using namespace Archives;
 
 void ArchiveConsoleListing::ListContents(ArchiveFile& archiveFile)
 {
-	string filename = XFile::getFilename(archiveFile.GetVolumeFileName());
+	string filename = XFile::GetFilename(archiveFile.GetVolumeFileName());
 
 	if (archiveFile.GetNumberOfPackedFiles() == 0)
 	{

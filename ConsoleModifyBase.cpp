@@ -17,7 +17,7 @@ ConsoleModifyBase::ConsoleModifyBase(const string& successMessage)
 ConsoleModifyBase::~ConsoleModifyBase()
 {
 	if (!tempDirectory.empty())
-		XFile::deletePath(tempDirectory);
+		XFile::DeletePath(tempDirectory);
 }
 
 vector<string> ConsoleModifyBase::GetFilesToModify(const ConsoleArgs& consoleArgs)

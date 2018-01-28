@@ -27,7 +27,7 @@ void ConsoleRemove::RemoveCommand(const ConsoleArgs& consoleArgs)
 
 	archive.reset();
 
-	vector<string> filenames = XFile::getFilesFromDirectory(tempDirectory);
+	vector<string> filenames = XFile::GetFilesFromDirectory(tempDirectory);
 
 	CreateModifiedArchive(archiveFilename, filenames, consoleArgs.consoleSettings.quiet);
 }
@@ -45,7 +45,7 @@ vector<string> ConsoleRemove::RemoveMatchingFilenames(ArchiveFile& archive, cons
 	for (int i = 0; i < archive.GetNumberOfPackedFiles(); ++i)
 		internalFilenames.push_back(archive.GetInternalFileName(i));
 
-	return StringHelper::removeMatchingStrings(internalFilenames, filesToRemove);
+	return StringHelper::RemoveMatchingStrings(internalFilenames, filesToRemove);
 }
 
 void ConsoleRemove::ThrowUnfoundFileDuringRemoveException(vector<string> unfoundFilenames)
@@ -72,7 +72,7 @@ void ConsoleRemove::CheckFilesAvailableToRemove(ArchiveFile& archive, const vect
 	for (int i = 0; i < archive.GetNumberOfPackedFiles(); ++i)
 		internalFilenames.push_back(archive.GetInternalFileName(i));
 
-	vector<string> unfoundFilenames = StringHelper::removeMatchingStrings(filesToRemove, internalFilenames);
+	vector<string> unfoundFilenames = StringHelper::RemoveMatchingStrings(filesToRemove, internalFilenames);
 
 	if (unfoundFilenames.size() > 0)
 		ThrowUnfoundFileDuringRemoveException(unfoundFilenames);
@@ -85,7 +85,7 @@ void ConsoleRemove::ExtractFilesFromOriginalArchive(ArchiveFile& archive, const 
 	{
 		string filename(internalFilenames[i]);
 		int index = archive.GetInternalFileIndex(filename.c_str());
-		string pathToExtractTo = XFile::appendSubDirectory(filename, tempDirectory);
+		string pathToExtractTo = XFile::AppendSubDirectory(filename, tempDirectory);
 
 		if (!archive.ExtractFile(index, pathToExtractTo.c_str()))
 			throw runtime_error("Unable to extract file " + filename + " from original archive. Operation Aborted.");

@@ -37,7 +37,7 @@ bool ConsoleAdd::ArchivedFileTaggedForOverwrite(const string& internalFilename, 
 {
 	for (string fileToAdd : filesToAdd)
 	{
-		if (XFile::pathsAreEqual(XFile::getFilename(fileToAdd), internalFilename))
+		if (XFile::PathsAreEqual(XFile::GetFilename(fileToAdd), internalFilename))
 			return true;
 	}
 
@@ -60,21 +60,21 @@ vector<string> ConsoleAdd::ExtractFilesFromOriginalArchive(const string& archive
 
 		if (!taggedForOverwrite)
 		{
-			bool extractionSuccessful = archive->ExtractFile(i, XFile::appendSubDirectory(internalFilename, tempDirectory).c_str());
+			bool extractionSuccessful = archive->ExtractFile(i, XFile::AppendSubDirectory(internalFilename, tempDirectory).c_str());
 
 			if (!extractionSuccessful)
 				throw runtime_error("Error extracting " + internalFilename + " from archive " + archiveFilename + ". Add operation aborted.");
 		}
 	}		
 
-	return XFile::getFilesFromDirectory(tempDirectory);
+	return XFile::GetFilesFromDirectory(tempDirectory);
 }
 
 void ConsoleAdd::CheckFilesExist(const vector<string>& filenames)
 {
 	for (string filename : filenames)
 	{
-		if (!XFile::isFile(filename))
+		if (!XFile::IsFile(filename))
 			throw runtime_error(filename + " was not found. Operation aborted.");
 	}
 }

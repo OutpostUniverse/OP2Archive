@@ -14,7 +14,7 @@ void ConsoleList::ListCommand(const ConsoleArgs& consoleArgs)
 
 	for (string path : consoleArgs.paths)
 	{
-		if (XFile::isDirectory(path))
+		if (XFile::IsDirectory(path))
 			ListAllArchivesInDirectory(path);
 		else if (ConsoleHelper::IsArchiveExtension(path))
 			ListArchiveContents(path);

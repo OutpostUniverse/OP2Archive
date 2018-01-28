@@ -14,12 +14,12 @@ void ConsoleFind::FindCommand(const ConsoleArgs& consoleArgs)
 
 void ConsoleFind::FindFileInArchives(const string& path)
 {
-	string directory = XFile::getDirectory(path);
+	string directory = XFile::GetDirectory(path);
 	ResourceManager resourceManager(directory);
 
-	string filename = XFile::getFilename(path);
+	string filename = XFile::GetFilename(path);
 
-	string archiveFilename = resourceManager.findContainingArchiveFile(filename);
+	string archiveFilename = resourceManager.FindContainingArchiveFile(filename);
 
 	if (archiveFilename == "")
 		cout << "The file " << filename << " is not located in an archive at the supplied directory." << endl << endl;
