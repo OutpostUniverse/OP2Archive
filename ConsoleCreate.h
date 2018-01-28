@@ -19,4 +19,7 @@ private:
 	void checkCreateOverwrite(const std::string& archiveFilename, bool overwrite, bool quiet);
 	void outputInitialCreateMessage(const std::string& archiveFilename, int packedFileCount);
 	void outputCreateResults(int packedFileCount, const std::string& archiveFilename);
+
+	std::vector<std::string> sortPathsByFilename(std::vector<std::string> paths);
+	std::vector<std::string> getFilenamesFromPaths(std::vector<std::string> paths);
 };

@@ -6,6 +6,9 @@
 using namespace std;
 using namespace Archives;
 
+// Cannot exist inside the class definition and work as a function object for passing into std::stable_sort.
+bool comparePathFilenames(const std::string path1, const std::string path2);
+
 void ConsoleCreate::createCommand(const ConsoleArgs& consoleArgs)
 {
 	ConsoleHelper::checkIfPathsEmpty(consoleArgs.paths);
@@ -31,31 +34,32 @@ void ConsoleCreate::createCommand(const ConsoleArgs& consoleArgs)
 	}
 }
 
-void ConsoleCreate::createArchiveFile(const string& archiveFilename, const vector<string>& filenames, bool quiet)
+void ConsoleCreate::createArchiveFile(const string& archiveFilename, const vector<string>& paths, bool quiet)
 {
+	vector<string> sortedPaths = sortPathsByFilename(paths);
+	vector<string> filenames = getFilenamesFromPaths(sortedPaths);
+
 	unique_ptr<ArchiveFile> archiveFile = createArchiveTemplate(archiveFilename);
 
-	vector<string> internalFilenames;
+	if (!quiet) {
+		outputInitialCreateMessage(archiveFilename, sortedPaths.size());
+	}
 
-	for (string filename : filenames)
-		internalFilenames.push_back(XFile::getFilename(filename));
-
-	if (!quiet)
-		outputInitialCreateMessage(archiveFilename, filenames.size());
-
+	const char** pathsCArray = StringHelper::vectorToCharArray(sortedPaths);
 	const char** filenamesCArray = StringHelper::vectorToCharArray(filenames);
-	const char** internalFilenamesCArray = StringHelper::vectorToCharArray(internalFilenames);
 
-	bool success = archiveFile->CreateVolume(archiveFilename.c_str(), filenames.size(), filenamesCArray, internalFilenamesCArray);
+	bool success = archiveFile->CreateVolume(archiveFilename.c_str(), sortedPaths.size(), pathsCArray, filenamesCArray);
 
+	delete pathsCArray;
 	delete filenamesCArray;
-	delete internalFilenamesCArray;
 
-	if (!success)
+	if (!success) {
 		throw runtime_error("Error creating archive.");
+	}
 
-	if (!quiet)
-		outputCreateResults(filenames.size(), archiveFilename);
+	if (!quiet) {
+		outputCreateResults(sortedPaths.size(), archiveFilename);
+	}
 }
 
 unique_ptr<ArchiveFile> ConsoleCreate::createArchiveTemplate(const string& archiveFilename)
@@ -124,4 +128,30 @@ void ConsoleCreate::outputCreateResults(int packedFileCount, const string& archi
 			cout << "Caution: Created archive is empty (contains no files)." << endl;
 		else
 			ConsoleHelper::listContentsOfArchive(archiveFilename);
+}
+
+vector<string> ConsoleCreate::sortPathsByFilename(vector<string> paths)
+{
+	vector<string> sortedPaths(paths);
+	stable_sort(sortedPaths.begin(), sortedPaths.end(), comparePathFilenames);
+
+	return sortedPaths;
+}
+
+// Compares 2 filenames to determine which comes first alphabetically.
+// Does not compare the entire path, but only the filename.
+bool comparePathFilenames(const string path1, const string path2)
+{
+	return XFile::getFilename(path1) < XFile::getFilename(path2);
+}
+
+vector<string> ConsoleCreate::getFilenamesFromPaths(vector<string> paths)
+{
+	vector<string> filenames;
+
+	for (string filename : paths) {
+		filenames.push_back(XFile::getFilename(filename));
+	}
+
+	return filenames;
 }
