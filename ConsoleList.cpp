@@ -14,12 +14,15 @@ void ConsoleList::ListCommand(const ConsoleArgs& consoleArgs)
 
 	for (string path : consoleArgs.paths)
 	{
-		if (XFile::IsDirectory(path))
+		if (XFile::IsDirectory(path)) {
 			ListAllArchivesInDirectory(path);
-		else if (ConsoleHelper::IsArchiveExtension(path))
+		}
+		else if (ConsoleHelper::IsArchiveExtension(path)) {
 			ListArchiveContents(path);
-		else
+		}
+		else {
 			throw invalid_argument("You must provide either a directory or a file of type (.vol|.clm).");
+		}
 	}
 }
 
@@ -36,6 +39,7 @@ void ConsoleList::ListAllArchivesInDirectory(const string& directory)
 	cout << archiveFilenames.size() << " archive file(s) located." << endl;
 	cout << ConsoleHelper::dashedLine << endl << endl;
 
-	for (const string& filename : archiveFilenames)
+	for (const string& filename : archiveFilenames) {
 		ListArchiveContents(filename);
+	}
 }

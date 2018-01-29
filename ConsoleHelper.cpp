@@ -14,17 +14,20 @@ bool ConsoleHelper::IsArchiveExtension(const string& filename)
 
 void ConsoleHelper::CheckIfPathsEmpty(const vector<string>& paths)
 {
-	if (paths.size() == 0)
+	if (paths.size() == 0) {
 		throw invalid_argument("You must provide at least one file or directory. To provide the current directory, enter './'.");
+	}
 }
 
 unique_ptr<ArchiveFile> ConsoleHelper::OpenArchive(const string& archivePath)
 {
-	if (XFile::ExtensionMatches(archivePath, "VOL"))
+	if (XFile::ExtensionMatches(archivePath, "VOL")) {
 		return make_unique<VolFile>(archivePath.c_str());
+	}
 
-	if (XFile::ExtensionMatches(archivePath, "CLM"))
+	if (XFile::ExtensionMatches(archivePath, "CLM")) {
 		return make_unique<ClmFile>(archivePath.c_str());
+	}
 
 	throw invalid_argument("Provided filename is not an archive file (.VOL/.CLM)");
 }

@@ -16,24 +16,27 @@ ConsoleModifyBase::ConsoleModifyBase(const string& successMessage)
 
 ConsoleModifyBase::~ConsoleModifyBase()
 {
-	if (!tempDirectory.empty())
+	if (!tempDirectory.empty()) {
 		XFile::DeletePath(tempDirectory);
+	}
 }
 
 vector<string> ConsoleModifyBase::GetFilesToModify(const ConsoleArgs& consoleArgs)
 {
 	vector<string> filesToRemove(consoleArgs.paths.begin() + 1, consoleArgs.paths.end());
 
-	if (filesToRemove.size() == 0)
+	if (filesToRemove.size() == 0) {
 		throw runtime_error("No filename(s) provided to use in modifying the archive.");
+	}
 
 	return filesToRemove;
 }
 
 string ConsoleModifyBase::GetArchiveName(const ConsoleArgs& consoleArgs)
 {
-	if (consoleArgs.paths.size() == 0)
+	if (consoleArgs.paths.size() == 0) {
 		throw runtime_error("No archive filename provided.");
+	}
 
 	return consoleArgs.paths[0];
 }
@@ -43,8 +46,7 @@ void ConsoleModifyBase::CreateModifiedArchive(const string& archiveFilename, con
 	ConsoleCreate consoleCreate;
 	consoleCreate.CreateArchiveFile(archiveFilename, filenamesToAdd, true);
 
-	if (!quiet)
-	{
+	if (!quiet) {
 		cout << successMessage + " " + archiveFilename << endl << endl;
 		ConsoleHelper::ListContentsOfArchive(archiveFilename);
 	}

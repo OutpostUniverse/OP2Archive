@@ -12,20 +12,21 @@ void ConsoleCreate::CreateCommand(const ConsoleArgs& consoleArgs)
 
 	string archiveFilename = consoleArgs.paths[0];
 
-	if (!ConsoleHelper::IsArchiveExtension(archiveFilename))
+	if (!ConsoleHelper::IsArchiveExtension(archiveFilename)) {
 		throw runtime_error("A .vol or .clm filename must be provided to create an archive.");
+	}
 
 	CheckCreateOverwrite(archiveFilename, consoleArgs.consoleSettings.overwrite, consoleArgs.consoleSettings.quiet);
 
 	if (consoleArgs.paths.size() == 1)
 	{
-		if (false) // Brett 23AUG17: Currently no way to specify to use the default source directory.
+		if (false) { // Brett 23AUG17: Currently no way to specify to use the default source directory.
 			CreateUsingDefaultDirectory(archiveFilename, consoleArgs.consoleSettings);
+		}
 
 		CreateArchiveFile(archiveFilename, vector<string>(), consoleArgs.consoleSettings.quiet);
 	}
-	else
-	{
+	else {
 		vector<string> filenames = GatherFilesForArchive(consoleArgs.paths);
 		CreateArchiveFile(archiveFilename, filenames, consoleArgs.consoleSettings.quiet);
 	}
@@ -61,11 +62,13 @@ void ConsoleCreate::CreateArchiveFile(const string& archiveFilename, const vecto
 
 unique_ptr<ArchiveFile> ConsoleCreate::CreateArchiveTemplate(const string& archiveFilename)
 {
-	if (XFile::ExtensionMatches(archiveFilename, "VOL"))
+	if (XFile::ExtensionMatches(archiveFilename, "VOL")) {
 		return make_unique<VolFile>("VolTemplate.vol");
+	}
 
-	if (XFile::ExtensionMatches(archiveFilename, "CLM"))
+	if (XFile::ExtensionMatches(archiveFilename, "CLM")) {
 		return make_unique<ClmFile>("ClmTemplate.clm");
+	}
 
 	throw runtime_error("Unable to open archive template files VolTemplate.vol and/or ClmTemplate.clm. Ensure both files exist in same directory as OP2Archive.exe and are not open in another application.");
 }
@@ -74,8 +77,9 @@ void ConsoleCreate::CreateUsingDefaultDirectory(const string& archiveFilename, c
 {
 	string sourceDir = XFile::ChangeFileExtension(archiveFilename, "");
 
-	if (!XFile::IsDirectory(sourceDir))
+	if (!XFile::IsDirectory(sourceDir)) {
 		throw runtime_error("The directory " + sourceDir + " does not exist. Either create this directory or explicity specify the source directory/files.");
+	}
 
 	vector<string> filenames = XFile::GetFilesFromDirectory(sourceDir);
 
@@ -93,8 +97,9 @@ vector<string> ConsoleCreate::GatherFilesForArchive(const vector<string>& paths)
 			vector<string> dirFilenames = XFile::GetFilesFromDirectory(paths[i]);
 			filenames.insert(std::end(filenames), std::begin(dirFilenames), std::end(dirFilenames));
 		}
-		else
+		else {
 			filenames.push_back(paths[i]);
+		}
 	}
 
 	return filenames;
@@ -104,10 +109,12 @@ void ConsoleCreate::CheckCreateOverwrite(const string& archiveFilename, bool ove
 {
 	if (XFile::PathExists(archiveFilename))
 	{
-		if (!overwrite)
+		if (!overwrite) {
 			throw runtime_error("Archive file already exists at specified path. If overwrite is desired add argument -o.");
-		else if (overwrite && !quiet)
+		}
+		else if (overwrite && !quiet) {
 			cout << "An archive file already exists at the specified path. Overwrite authorized by user." << endl << endl;
+		}
 	}
 }
 
@@ -119,12 +126,14 @@ void ConsoleCreate::OutputInitialCreateMessage(const string& archiveFilename, in
 
 void ConsoleCreate::OutputCreateResults(int packedFileCount, const string& archiveFilename)
 {
-		cout << "Archive created." << endl << endl;
+	cout << "Archive created." << endl << endl;
 
-		if (packedFileCount < 1)
-			cout << "Caution: Created archive is empty (contains no files)." << endl;
-		else
-			ConsoleHelper::ListContentsOfArchive(archiveFilename);
+	if (packedFileCount < 1) {
+		cout << "Caution: Created archive is empty (contains no files)." << endl;
+	}
+	else {
+		ConsoleHelper::ListContentsOfArchive(archiveFilename);
+	}
 }
 
 vector<string> ConsoleCreate::SortPathsByFilename(vector<string> paths)

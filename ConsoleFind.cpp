@@ -8,8 +8,9 @@ void ConsoleFind::FindCommand(const ConsoleArgs& consoleArgs)
 {
 	ConsoleHelper::CheckIfPathsEmpty(consoleArgs.paths);
 
-	for (string path : consoleArgs.paths)
+	for (string path : consoleArgs.paths) {
 		FindFileInArchives(path);
+	}
 }
 
 void ConsoleFind::FindFileInArchives(const string& path)
@@ -21,8 +22,10 @@ void ConsoleFind::FindFileInArchives(const string& path)
 
 	string archiveFilename = resourceManager.FindContainingArchiveFile(filename);
 
-	if (archiveFilename == "")
+	if (archiveFilename == "") {
 		cout << "The file " << filename << " is not located in an archive at the supplied directory." << endl << endl;
-	else
+	}
+	else {
 		cout << "The file " << filename << " is located in the archive " << archiveFilename << "." << endl << endl;
+	}
 }

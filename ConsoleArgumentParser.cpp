@@ -25,8 +25,7 @@ bool ConsoleArgumentParser::FindSwitch(char* argumentChar, ConsoleSwitch& curren
 
 	for (ConsoleSwitch consoleSwitch : consoleSwitches)
 	{
-		if (consoleSwitch.ArgumentMatch(argument))
-		{
+		if (consoleSwitch.ArgumentMatch(argument)) {
 			currentSwitch = consoleSwitch;
 			return true;
 		}
@@ -39,8 +38,7 @@ ConsoleArgs ConsoleArgumentParser::SortArguments(int argc, char **argv)
 {
 	ConsoleArgs consoleArgs;
 
-	if (CheckTooFewArguments(argc))
-	{
+	if (CheckTooFewArguments(argc)) {
 		consoleArgs.consoleCommand = ConsoleCommand::Help;
 		return consoleArgs;
 	}
@@ -48,8 +46,7 @@ ConsoleArgs ConsoleArgumentParser::SortArguments(int argc, char **argv)
 	string commandStr = argv[1];
 	consoleArgs.consoleCommand = ParseCommand(commandStr);
 
-	for (int i = 2; i < argc; ++i)
-	{
+	for (int i = 2; i < argc; ++i) {
 		ParseArgument(argv, i, argc, consoleArgs);
 	}
 
@@ -60,26 +57,27 @@ ConsoleCommand ConsoleArgumentParser::ParseCommand(const string& commandStr)
 {
 	string commandStrUpper = StringHelper::ConvertToUpper(commandStr);
 
-	if (commandStrUpper == "LIST")
+	if (commandStrUpper == "LIST") {
 		return ConsoleCommand::List;
-
-	if (commandStrUpper == "HELP" || commandStrUpper == "-?" || commandStrUpper == "-H")
+	}
+	if (commandStrUpper == "HELP" || commandStrUpper == "-?" || commandStrUpper == "-H") {
 		return ConsoleCommand::Help;
-
-	if (commandStrUpper == "FIND")
+	}
+	if (commandStrUpper == "FIND") {
 		return ConsoleCommand::Find;
-
-	if (commandStrUpper == "EXTRACT")
+	}
+	if (commandStrUpper == "EXTRACT") {
 		return ConsoleCommand::Extract;
-
-	if (commandStrUpper == "CREATE")
+	}
+	if (commandStrUpper == "CREATE") {
 		return ConsoleCommand::Create;
-
-	if (commandStrUpper == "ADD")
+	}
+	if (commandStrUpper == "ADD") {
 		return ConsoleCommand::Add;
-
-	if (commandStrUpper == "REMOVE")
+	}
+	if (commandStrUpper == "REMOVE") {
 		return ConsoleCommand::Remove;
+	}
 
 	throw invalid_argument("A valid command was not provided.");
 }
@@ -94,15 +92,16 @@ void ConsoleArgumentParser::ParseArgument(char** argv, int& i, int argc, Console
 	{
 		CheckForMissingSwitchArgument(i, argc, currentSwitch.numberOfArgs);
 
-		if (currentSwitch.numberOfArgs == 0)
+		if (currentSwitch.numberOfArgs == 0) {
 			currentSwitch.parseFunction(argv[i], consoleArgs);
-		else
+		}
+		else {
 			currentSwitch.parseFunction(argv[i + 1], consoleArgs);
+		}
 
 		i += currentSwitch.numberOfArgs;
 	}
-	else
-	{
+	else {
 		consoleArgs.paths.push_back(argv[i]);
 	}
 }
@@ -111,17 +110,18 @@ CompressionType ConsoleArgumentParser::ParseCompression(const string& compressio
 {
 	string compressionStrUpper = StringHelper::ConvertToUpper(compressionStr);
 
-	if (compressionStrUpper == "NONE" || compressionStrUpper == "UNCOMPRESSED")
+	if (compressionStrUpper == "NONE" || compressionStrUpper == "UNCOMPRESSED") {
 		return Archives::CompressionType::Uncompressed;
-
-	if (compressionStrUpper == "LZ")
+	}
+	if (compressionStrUpper == "LZ") {
 		return Archives::CompressionType::LZ;
-
-	if (compressionStrUpper == "LZH")
+	}
+	if (compressionStrUpper == "LZH") {
 		return Archives::CompressionType::LZH;
-
-	if (compressionStrUpper == "RLE")
+	}
+	if (compressionStrUpper == "RLE") {
 		return Archives::CompressionType::RLE;
+	}
 
 	throw invalid_argument("Unable to determine compression type. Try None, LZ, LZH, or RLE.");
 }
@@ -130,19 +130,22 @@ bool ConsoleArgumentParser::ParseBool(const string& str)
 {
 	string upperStr = StringHelper::ConvertToUpper(str);
 
-	if (upperStr == "TRUE" || upperStr == "YES")
+	if (upperStr == "TRUE" || upperStr == "YES") {
 		return true;
+	}
 
-	if (upperStr == "FALSE" || upperStr == "NO")
+	if (upperStr == "FALSE" || upperStr == "NO") {
 		return false;
+	}
 
 	throw invalid_argument("Unable to parse argument into a valid boolean (True/False).");
 }
 
 void ConsoleArgumentParser::CheckForMissingSwitchArgument(int index, int argc, int numberOfArgsToPass)
 {
-	if (index + numberOfArgsToPass >= argc)
+	if (index + numberOfArgsToPass >= argc) {
 		throw range_error("Missing the final argument for the supplied switch.");
+	}
 }
 
 void ConsoleArgumentParser::ParseHelp(const char* value, ConsoleArgs& consoleArgs)

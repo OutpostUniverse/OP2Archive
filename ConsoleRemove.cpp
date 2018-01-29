@@ -14,8 +14,9 @@ void ConsoleRemove::RemoveCommand(const ConsoleArgs& consoleArgs)
 	string archiveFilename = GetArchiveName(consoleArgs);
 	vector<string> filesToRemove = GetFilesToModify(consoleArgs);
 	
-	if (!consoleArgs.consoleSettings.quiet)
+	if (!consoleArgs.consoleSettings.quiet) {
 		OutputInitialAddMessage(archiveFilename, filesToRemove.size());
+	}
 
 	unique_ptr<ArchiveFile> archive = ConsoleHelper::OpenArchive(archiveFilename);
 
@@ -42,8 +43,9 @@ vector<string> ConsoleRemove::RemoveMatchingFilenames(ArchiveFile& archive, cons
 {
 	vector<string> internalFilenames;
 
-	for (int i = 0; i < archive.GetNumberOfPackedFiles(); ++i)
+	for (int i = 0; i < archive.GetNumberOfPackedFiles(); ++i) {
 		internalFilenames.push_back(archive.GetInternalFileName(i));
+	}
 
 	return StringHelper::RemoveMatchingStrings(internalFilenames, filesToRemove);
 }
@@ -56,8 +58,9 @@ void ConsoleRemove::ThrowUnfoundFileDuringRemoveException(vector<string> unfound
 	{
 		exceptionString += " " + unfoundFilenames[i];
 
-		if (i < unfoundFilenames.size() - 1)
+		if (i < unfoundFilenames.size() - 1) {
 			exceptionString += ",";
+		}
 	}
 
 	exceptionString += ".";
@@ -69,13 +72,15 @@ void ConsoleRemove::CheckFilesAvailableToRemove(ArchiveFile& archive, const vect
 {
 	vector<string> internalFilenames;
 
-	for (int i = 0; i < archive.GetNumberOfPackedFiles(); ++i)
+	for (int i = 0; i < archive.GetNumberOfPackedFiles(); ++i) {
 		internalFilenames.push_back(archive.GetInternalFileName(i));
+	}
 
 	vector<string> unfoundFilenames = StringHelper::RemoveMatchingStrings(filesToRemove, internalFilenames);
 
-	if (unfoundFilenames.size() > 0)
+	if (unfoundFilenames.size() > 0) {
 		ThrowUnfoundFileDuringRemoveException(unfoundFilenames);
+	}
 }
 
 // The REMOVE command actually extracts the contents of an archive, deletes the archive, and then recreates the archive.
@@ -87,7 +92,8 @@ void ConsoleRemove::ExtractFilesFromOriginalArchive(ArchiveFile& archive, const 
 		int index = archive.GetInternalFileIndex(filename.c_str());
 		string pathToExtractTo = XFile::AppendSubDirectory(filename, tempDirectory);
 
-		if (!archive.ExtractFile(index, pathToExtractTo.c_str()))
+		if (!archive.ExtractFile(index, pathToExtractTo.c_str())) {
 			throw runtime_error("Unable to extract file " + filename + " from original archive. Operation Aborted.");
+		}
 	}
 }

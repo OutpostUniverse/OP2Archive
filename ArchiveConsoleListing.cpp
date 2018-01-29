@@ -11,8 +11,7 @@ void ArchiveConsoleListing::ListContents(ArchiveFile& archiveFile)
 {
 	string filename = XFile::GetFilename(archiveFile.GetVolumeFileName());
 
-	if (archiveFile.GetNumberOfPackedFiles() == 0)
-	{
+	if (archiveFile.GetNumberOfPackedFiles() == 0) {
 		cout << filename << " is empty." << endl << endl;
 		return;
 	}
@@ -33,8 +32,9 @@ void ArchiveConsoleListing::ListContents(ArchiveFile& archiveFile)
 		string filenameBlanks = CreateBlankChars(filename.size(), filenameColumnSize);
 
 		string sizeBlanks;
-		if (filename.size() <= maxFilenameSize)
+		if (filename.size() <= maxFilenameSize) {
 			sizeBlanks = CreateBlankChars(fileSizes->at(i).size(), maxCharsInFileSize);
+		}
 
 		cout.imbue(locale(""));
 		
@@ -51,8 +51,9 @@ int ArchiveConsoleListing::FindMaxFilenameSize(ArchiveFile& archiveFile)
 	for (int i = 0; i < archiveFile.GetNumberOfPackedFiles(); ++i)
 	{
 		size_t filenameSize = string(archiveFile.GetInternalFileName(i)).size();
-		if (filenameSize > largestFilenameSize && filenameSize <= maxFilenameSize)
+		if (filenameSize > largestFilenameSize && filenameSize <= maxFilenameSize) {
 			largestFilenameSize = filenameSize;
+		}
 	}
 
 	return largestFilenameSize;
@@ -84,8 +85,9 @@ unique_ptr<vector<string>> ArchiveConsoleListing::FormatFileSizes(ArchiveFile& a
 string ArchiveConsoleListing::CreateBlankChars(size_t stringSize, int columnSize)
 {
 	size_t numberOfBlankChars = 0;
-	if (stringSize <= maxFilenameSize)
+	if (stringSize <= maxFilenameSize) {
 		numberOfBlankChars = columnSize - stringSize;
+	}
 
 	return string(numberOfBlankChars, ' ');
 }
