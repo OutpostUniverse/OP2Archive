@@ -69,14 +69,18 @@ void ConsoleExtract::ExtractAllFiles(ArchiveFile& archiveFile, const ConsoleSett
 	}
 }
 
-void ConsoleExtract::ExtractSpecificFile(ArchiveFile& archiveFile, const string& filename, const ConsoleSettings& consoleSettings)
+void ConsoleExtract::ExtractSpecificFile(ArchiveFile& archiveFile, const string& filenameToExtract, const ConsoleSettings& consoleSettings)
 {
-	if (!XFile::PathExists(consoleSettings.destDirectory)) {
+	if (!XFile::PathExists(consoleSettings.destDirectory) || !XFile::IsDirectory(consoleSettings.destDirectory)) {
 		XFile::NewDirectory(consoleSettings.destDirectory);
 	}
 
-	string destPath = XFile::ReplaceFilename(consoleSettings.destDirectory, filename).c_str();
-	int archiveFileIndex = archiveFile.GetInternalFileIndex(filename.c_str());
+	string destPath = XFile::ReplaceFilename(consoleSettings.destDirectory, filenameToExtract).c_str();
+	int archiveFileIndex = archiveFile.GetInternalFileIndex(filenameToExtract.c_str());
+
+	if (archiveFileIndex == -1) {
+		throw runtime_error("Provided filename does not exist in the archive: " + filenameToExtract + ".");
+	}
 
 	if (!consoleSettings.overwrite) {
 		if (CheckIfFileExists(destPath, consoleSettings.quiet)) {
@@ -87,7 +91,7 @@ void ConsoleExtract::ExtractSpecificFile(ArchiveFile& archiveFile, const string&
 	bool success = archiveFile.ExtractFile(archiveFileIndex, destPath.c_str());
 
 	if (!consoleSettings.quiet) {
-		OutputExtractionMessage(success, filename);
+		OutputExtractionMessage(success, filenameToExtract);
 	}
 }
 

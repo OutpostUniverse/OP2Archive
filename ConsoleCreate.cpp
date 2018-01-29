@@ -1,5 +1,6 @@
 #include "ConsoleCreate.h"
 #include "ConsoleHelper.h"
+#include "StringHelper.h"
 #include <iostream>
 #include <stdexcept>
 
@@ -36,6 +37,8 @@ void ConsoleCreate::CreateArchiveFile(const string& archiveFilename, const vecto
 {
 	vector<string> sortedPaths = SortPathsByFilename(paths);
 	vector<string> filenames = GetFilenamesFromPaths(sortedPaths);
+
+	// 
 
 	unique_ptr<ArchiveFile> archiveFile = CreateArchiveTemplate(archiveFilename);
 
@@ -139,7 +142,7 @@ void ConsoleCreate::OutputCreateResults(int packedFileCount, const string& archi
 vector<string> ConsoleCreate::SortPathsByFilename(vector<string> paths)
 {
 	vector<string> sortedPaths(paths);
-	stable_sort(sortedPaths.begin(), sortedPaths.end(), ComparePathFilenames);
+	sort(sortedPaths.begin(), sortedPaths.end(), ComparePathFilenames);
 
 	return sortedPaths;
 }
@@ -156,6 +159,10 @@ vector<string> ConsoleCreate::GetFilenamesFromPaths(vector<string> paths)
 	vector<string> filenames;
 
 	for (string filename : paths) {
+		if (StringHelper::ContainsStringCaseInsensitive(filenames, filename)) {
+			throw runtime_error("Attempting to create a vol file containing 2 files with the same filename.");
+		}
+			
 		filenames.push_back(XFile::GetFilename(filename));
 	}
 
