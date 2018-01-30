@@ -87,6 +87,12 @@ Source code may be found at: https://github.com/OutpostUniverse/OP2Archive. See 
 
 +++ CHANGE LOG +++
 
+Ver 1.1.0
+ * Bug Fix and Feature Change: Sort all filenames alphabetically during CREATE command.
+ * Error Handling: Attempting to CREATE a repository that would contain 2 files with the same name results in an error message.
+ * Error Handling: Attempting to EXTRACT a directory from an Archive results in an error message.
+ * General code cleaning.
+
 Ver 1.0.2
  * Fix bug where program crashes when attempting to extract a directory from a vol file.
 

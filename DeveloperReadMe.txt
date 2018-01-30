@@ -17,7 +17,7 @@ Post Build Event Notes: When in RELEASE mode, a command prompt script will run o
 
  1. Update ReadMe.txt with changes and new version numer. See http://semver.org/ for versioning guidelines.
  2. Set new version number at top of OP2Archive main.cpp AND in post build event batch script.
- 3. Consider tagging current version in repository.
+ 3. Tag current version in repository.
  4. Set Solution Configuration to Release.
  5. Set Solution Platform to x86. (x64 is not currently supported due to some WINAPI code within OP2Utility Archives).
  6. Compile Code. 
@@ -26,4 +26,4 @@ Post Build Event Notes: When in RELEASE mode, a command prompt script will run o
     * VolTemplate.vol
     * ClmTemplate.clm
     * ReadMe.txt
- 8. Place zip file on the Outpost Universe Website.
+ 8. Place zip file on the Outpost Universe GitHub repository.
