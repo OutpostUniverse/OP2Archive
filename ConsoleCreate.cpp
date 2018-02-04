@@ -145,11 +145,11 @@ vector<string> ConsoleCreate::SortPathsByFilename(vector<string> paths)
 	return sortedPaths;
 }
 
-// Compares 2 filenames to determine which comes first alphabetically.
+// Compares 2 filenames case insensitive to determine which comes first alphabetically.
 // Does not compare the entire path, but only the filename.
 bool ConsoleCreate::ComparePathFilenames(const string path1, const string path2)
 {
-	return XFile::GetFilename(path1) < XFile::GetFilename(path2);
+	return StringHelper::StringCompareCaseInsensitive(XFile::GetFilename(path1), XFile::GetFilename(path2));
 }
 
 vector<string> ConsoleCreate::GetFilenamesFromPaths(vector<string> paths)
