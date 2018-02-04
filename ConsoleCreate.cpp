@@ -38,8 +38,6 @@ void ConsoleCreate::CreateArchiveFile(const string& archiveFilename, const vecto
 	vector<string> sortedPaths = SortPathsByFilename(paths);
 	vector<string> filenames = GetFilenamesFromPaths(sortedPaths);
 
-	// 
-
 	unique_ptr<ArchiveFile> archiveFile = CreateArchiveTemplate(archiveFilename);
 
 	if (!quiet) {
