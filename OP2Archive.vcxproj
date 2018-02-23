@@ -79,7 +79,7 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <PostBuildEvent>
-      <Command>SET zipName="OP2Archive Ver1.1.0"
+      <Command>SET zipName="OP2Archive Ver1.1.1"
 SET directoryName=$(OutDir)%25zipName%25 
 
 SET pdbDirectoryName=$(OutDir)%25zipName%"_PDB"
@@ -131,7 +131,7 @@ if $(ConfigurationName) == Release (
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PostBuildEvent>
-      <Command>SET zipName="OP2Archive Ver1.1.0"
+      <Command>SET zipName="OP2Archive Ver1.1.1"
 SET directoryName=$(OutDir)%25zipName%25 
 
 SET pdbDirectoryName=$(OutDir)%25zipName%"_PDB"

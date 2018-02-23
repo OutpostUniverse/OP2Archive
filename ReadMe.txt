@@ -87,6 +87,9 @@ Source code may be found at: https://github.com/OutpostUniverse/OP2Archive. See 
 
 +++ CHANGE LOG +++
 
+Ver 1.1.1
+ * Bug Fix: During CREATE command, sort all filenames case insensitive.
+
 Ver 1.1.0
  * Bug Fix and Feature Change: Sort all filenames alphabetically during CREATE command.
  * Error Handling: Attempting to CREATE a repository that would contain 2 files with the same name results in an error message.
