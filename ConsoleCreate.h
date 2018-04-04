@@ -25,4 +25,5 @@ private:
 	
 	// Must be static for passing into the sort alogrithm.
 	static bool ComparePathFilenames(const std::string path1, const std::string path2);
+	void CheckForIllegalFilenames(std::vector<std::string> internalNames);
 };

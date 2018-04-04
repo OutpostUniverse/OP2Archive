@@ -38,6 +38,8 @@ void ConsoleCreate::CreateArchiveFile(const string& archiveFilename, const vecto
 	vector<string> sortedPaths = SortPathsByFilename(paths);
 	vector<string> filenames = GetFilenamesFromPaths(sortedPaths);
 
+	CheckForIllegalFilenames(filenames);
+
 	unique_ptr<ArchiveFile> archiveFile = CreateArchiveTemplate(archiveFilename);
 
 	if (!quiet) {
@@ -165,4 +167,14 @@ vector<string> ConsoleCreate::GetFilenamesFromPaths(vector<string> paths)
 	}
 
 	return filenames;
+}
+
+void ConsoleCreate::CheckForIllegalFilenames(std::vector<std::string> internalNames)
+{
+	for (std::string internalName : internalNames)
+	{
+		if (StringHelper::ContainsNonAsciiChars(internalName)) {
+			throw std::runtime_error("The following filename contains an illegal character and cannot be packed: " + internalName + ".");
+		}
+	}
 }
