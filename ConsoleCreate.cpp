@@ -35,31 +35,22 @@ void ConsoleCreate::CreateCommand(const ConsoleArgs& consoleArgs)
 
 void ConsoleCreate::CreateArchiveFile(const string& archiveFilename, const vector<string>& paths, bool quiet)
 {
-	vector<string> sortedPaths = SortPathsByFilename(paths);
-	vector<string> filenames = GetFilenamesFromPaths(sortedPaths);
-
-	CheckForIllegalFilenames(filenames);
+	CheckForIllegalFilenames(paths);
 
 	unique_ptr<ArchiveFile> archiveFile = CreateArchiveTemplate(archiveFilename);
 
 	if (!quiet) {
-		OutputInitialCreateMessage(archiveFilename, sortedPaths.size());
+		OutputInitialCreateMessage(archiveFilename, paths.size());
 	}
 
-	const char** pathsCArray = StringHelper::VectorToCharArray(sortedPaths);
-	const char** filenamesCArray = StringHelper::VectorToCharArray(filenames);
-
-	bool success = archiveFile->CreateVolume(archiveFilename.c_str(), sortedPaths.size(), pathsCArray, filenamesCArray);
-
-	delete pathsCArray;
-	delete filenamesCArray;
+	bool success = archiveFile->CreateVolume(archiveFilename, paths);
 
 	if (!success) {
 		throw runtime_error("Error creating archive.");
 	}
 
 	if (!quiet) {
-		OutputCreateResults(sortedPaths.size(), archiveFilename);
+		OutputCreateResults(paths.size(), archiveFilename);
 	}
 }
 
@@ -139,42 +130,14 @@ void ConsoleCreate::OutputCreateResults(int packedFileCount, const string& archi
 	}
 }
 
-vector<string> ConsoleCreate::SortPathsByFilename(vector<string> paths)
+void ConsoleCreate::CheckForIllegalFilenames(std::vector<std::string> paths)
 {
-	vector<string> sortedPaths(paths);
-	sort(sortedPaths.begin(), sortedPaths.end(), ComparePathFilenames);
-
-	return sortedPaths;
-}
-
-// Compares 2 filenames case insensitive to determine which comes first alphabetically.
-// Does not compare the entire path, but only the filename.
-bool ConsoleCreate::ComparePathFilenames(const string path1, const string path2)
-{
-	return StringHelper::StringCompareCaseInsensitive(XFile::GetFilename(path1), XFile::GetFilename(path2));
-}
-
-vector<string> ConsoleCreate::GetFilenamesFromPaths(vector<string> paths)
-{
-	vector<string> filenames;
-
-	for (string filename : paths) {
-		if (StringHelper::ContainsStringCaseInsensitive(filenames, filename)) {
-			throw runtime_error("Attempting to create a vol file containing 2 files with the same filename.");
-		}
-			
-		filenames.push_back(XFile::GetFilename(filename));
-	}
-
-	return filenames;
-}
-
-void ConsoleCreate::CheckForIllegalFilenames(std::vector<std::string> internalNames)
-{
-	for (std::string internalName : internalNames)
+	for (std::string path : paths)
 	{
-		if (StringHelper::ContainsNonAsciiChars(internalName)) {
-			throw std::runtime_error("The following filename contains an illegal character and cannot be packed: " + internalName + ".");
+		std::string filename = XFile::GetFilename(path);
+
+		if (StringHelper::ContainsNonAsciiChars(filename)) {
+			throw std::runtime_error("The following filename contains an illegal character and cannot be packed: " + filename + ".");
 		}
 	}
 }
