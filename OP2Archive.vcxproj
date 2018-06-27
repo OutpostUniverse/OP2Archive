@@ -94,8 +94,6 @@ if $(ConfigurationName) == Release (
 
     xcopy /y /d "$(ProjectDir)ReadMe.txt" %25directoryName%25
     xcopy /y /d "$(ProjectDir)License.txt" %25directoryName%25
-    xcopy /y /d "$(ProjectDir)VolTemplate.vol" %25directoryName%25
-    xcopy /y /d "$(ProjectDir)ClmTemplate.clm" %25directoryName%25
     xcopy /y /d "$(OutDir)$(TargetFileName)" %25directoryName%25
 
     xcopy /y /d "$(OutDir)OP2Archive.pdb" %25pdbDirectoryName%25
@@ -146,8 +144,6 @@ if $(ConfigurationName) == Release (
 
     xcopy /y /d "$(ProjectDir)ReadMe.txt" %25directoryName%25
     xcopy /y /d "$(ProjectDir)License.txt" %25directoryName%25
-    xcopy /y /d "$(ProjectDir)VolTemplate.vol" %25directoryName%25
-    xcopy /y /d "$(ProjectDir)ClmTemplate.clm" %25directoryName%25
     xcopy /y /d "$(OutDir)$(TargetFileName)" %25directoryName%25
 
     xcopy /y /d "$(OutDir)OP2Archive.pdb" %25pdbDirectoryName%25
