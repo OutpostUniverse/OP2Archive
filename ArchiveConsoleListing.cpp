@@ -22,7 +22,7 @@ void ArchiveConsoleListing::ListContents(ArchiveFile& archiveFile)
 	cout << "ID  " << "NAME" << string(filenameColumnSize - 4, ' ') << "  SIZE (Bytes)" << endl;
 	cout << "--------------------------------------------------" << endl;
 
-	size_t maxCharsInFileSize;
+	std::size_t maxCharsInFileSize;
 	unique_ptr<vector<string>> fileSizes = FormatFileSizes(archiveFile, maxCharsInFileSize);
 
 	for (int i = 0; i < archiveFile.GetNumberOfPackedFiles(); ++i)
@@ -46,11 +46,11 @@ void ArchiveConsoleListing::ListContents(ArchiveFile& archiveFile)
 
 int ArchiveConsoleListing::FindMaxFilenameSize(ArchiveFile& archiveFile)
 {
-	size_t largestFilenameSize = 0;
+	std::size_t largestFilenameSize = 0;
 
 	for (int i = 0; i < archiveFile.GetNumberOfPackedFiles(); ++i)
 	{
-		size_t filenameSize = string(archiveFile.GetInternalFileName(i)).size();
+		std::size_t filenameSize = string(archiveFile.GetInternalFileName(i)).size();
 		if (filenameSize > largestFilenameSize && filenameSize <= maxFilenameSize) {
 			largestFilenameSize = filenameSize;
 		}
@@ -59,7 +59,7 @@ int ArchiveConsoleListing::FindMaxFilenameSize(ArchiveFile& archiveFile)
 	return largestFilenameSize;
 }
 
-unique_ptr<vector<string>> ArchiveConsoleListing::FormatFileSizes(ArchiveFile& archiveFile, size_t& maxCharsInSize)
+unique_ptr<vector<string>> ArchiveConsoleListing::FormatFileSizes(ArchiveFile& archiveFile, std::size_t& maxCharsInSize)
 {
 	maxCharsInSize = 0;
 	unique_ptr<vector<string>> fileSizes = make_unique<vector<string>>();
@@ -67,7 +67,7 @@ unique_ptr<vector<string>> ArchiveConsoleListing::FormatFileSizes(ArchiveFile& a
 	stringstream buffer;
 	buffer.imbue(locale(""));
 
-	for (size_t i = 0; i < static_cast<size_t>(archiveFile.GetNumberOfPackedFiles()); ++i)
+	for (std::size_t i = 0; i < static_cast<std::size_t>(archiveFile.GetNumberOfPackedFiles()); ++i)
 	{
 		buffer << archiveFile.GetInternalFileSize(i);
 
@@ -82,9 +82,9 @@ unique_ptr<vector<string>> ArchiveConsoleListing::FormatFileSizes(ArchiveFile& a
 	return fileSizes;
 }
 
-string ArchiveConsoleListing::CreateBlankChars(size_t stringSize, int columnSize)
+string ArchiveConsoleListing::CreateBlankChars(std::size_t stringSize, int columnSize)
 {
-	size_t numberOfBlankChars = 0;
+	std::size_t numberOfBlankChars = 0;
 	if (stringSize <= maxFilenameSize) {
 		numberOfBlankChars = columnSize - stringSize;
 	}

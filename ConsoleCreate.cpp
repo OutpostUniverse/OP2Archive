@@ -37,16 +37,18 @@ void ConsoleCreate::CreateArchiveFile(const string& archiveFilename, const vecto
 {
 	CheckForIllegalFilenames(paths);
 
-	unique_ptr<ArchiveFile> archiveFile = CreateArchiveTemplate(archiveFilename);
-
 	if (!quiet) {
 		OutputInitialCreateMessage(archiveFilename, paths.size());
 	}
 
-	bool success = archiveFile->CreateVolume(archiveFilename, paths);
-
-	if (!success) {
-		throw runtime_error("Error creating archive.");
+	if (XFile::ExtensionMatches(archiveFilename, "vol")) {
+		VolFile::CreateArchive(archiveFilename, paths);
+	}
+	else if (XFile::ExtensionMatches(archiveFilename, "clm")) {
+		ClmFile::CreateArchive(archiveFilename, paths);
+	}
+	else {
+		throw std::runtime_error("Error attempting to create new archive. Extension must match vol or clm");
 	}
 
 	if (!quiet) {
@@ -84,7 +86,7 @@ vector<string> ConsoleCreate::GatherFilesForArchive(const vector<string>& paths)
 {
 	vector<string> filenames;
 
-	for (size_t i = 1; i < paths.size(); i++) //Skip the first path since it is the archive name.
+	for (std::size_t i = 1; i < paths.size(); i++) //Skip the first path since it is the archive name.
 	{
 		if (XFile::IsDirectory(paths[i]))
 		{

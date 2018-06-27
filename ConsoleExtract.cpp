@@ -49,7 +49,7 @@ void ConsoleExtract::ExtractFromArchive(const string& archiveFilename, const vec
 	}
 
 	// If specific files provided, only extract provided files.
-	for (size_t i = 0; i < filesToExtract.size(); ++i) {
+	for (std::size_t i = 0; i < filesToExtract.size(); ++i) {
 		ExtractSpecificFile(*archiveFile, filesToExtract[i], consoleSettings);
 	}
 }
@@ -88,10 +88,17 @@ void ConsoleExtract::ExtractSpecificFile(ArchiveFile& archiveFile, const string&
 		}
 	}
 
-	bool success = archiveFile.ExtractFile(archiveFileIndex, destPath.c_str());
-
-	if (!consoleSettings.quiet) {
-		OutputExtractionMessage(success, filenameToExtract);
+	try {
+		archiveFile.ExtractFile(archiveFileIndex, destPath.c_str());
+		if (!consoleSettings.quiet) {
+			cout << filenameToExtract << " extracted." << endl;
+		}
+	}
+	catch (const std::exception&)
+	{
+		if (!consoleSettings.quiet) {
+			cerr << "Error extracting " << filenameToExtract << endl;
+		}
 	}
 }
 
@@ -107,14 +114,4 @@ bool ConsoleExtract::CheckIfFileExists(string path, bool quiet)
 	}
 
 	return false;
-}
-
-void ConsoleExtract::OutputExtractionMessage(bool success, string filename)
-{
-	if (success) {
-		cout << filename << " extracted." << endl;
-	}
-	else {
-		cerr << "Error extracting " << filename << endl;
-	}
 }
