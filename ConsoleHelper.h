@@ -13,7 +13,7 @@ public:
 	static bool IsArchiveExtension(const std::string& filename);
 	static std::unique_ptr<Archives::ArchiveFile> OpenArchive(const std::string& archivePath);
 	static std::vector<std::string> GetArchiveFilenames(const std::string& directory);
-	static void ConsoleHelper::CheckIfPathsEmpty(const std::vector<std::string>& paths);
+	static void CheckIfPathsEmpty(const std::vector<std::string>& paths);
 	static std::string CreateTempDirectory();
 	static void ListContentsOfArchive(const std::string& archiveFilename);
 };
