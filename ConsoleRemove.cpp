@@ -47,14 +47,14 @@ vector<string> ConsoleRemove::RemoveMatchingFilenames(ArchiveFile& archive, cons
 		internalFilenames.push_back(archive.GetInternalFileName(i));
 	}
 
-	return StringHelper::RemoveMatchingStrings(internalFilenames, filesToRemove);
+	return StringHelper::RemoveStrings(internalFilenames, filesToRemove);
 }
 
 void ConsoleRemove::ThrowUnfoundFileDuringRemoveException(vector<string> unfoundFilenames)
 {
 	string exceptionString("The Following filename(s) were not found in the archive:");
 
-	for (size_t i = 0; i < unfoundFilenames.size(); ++i)
+	for (std::size_t i = 0; i < unfoundFilenames.size(); ++i)
 	{
 		exceptionString += " " + unfoundFilenames[i];
 
@@ -76,7 +76,8 @@ void ConsoleRemove::CheckFilesAvailableToRemove(ArchiveFile& archive, const vect
 		internalFilenames.push_back(archive.GetInternalFileName(i));
 	}
 
-	vector<string> unfoundFilenames = StringHelper::RemoveMatchingStrings(filesToRemove, internalFilenames);
+	// Unfound filenames are filenames requested for removal that do not exist in the archive.
+	vector<string> unfoundFilenames = StringHelper::RemoveStrings(filesToRemove, internalFilenames);
 
 	if (unfoundFilenames.size() > 0) {
 		ThrowUnfoundFileDuringRemoveException(unfoundFilenames);
@@ -86,14 +87,17 @@ void ConsoleRemove::CheckFilesAvailableToRemove(ArchiveFile& archive, const vect
 // The REMOVE command actually extracts the contents of an archive, deletes the archive, and then recreates the archive.
 void ConsoleRemove::ExtractFilesFromOriginalArchive(ArchiveFile& archive, const vector<string> internalFilenames)
 {
-	for (size_t i = 0; i < internalFilenames.size(); ++i)
+	for (std::size_t i = 0; i < internalFilenames.size(); ++i)
 	{
 		string filename(internalFilenames[i]);
 		int index = archive.GetInternalFileIndex(filename.c_str());
 		string pathToExtractTo = XFile::AppendSubDirectory(filename, tempDirectory);
 
-		if (!archive.ExtractFile(index, pathToExtractTo.c_str())) {
-			throw runtime_error("Unable to extract file " + filename + " from original archive. Operation Aborted.");
+		try {
+			archive.ExtractFile(index, pathToExtractTo.c_str());
+		}
+		catch (const std::exception& e) {
+			throw runtime_error("Unable to extract file " + filename + " from original archive. Operation Aborted. Internal Error Message: " + e.what());
 		}
 	}
 }

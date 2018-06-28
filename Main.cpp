@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 		ConsoleArgs consoleArgs = consoleArgumentParser.SortArguments(argc, argv);
 		SelectCommand(consoleArgs);
 	}
-	catch (const exception& e) {
+	catch (const std::exception& e) {
 		cerr << e.what() << endl;
 		cerr << "Run without arguments to see usage message." << endl << endl;
 

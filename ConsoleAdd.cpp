@@ -63,10 +63,13 @@ vector<string> ConsoleAdd::ExtractFilesFromOriginalArchive(const string& archive
 
 		if (!taggedForOverwrite)
 		{
-			bool extractionSuccessful = archive->ExtractFile(i, XFile::AppendSubDirectory(internalFilename, tempDirectory).c_str());
-
-			if (!extractionSuccessful) {
-				throw runtime_error("Error extracting " + internalFilename + " from archive " + archiveFilename + ". Add operation aborted.");
+			try
+			{
+				archive->ExtractFile(i, XFile::AppendSubDirectory(internalFilename, tempDirectory).c_str());
+			}
+			catch (const std::exception& e)
+			{
+				throw runtime_error("Error extracting " + internalFilename + " from archive " + archiveFilename + ". Add operation aborted. Internal error: " + e.what());
 			}
 		}
 	}		
@@ -76,7 +79,7 @@ vector<string> ConsoleAdd::ExtractFilesFromOriginalArchive(const string& archive
 
 void ConsoleAdd::CheckFilesExist(const vector<string>& filenames)
 {
-	for (string filename : filenames)
+	for (const string& filename : filenames)
 	{
 		if (!XFile::IsFile(filename)) {
 			throw runtime_error(filename + " was not found. Operation aborted.");

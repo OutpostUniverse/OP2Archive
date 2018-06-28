@@ -20,10 +20,9 @@ private:
 	void OutputInitialCreateMessage(const std::string& archiveFilename, int packedFileCount);
 	void OutputCreateResults(int packedFileCount, const std::string& archiveFilename);
 
-	std::vector<std::string> SortPathsByFilename(std::vector<std::string> paths);
-	std::vector<std::string> GetFilenamesFromPaths(std::vector<std::string> paths);
+	//std::vector<std::string> SortPathsByFileName(std::vector<std::string> paths);
 	
 	// Must be static for passing into the sort alogrithm.
 	static bool ComparePathFilenames(const std::string path1, const std::string path2);
-	void CheckForIllegalFilenames(std::vector<std::string> internalNames);
+	void CheckForIllegalFilenames(std::vector<std::string> paths);
 };

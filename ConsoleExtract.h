@@ -18,5 +18,4 @@ private:
 	void ExtractSpecificFile(Archives::ArchiveFile& archive, const std::string& filename, const ConsoleSettings& consoleSettings);
 
 	bool CheckIfFileExists(std::string path, bool quiet);
-	void OutputExtractionMessage(bool success, std::string filename);
 };
