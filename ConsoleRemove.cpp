@@ -87,17 +87,16 @@ void ConsoleRemove::CheckFilesAvailableToRemove(ArchiveFile& archive, const vect
 // The REMOVE command actually extracts the contents of an archive, deletes the archive, and then recreates the archive.
 void ConsoleRemove::ExtractFilesFromOriginalArchive(ArchiveFile& archive, const vector<string> internalFilenames)
 {
-	for (std::size_t i = 0; i < internalFilenames.size(); ++i)
+	for (const auto& internalFilename : internalFilenames)
 	{
-		string filename(internalFilenames[i]);
-		int index = archive.GetInternalFileIndex(filename.c_str());
-		string pathToExtractTo = XFile::AppendSubDirectory(filename, tempDirectory);
+		int index = archive.GetInternalFileIndex(internalFilename);
+		string pathToExtractTo = XFile::AppendSubDirectory(internalFilename, tempDirectory);
 
 		try {
-			archive.ExtractFile(index, pathToExtractTo.c_str());
+			archive.ExtractFile(index, pathToExtractTo);
 		}
 		catch (const std::exception& e) {
-			throw runtime_error("Unable to extract file " + filename + " from original archive. Operation Aborted. Internal Error Message: " + e.what());
+			throw runtime_error("Unable to extract file " + internalFilename + " from original archive. Operation Aborted. Internal Error Message: " + e.what());
 		}
 	}
 }

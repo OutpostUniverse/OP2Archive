@@ -73,8 +73,9 @@ unique_ptr<vector<string>> ArchiveConsoleListing::FormatFileSizes(ArchiveFile& a
 
 		fileSizes->push_back(buffer.str());
 
-		if (fileSizes->at(i).size() > maxCharsInSize)
+		if (fileSizes->at(i).size() > maxCharsInSize) {
 			maxCharsInSize = fileSizes->at(i).size();
+		}
 
 		buffer.str(string());
 	}

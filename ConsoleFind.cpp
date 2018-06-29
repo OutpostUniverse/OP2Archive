@@ -8,7 +8,7 @@ void ConsoleFind::FindCommand(const ConsoleArgs& consoleArgs)
 {
 	ConsoleHelper::CheckIfPathsEmpty(consoleArgs.paths);
 
-	for (string path : consoleArgs.paths) {
+	for (const auto& path : consoleArgs.paths) {
 		FindFileInArchives(path);
 	}
 }

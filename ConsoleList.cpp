@@ -12,7 +12,7 @@ void ConsoleList::ListCommand(const ConsoleArgs& consoleArgs)
 {
 	ConsoleHelper::CheckIfPathsEmpty(consoleArgs.paths);
 
-	for (string path : consoleArgs.paths)
+	for (const auto& path : consoleArgs.paths)
 	{
 		if (XFile::IsDirectory(path)) {
 			ListAllArchivesInDirectory(path);
@@ -39,7 +39,7 @@ void ConsoleList::ListAllArchivesInDirectory(const string& directory)
 	cout << archiveFilenames.size() << " archive file(s) located." << endl;
 	cout << ConsoleHelper::dashedLine << endl << endl;
 
-	for (const string& filename : archiveFilenames) {
+	for (const auto& filename : archiveFilenames) {
 		ListArchiveContents(filename);
 	}
 }

@@ -36,7 +36,7 @@ void ConsoleAdd::OutputInitialAddMessage(const string& archiveFilename, int file
 
 bool ConsoleAdd::ArchivedFileTaggedForOverwrite(const string& internalFilename, const vector<string>& filesToAdd)
 {
-	for (string fileToAdd : filesToAdd)
+	for (const auto& fileToAdd : filesToAdd)
 	{
 		if (XFile::PathsAreEqual(XFile::GetFilename(fileToAdd), internalFilename)) {
 			return true;
@@ -79,7 +79,7 @@ vector<string> ConsoleAdd::ExtractFilesFromOriginalArchive(const string& archive
 
 void ConsoleAdd::CheckFilesExist(const vector<string>& filenames)
 {
-	for (const string& filename : filenames)
+	for (const auto& filename : filenames)
 	{
 		if (!XFile::IsFile(filename)) {
 			throw runtime_error(filename + " was not found. Operation aborted.");
