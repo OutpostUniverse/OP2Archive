@@ -89,11 +89,11 @@ void ConsoleRemove::ExtractFilesFromOriginalArchive(ArchiveFile& archive, const 
 {
 	for (const auto& internalFilename : internalFilenames)
 	{
-		int index = archive.GetInternalFileIndex(internalFilename.c_str());
+		int index = archive.GetInternalFileIndex(internalFilename);
 		string pathToExtractTo = XFile::AppendSubDirectory(internalFilename, tempDirectory);
 
 		try {
-			archive.ExtractFile(index, pathToExtractTo.c_str());
+			archive.ExtractFile(index, pathToExtractTo);
 		}
 		catch (const std::exception& e) {
 			throw runtime_error("Unable to extract file " + internalFilename + " from original archive. Operation Aborted. Internal Error Message: " + e.what());
