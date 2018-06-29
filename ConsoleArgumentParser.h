@@ -31,7 +31,7 @@ private:
 		std::function<void(const char*, ConsoleArgs&)> parseFunction;
 		int numberOfArgs; // The switch statement itself does not count as an argument.
 
-		bool ArgumentMatch(std::string argument)
+		bool ArgumentMatch(std::string argument) const
 		{
 			return argument == shortSwitch || argument == longSwitch;
 		}

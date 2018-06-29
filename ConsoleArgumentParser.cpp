@@ -23,7 +23,7 @@ bool ConsoleArgumentParser::FindSwitch(char* argumentChar, ConsoleSwitch& curren
 	if (argument.size() > 0 && argument[argument.size() - 1] == ':')
 		argument.pop_back();
 
-	for (ConsoleSwitch consoleSwitch : consoleSwitches)
+	for (const auto& consoleSwitch : consoleSwitches)
 	{
 		if (consoleSwitch.ArgumentMatch(argument)) {
 			currentSwitch = consoleSwitch;

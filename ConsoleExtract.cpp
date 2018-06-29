@@ -30,7 +30,7 @@ void ConsoleExtract::ExtractFromDirectory(const string& directory, const Console
 {
 	vector<string> archiveFilenames = ConsoleHelper::GetArchiveFilenames(directory);
 
-	for (string archiveFilename : archiveFilenames)
+	for (const auto& archiveFilename : archiveFilenames)
 	{
 		string archivePath = XFile::AppendSubDirectory(archiveFilename, directory);
 		unique_ptr<ArchiveFile> archive = ConsoleHelper::OpenArchive(archivePath);
@@ -49,8 +49,8 @@ void ConsoleExtract::ExtractFromArchive(const string& archiveFilename, const vec
 	}
 
 	// If specific files provided, only extract provided files.
-	for (std::size_t i = 0; i < filesToExtract.size(); ++i) {
-		ExtractSpecificFile(*archiveFile, filesToExtract[i], consoleSettings);
+	for (const auto& fileToExtract : filesToExtract) {
+		ExtractSpecificFile(*archiveFile, fileToExtract, consoleSettings);
 	}
 }
 

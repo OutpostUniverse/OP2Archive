@@ -134,7 +134,7 @@ void ConsoleCreate::OutputCreateResults(int packedFileCount, const string& archi
 
 void ConsoleCreate::CheckForIllegalFilenames(std::vector<std::string> paths)
 {
-	for (std::string path : paths)
+	for (const auto& path : paths)
 	{
 		std::string filename = XFile::GetFilename(path);
 
