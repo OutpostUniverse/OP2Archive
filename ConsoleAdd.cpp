@@ -65,7 +65,7 @@ vector<string> ConsoleAdd::ExtractFilesFromOriginalArchive(const string& archive
 		{
 			try
 			{
-				archive->ExtractFile(i, XFile::AppendSubDirectory(internalFilename, tempDirectory).c_str());
+				archive->ExtractFile(i, XFile::AppendSubDirectory(internalFilename, tempDirectory));
 			}
 			catch (const std::exception& e)
 			{

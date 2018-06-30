@@ -22,11 +22,11 @@ void ConsoleHelper::CheckIfPathsEmpty(const vector<string>& paths)
 unique_ptr<ArchiveFile> ConsoleHelper::OpenArchive(const string& archivePath)
 {
 	if (XFile::ExtensionMatches(archivePath, "VOL")) {
-		return make_unique<VolFile>(archivePath.c_str());
+		return make_unique<VolFile>(archivePath);
 	}
 
 	if (XFile::ExtensionMatches(archivePath, "CLM")) {
-		return make_unique<ClmFile>(archivePath.c_str());
+		return make_unique<ClmFile>(archivePath);
 	}
 
 	throw invalid_argument("Provided filename is not an archive file (.VOL/.CLM)");
