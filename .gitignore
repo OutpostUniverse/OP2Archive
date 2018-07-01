@@ -5,4 +5,5 @@ Debug
 *.user
 x64
 .vs
+.build/
 Release
