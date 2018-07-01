@@ -1,9 +1,9 @@
 *.suo
 *.db
 *.opendb
-Debug
 *.user
-x64
 .vs
 .build/
+x64
+Debug
 Release
