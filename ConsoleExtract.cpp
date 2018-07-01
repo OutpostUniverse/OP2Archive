@@ -75,8 +75,8 @@ void ConsoleExtract::ExtractSpecificFile(ArchiveFile& archiveFile, const string&
 		XFile::NewDirectory(consoleSettings.destDirectory);
 	}
 
-	string destPath = XFile::ReplaceFilename(consoleSettings.destDirectory, filenameToExtract).c_str();
-	int archiveFileIndex = archiveFile.GetInternalFileIndex(filenameToExtract.c_str());
+	string destPath = XFile::ReplaceFilename(consoleSettings.destDirectory, filenameToExtract);
+	int archiveFileIndex = archiveFile.GetInternalFileIndex(filenameToExtract);
 
 	if (archiveFileIndex == -1) {
 		throw runtime_error("Provided filename does not exist in the archive: " + filenameToExtract + ".");
@@ -89,7 +89,7 @@ void ConsoleExtract::ExtractSpecificFile(ArchiveFile& archiveFile, const string&
 	}
 
 	try {
-		archiveFile.ExtractFile(archiveFileIndex, destPath.c_str());
+		archiveFile.ExtractFile(archiveFileIndex, destPath);
 		if (!consoleSettings.quiet) {
 			cout << filenameToExtract << " extracted." << endl;
 		}
