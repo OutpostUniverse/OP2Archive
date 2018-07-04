@@ -102,7 +102,7 @@ void ConsoleExtract::ExtractSpecificFile(ArchiveFile& archiveFile, const string&
 	}
 }
 
-bool ConsoleExtract::CheckIfFileExists(string path, bool quiet)
+bool ConsoleExtract::CheckIfFileExists(const string& path, bool quiet)
 {
 	if (XFile::PathExists(path))
 	{

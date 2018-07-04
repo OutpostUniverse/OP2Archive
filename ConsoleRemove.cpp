@@ -50,7 +50,7 @@ vector<string> ConsoleRemove::RemoveMatchingFilenames(ArchiveFile& archive, cons
 	return StringHelper::RemoveStrings(internalFilenames, filesToRemove);
 }
 
-void ConsoleRemove::ThrowUnfoundFileDuringRemoveException(vector<string> unfoundFilenames)
+void ConsoleRemove::ThrowUnfoundFileDuringRemoveException(const vector<string>& unfoundFilenames)
 {
 	string exceptionString("The Following filename(s) were not found in the archive:");
 

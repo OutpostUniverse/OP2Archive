@@ -15,7 +15,7 @@ public:
 private:
 	void OutputInitialAddMessage(const std::string& archiveFilename, int fileCountToRemove);
 	std::vector<std::string> RemoveMatchingFilenames(Archives::ArchiveFile& archive, const std::vector<std::string>& filesToRemove);
-	void ThrowUnfoundFileDuringRemoveException(std::vector<std::string> unfoundFilenames);
+	void ThrowUnfoundFileDuringRemoveException(const std::vector<std::string>& unfoundFilenames);
 	void CheckFilesAvailableToRemove(Archives::ArchiveFile& archive, const std::vector<std::string>& filesToRemove, bool quiet);
 	void ExtractFilesFromOriginalArchive(Archives::ArchiveFile& archive, const std::vector<std::string> internalFilenames);
 };

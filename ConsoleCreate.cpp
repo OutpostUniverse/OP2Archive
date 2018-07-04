@@ -132,7 +132,7 @@ void ConsoleCreate::OutputCreateResults(int packedFileCount, const string& archi
 	}
 }
 
-void ConsoleCreate::CheckForIllegalFilenames(std::vector<std::string> paths)
+void ConsoleCreate::CheckForIllegalFilenames(const std::vector<std::string>& paths)
 {
 	for (const auto& path : paths)
 	{
