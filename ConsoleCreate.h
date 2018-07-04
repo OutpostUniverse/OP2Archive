@@ -20,5 +20,5 @@ private:
 	void OutputInitialCreateMessage(const std::string& archiveFilename, int packedFileCount);
 	void OutputCreateResults(int packedFileCount, const std::string& archiveFilename);
 
-	void CheckForIllegalFilenames(std::vector<std::string> paths);
+	void CheckForIllegalFilenames(const std::vector<std::string>& paths);
 };
