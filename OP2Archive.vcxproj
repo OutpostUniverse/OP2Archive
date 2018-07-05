@@ -175,30 +175,30 @@ if $(ConfigurationName) == Release (
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ArchiveConsoleListing.cpp" />
-    <ClCompile Include="ConsoleAdd.cpp" />
-    <ClCompile Include="ConsoleArgumentParser.cpp" />
-    <ClCompile Include="ConsoleCreate.cpp" />
-    <ClCompile Include="ConsoleExtract.cpp" />
-    <ClCompile Include="ConsoleHelper.cpp" />
-    <ClCompile Include="ConsoleList.cpp" />
-    <ClCompile Include="ConsoleFind.cpp" />
-    <ClCompile Include="ConsoleModifyBase.cpp" />
-    <ClCompile Include="ConsoleRemove.cpp" />
-    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="src\ArchiveConsoleListing.cpp" />
+    <ClCompile Include="src\ConsoleAdd.cpp" />
+    <ClCompile Include="src\ConsoleArgumentParser.cpp" />
+    <ClCompile Include="src\ConsoleCreate.cpp" />
+    <ClCompile Include="src\ConsoleExtract.cpp" />
+    <ClCompile Include="src\ConsoleHelper.cpp" />
+    <ClCompile Include="src\ConsoleList.cpp" />
+    <ClCompile Include="src\ConsoleFind.cpp" />
+    <ClCompile Include="src\ConsoleModifyBase.cpp" />
+    <ClCompile Include="src\ConsoleRemove.cpp" />
+    <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ArchiveConsoleListing.h" />
-    <ClInclude Include="ConsoleAdd.h" />
-    <ClInclude Include="ConsoleArgumentParser.h" />
-    <ClInclude Include="ConsoleCreate.h" />
-    <ClInclude Include="ConsoleExtract.h" />
-    <ClInclude Include="ConsoleHelper.h" />
-    <ClInclude Include="ConsoleList.h" />
-    <ClInclude Include="ConsoleFind.h" />
-    <ClInclude Include="ConsoleModifyBase.h" />
-    <ClInclude Include="ConsoleRemove.h" />
-    <ClInclude Include="ConsoleSettings.h" />
+    <ClInclude Include="src\ArchiveConsoleListing.h" />
+    <ClInclude Include="src\ConsoleAdd.h" />
+    <ClInclude Include="src\ConsoleArgumentParser.h" />
+    <ClInclude Include="src\ConsoleCreate.h" />
+    <ClInclude Include="src\ConsoleExtract.h" />
+    <ClInclude Include="src\ConsoleHelper.h" />
+    <ClInclude Include="src\ConsoleList.h" />
+    <ClInclude Include="src\ConsoleFind.h" />
+    <ClInclude Include="src\ConsoleModifyBase.h" />
+    <ClInclude Include="src\ConsoleRemove.h" />
+    <ClInclude Include="src\ConsoleSettings.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="DeveloperReadMe.txt" />
