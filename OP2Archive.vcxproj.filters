@@ -15,72 +15,72 @@
     </Filter> 
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
+    <ClCompile Include="src\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ArchiveConsoleListing.cpp">
+    <ClCompile Include="src\ArchiveConsoleListing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ConsoleArgumentParser.cpp">
+    <ClCompile Include="src\ConsoleArgumentParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ConsoleExtract.cpp">
+    <ClCompile Include="src\ConsoleExtract.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ConsoleRemove.cpp">
+    <ClCompile Include="src\ConsoleRemove.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ConsoleCreate.cpp">
+    <ClCompile Include="src\ConsoleCreate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ConsoleHelper.cpp">
+    <ClCompile Include="src\ConsoleHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ConsoleAdd.cpp">
+    <ClCompile Include="src\ConsoleAdd.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ConsoleModifyBase.cpp">
+    <ClCompile Include="src\ConsoleModifyBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ConsoleList.cpp">
+    <ClCompile Include="src\ConsoleList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ConsoleFind.cpp">
+    <ClCompile Include="src\ConsoleFind.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ArchiveConsoleListing.h">
+    <ClInclude Include="src\ArchiveConsoleListing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ConsoleArgumentParser.h">
+    <ClInclude Include="src\ConsoleArgumentParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ConsoleExtract.h">
+    <ClInclude Include="src\ConsoleExtract.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ConsoleRemove.h">
+    <ClInclude Include="src\ConsoleRemove.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ConsoleCreate.h">
+    <ClInclude Include="src\ConsoleCreate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ConsoleHelper.h">
+    <ClInclude Include="src\ConsoleHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ConsoleSettings.h">
+    <ClInclude Include="src\ConsoleSettings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ConsoleAdd.h">
+    <ClInclude Include="src\ConsoleAdd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ConsoleModifyBase.h">
+    <ClInclude Include="src\ConsoleModifyBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ConsoleList.h">
+    <ClInclude Include="src\ConsoleList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ConsoleFind.h">
+    <ClInclude Include="src\ConsoleFind.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
