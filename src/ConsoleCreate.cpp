@@ -1,6 +1,6 @@
 #include "ConsoleCreate.h"
 #include "ConsoleHelper.h"
-#include "StringHelper.h"
+#include "OP2Utility.h"
 #include <iostream>
 #include <stdexcept>
 

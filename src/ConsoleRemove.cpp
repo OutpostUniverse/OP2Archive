@@ -44,7 +44,7 @@ vector<string> ConsoleRemove::RemoveMatchingFilenames(ArchiveFile& archive, cons
 	vector<string> internalFilenames;
 
 	for (int i = 0; i < archive.GetNumberOfPackedFiles(); ++i) {
-		internalFilenames.push_back(archive.GetInternalFileName(i));
+		internalFilenames.push_back(archive.GetInternalFilename(i));
 	}
 
 	return StringHelper::RemoveStrings(internalFilenames, filesToRemove);
@@ -73,7 +73,7 @@ void ConsoleRemove::CheckFilesAvailableToRemove(ArchiveFile& archive, const vect
 	vector<string> internalFilenames;
 
 	for (int i = 0; i < archive.GetNumberOfPackedFiles(); ++i) {
-		internalFilenames.push_back(archive.GetInternalFileName(i));
+		internalFilenames.push_back(archive.GetInternalFilename(i));
 	}
 
 	// Unfound filenames are filenames requested for removal that do not exist in the archive.

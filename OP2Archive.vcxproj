@@ -78,7 +78,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./OP2Utility</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./OP2Utility; ./OP2Utility/include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <EnablePREfast>false</EnablePREfast>
     </ClCompile>
@@ -125,7 +125,7 @@ if $(ConfigurationName) == Release (
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./OP2Utility</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./OP2Utility; ./OP2Utility/include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
