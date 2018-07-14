@@ -9,7 +9,7 @@ using namespace Archives;
 
 void ArchiveConsoleListing::ListContents(ArchiveFile& archiveFile)
 {
-	string filename = XFile::GetFilename(archiveFile.GetVolumeFileName());
+	string filename = XFile::GetFilename(archiveFile.GetVolumeFilename());
 
 	if (archiveFile.GetNumberOfPackedFiles() == 0) {
 		cout << filename << " is empty." << endl << endl;
@@ -27,7 +27,7 @@ void ArchiveConsoleListing::ListContents(ArchiveFile& archiveFile)
 
 	for (int i = 0; i < archiveFile.GetNumberOfPackedFiles(); ++i)
 	{
-		string filename(archiveFile.GetInternalFileName(i));
+		string filename(archiveFile.GetInternalFilename(i));
 
 		string filenameBlanks = CreateBlankChars(filename.size(), filenameColumnSize);
 
@@ -50,7 +50,7 @@ int ArchiveConsoleListing::FindMaxFilenameSize(ArchiveFile& archiveFile)
 
 	for (int i = 0; i < archiveFile.GetNumberOfPackedFiles(); ++i)
 	{
-		std::size_t filenameSize = string(archiveFile.GetInternalFileName(i)).size();
+		std::size_t filenameSize = string(archiveFile.GetInternalFilename(i)).size();
 		if (filenameSize > largestFilenameSize && filenameSize <= maxFilenameSize) {
 			largestFilenameSize = filenameSize;
 		}

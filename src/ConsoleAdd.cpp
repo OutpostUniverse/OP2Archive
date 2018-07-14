@@ -53,7 +53,7 @@ vector<string> ConsoleAdd::ExtractFilesFromOriginalArchive(const string& archive
 
 	for (int i = 0; i < archive->GetNumberOfPackedFiles(); ++i)
 	{
-		string internalFilename = archive->GetInternalFileName(i);
+		string internalFilename = archive->GetInternalFilename(i);
 
 		bool taggedForOverwrite = ArchivedFileTaggedForOverwrite(internalFilename, internalFilenames);
 

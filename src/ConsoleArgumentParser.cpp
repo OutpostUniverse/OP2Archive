@@ -1,5 +1,5 @@
 #include "ConsoleArgumentParser.h"
-#include "StringHelper.h"
+#include "OP2Utility.h"
 #include <stdexcept>
 
 using namespace std;
