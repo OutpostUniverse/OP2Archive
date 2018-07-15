@@ -41,6 +41,7 @@ set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELEASE} /MT")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
 
 target_link_libraries (OP2Archive OP2Utility)
+target_link_libraries(${PROJECT_NAME} stdc++fs)
 
 # Add filters (virtual folders) in Visual Studio that correspond in name to actual directories
 # https://cmake.org/cmake/help/v3.12/command/source_group.html
