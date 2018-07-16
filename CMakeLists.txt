@@ -42,10 +42,6 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
 
 target_link_libraries (OP2Archive OP2Utility)
 
-IF (NOT MSVC) #stdc++fs creates a LNK1104 on Visual Studio 2017
-target_link_libraries(${PROJECT_NAME} stdc++fs)
-ENDIF()
-
 # Add filters (virtual folders) in Visual Studio that correspond in name to actual directories
 # https://cmake.org/cmake/help/v3.12/command/source_group.html
 set(SRC_ROOT_PATH "${OP2Utility_SOURCE_DIR}/src")
