@@ -17,7 +17,8 @@ UTILITYDIR := OP2Utility
 UTILITYLIB := $(UTILITYDIR)/lib$(UTILITYBASE).a
 
 CFLAGS := -std=c++14 -g -Wall -Wno-unknown-pragmas -I $(UTILITYDIR)/include
-LDFLAGS := -lstdc++ -lm -L$(UTILITYDIR) -l$(UTILITYBASE) -lstdc++fs
+LDFLAGS := -L$(UTILITYDIR)
+LDLIBS := -l$(UTILITYBASE) -lstdc++fs -lstdc++ -lm
 
 DEPFLAGS = -MT $@ -MMD -MP -MF $(DEPDIR)/$*.Td
 
@@ -32,7 +33,7 @@ all: $(OUTPUT)
 
 $(OUTPUT): $(UTILITYLIB) $(OBJS)
 	@mkdir -p ${@D}
-	$(CXX) $^ $(LDFLAGS) -o $@
+	$(CXX) $^ $(LDFLAGS) -o $@ $(LDLIBS)
 
 $(UTILITYLIB):
 	$(MAKE) -C $(UTILITYDIR)
