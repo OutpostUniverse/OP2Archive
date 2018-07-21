@@ -6,14 +6,14 @@ ifeq ($(origin CXX),default)
 	CXX := clang-6.0
 endif
 
-SRCDIR := .
+SRCDIR := src
 BUILDDIR := .build
 BINDIR := $(BUILDDIR)/bin
 OBJDIR := $(BUILDDIR)/obj
 DEPDIR := $(BUILDDIR)/deps
 OUTPUT := $(BINDIR)/op2archive
 
-CFLAGS := -std=c++14 -g -Wall -Wno-unknown-pragmas -I OP2Utility/
+CFLAGS := -std=c++14 -g -Wall -Wno-unknown-pragmas -I OP2Utility/include
 LDFLAGS := -lstdc++ -lm -lstdc++fs
 
 DEPFLAGS = -MT $@ -MMD -MP -MF $(DEPDIR)/$*.Td
