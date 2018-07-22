@@ -6,19 +6,24 @@ ifeq ($(origin CXX),default)
 	CXX := clang-6.0
 endif
 
-SRCDIR := .
+SRCDIR := src
 BUILDDIR := .build
 BINDIR := $(BUILDDIR)/bin
 OBJDIR := $(BUILDDIR)/obj
 DEPDIR := $(BUILDDIR)/deps
-OUTPUT := $(BINDIR)/op2archive
+OUTPUT := OP2Archive
+UTILITYBASE := OP2Utility
+UTILITYDIR := OP2Utility
+UTILITYLIB := $(UTILITYDIR)/lib$(UTILITYBASE).a
 
-CFLAGS := -std=c++14 -g -Wall -Wno-unknown-pragmas -I OP2Utility/
-LDFLAGS := -lstdc++ -lm -lstdc++fs
+CPPFLAGS := -I $(UTILITYDIR)/include
+CXXFLAGS := -std=c++14 -g -Wall -Wno-unknown-pragmas
+LDFLAGS := -L$(UTILITYDIR)
+LDLIBS := -l$(UTILITYBASE) -lstdc++fs -lstdc++ -lm
 
 DEPFLAGS = -MT $@ -MMD -MP -MF $(DEPDIR)/$*.Td
 
-COMPILE.cpp = $(CXX) $(DEPFLAGS) $(CFLAGS) $(TARGET_ARCH) -c
+COMPILE.cpp = $(CXX) $(DEPFLAGS) $(CPPFLAGS) $(CXXFLAGS) $(TARGET_ARCH) -c
 POSTCOMPILE = @mv -f $(DEPDIR)/$*.Td $(DEPDIR)/$*.d && touch $@
 
 SRCS := $(shell find $(SRCDIR) -name '*.cpp')
@@ -27,9 +32,12 @@ FOLDERS := $(sort $(dir $(SRCS)))
 
 all: $(OUTPUT)
 
-$(OUTPUT): $(OBJS)
+$(OUTPUT): $(UTILITYLIB) $(OBJS)
 	@mkdir -p ${@D}
-	$(CXX) $^ $(LDFLAGS) -o $@
+	$(CXX) $^ $(LDFLAGS) -o $@ $(LDLIBS)
+
+$(UTILITYLIB):
+	$(MAKE) -C $(UTILITYDIR)
 
 $(OBJS): $(OBJDIR)/%.o : $(SRCDIR)/%.cpp $(DEPDIR)/%.d | build-folder
 	$(COMPILE.cpp) $(OUTPUT_OPTION) $<
