@@ -76,11 +76,6 @@ void ConsoleExtract::ExtractSpecificFile(ArchiveFile& archiveFile, const string&
 	}
 
 	string destPath = XFile::ReplaceFilename(consoleSettings.destDirectory, filenameToExtract);
-	int archiveFileIndex = archiveFile.GetInternalFileIndex(filenameToExtract);
-
-	if (archiveFileIndex == -1) {
-		throw runtime_error("Provided filename does not exist in the archive: " + filenameToExtract + ".");
-	}
 
 	if (!consoleSettings.overwrite) {
 		if (CheckIfFileExists(destPath, consoleSettings.quiet)) {
@@ -89,15 +84,15 @@ void ConsoleExtract::ExtractSpecificFile(ArchiveFile& archiveFile, const string&
 	}
 
 	try {
-		archiveFile.ExtractFile(archiveFileIndex, destPath);
+		archiveFile.ExtractFile(filenameToExtract, destPath);
 		if (!consoleSettings.quiet) {
 			cout << filenameToExtract << " extracted." << endl;
 		}
 	}
-	catch (const std::exception&)
+	catch (const std::exception& e)
 	{
 		if (!consoleSettings.quiet) {
-			cerr << "Error extracting " << filenameToExtract << endl;
+			cerr << e.what() << endl;
 		}
 	}
 }
