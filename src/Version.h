@@ -9,5 +9,6 @@ namespace VersionInfo
 	extern const int Minor;
 	extern const int Patch;
 
+	// Returns the version string formatted as Major.Minor.Patch
 	std::string GetVersionString();
 }
