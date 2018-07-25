@@ -3,7 +3,7 @@
 #include <string>
 
 // For information on how to define version information, see https://semver.org/.
-namespace VersionInfo
+namespace OP2ArchiveVersion
 {
 	extern const int Major;
 	extern const int Minor;

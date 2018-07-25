@@ -2,7 +2,7 @@
 
 #include "../src/Version.h"
 
-namespace VersionInfo
+namespace OP2ArchiveVersion
 {
 	const int Major = @VERSION_MAJOR@;
 	const int Minor = @VERSION_MINOR@;

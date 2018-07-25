@@ -77,7 +77,7 @@ void SelectCommand(const ConsoleArgs& consoleArgs)
 void OutputHelp()
 {
 	cout << endl;
-	cout << "OP2Archive Ver " << VersionInfo::GetVersionString() << " - Outpost 2 Archive Access and Maintenance" << endl;
+	cout << "OP2Archive Ver " << OP2ArchiveVersion::GetVersionString() << " - Outpost 2 Archive Access and Maintenance" << endl;
 	cout << "Developed by Hooman and Brett208 (Vagabond)" << endl;
 	cout << endl;
 	cout << "Allows examining, creating, and extracting files from Outpost 2 .vol and .clm archives." << endl;
