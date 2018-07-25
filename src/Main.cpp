@@ -1,3 +1,4 @@
+#include "Version.h"
 #include "ConsoleArgumentParser.h"
 #include "ConsoleAdd.h"
 #include "ConsoleCreate.h"
@@ -16,8 +17,6 @@ int main(int argc, char **argv);
 void SelectCommand(const ConsoleArgs& consoleArgs);
 void OutputHelp();
 void DebugPause();
-
-static string version = "1.1.1";
 
 int main(int argc, char **argv)
 {
@@ -78,7 +77,7 @@ void SelectCommand(const ConsoleArgs& consoleArgs)
 void OutputHelp()
 {
 	cout << endl;
-	cout << "OP2Archive Ver " << version << " - Outpost 2 Archive Access and Maintenance" << endl;
+	cout << "OP2Archive Ver " << VersionInfo::GetVersionString() << " - Outpost 2 Archive Access and Maintenance" << endl;
 	cout << "Developed by Hooman and Brett208 (Vagabond)" << endl;
 	cout << endl;
 	cout << "Allows examining, creating, and extracting files from Outpost 2 .vol and .clm archives." << endl;

@@ -2,6 +2,14 @@ cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 
 project("OP2Archive")
 
+set (VERSION_MAJOR 1)
+set (VERSION_MINOR 2)
+set (VERSION_PATCH 0)
+
+# Create a new file called Version.cpp using the template Version.cpp.in
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/Version.cpp.in ${CMAKE_CURRENT_BINARY_DIR}/Version.cpp)
+
+
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -31,7 +39,9 @@ file(GLOB SOURCE_CODE
 	"src/ConsoleRemove.cpp"
 	"src/ConsoleRemove.h"
 	"src/ConsoleSettings.h"
-	"src/Main.cpp")
+	"src/Main.cpp"
+	"src/Version.h"
+	"${CMAKE_CURRENT_BINARY_DIR}/Version.cpp") # Version.cpp is initialized in the binary directory, not the src directory.
 
 add_executable(OP2Archive "${SOURCE_CODE}")
 
