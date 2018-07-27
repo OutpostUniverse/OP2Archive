@@ -63,3 +63,18 @@ foreach(source IN ITEMS ${SOURCE_CODE})
     string(REPLACE "/" "\\" group_path "${source_path_rel}")
     source_group("${group_path}" FILES "${source}")
 endforeach()
+
+install (FILES "License.txt" "ReadMe.txt" DESTINATION "./")
+
+IF (MSVC)
+install (FILES "${CMAKE_CURRENT_BINARY_DIR}/RelWithDebInfo/OP2Archive.exe"
+	"${CMAKE_CURRENT_BINARY_DIR}/RelWithDebInfo/OP2Archive.pdb" 
+	DESTINATION "./")
+ENDIF()
+
+set(CPACK_GENERATOR "ZIP")
+set(CPACK_PACKAGE_VERSION_MAJOR "${VERSION_MAJOR}")
+set(CPACK_PACKAGE_VERSION_MINOR "${VERSION_MINOR}")
+set(CPACK_PACKAGE_VERSION_PATCH "${VERSION_PATCH}")
+
+include(CPack)
