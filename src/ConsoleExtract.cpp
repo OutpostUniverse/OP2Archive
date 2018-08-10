@@ -57,11 +57,11 @@ void ConsoleExtract::ExtractFromArchive(const string& archiveFilename, const vec
 void ConsoleExtract::ExtractAllFiles(ArchiveFile& archiveFile, const ConsoleSettings& consoleSettings)
 {
 	if (!consoleSettings.quiet) {
-		cout << "Extracting all " << archiveFile.GetNumberOfPackedFiles() << " file(s) from archive " << archiveFile.GetVolumeFilename() << "." << endl;
+		cout << "Extracting all " << archiveFile.GetCount() << " file(s) from archive " << archiveFile.GetVolumeFilename() << "." << endl;
 	}
 
-	for (int i = 0; i < archiveFile.GetNumberOfPackedFiles(); ++i) {
-		ExtractSpecificFile(archiveFile, archiveFile.GetInternalFilename(i), consoleSettings);
+	for (std::size_t i = 0; i < archiveFile.GetCount(); ++i) {
+		ExtractSpecificFile(archiveFile, archiveFile.GetName(i), consoleSettings);
 	}
 
 	if (!consoleSettings.quiet) {

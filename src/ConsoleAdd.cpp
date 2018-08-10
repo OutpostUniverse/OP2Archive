@@ -28,7 +28,7 @@ void ConsoleAdd::AddCommand(const ConsoleArgs& consoleArgs)
 	CreateModifiedArchive(archiveFilename, filesToAdd, consoleArgs.consoleSettings.quiet);
 }
 
-void ConsoleAdd::OutputInitialAddMessage(const string& archiveFilename, int fileCountToAdd)
+void ConsoleAdd::OutputInitialAddMessage(const string& archiveFilename, std::size_t fileCountToAdd)
 {
 	cout << "Attempting to add " << fileCountToAdd << " file(s) to the archive " << archiveFilename << endl;
 	cout << ConsoleHelper::dashedLine << endl;
@@ -51,9 +51,9 @@ vector<string> ConsoleAdd::ExtractFilesFromOriginalArchive(const string& archive
 {
 	unique_ptr<ArchiveFile> archive = ConsoleHelper::OpenArchive(archiveFilename);
 
-	for (int i = 0; i < archive->GetNumberOfPackedFiles(); ++i)
+	for (std::size_t i = 0; i < archive->GetCount(); ++i)
 	{
-		string internalFilename = archive->GetInternalFilename(i);
+		string internalFilename = archive->GetName(i);
 
 		bool taggedForOverwrite = ArchivedFileTaggedForOverwrite(internalFilename, internalFilenames);
 
