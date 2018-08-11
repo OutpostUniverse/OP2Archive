@@ -33,7 +33,7 @@ void ConsoleRemove::RemoveCommand(const ConsoleArgs& consoleArgs)
 	CreateModifiedArchive(archiveFilename, filenames, consoleArgs.consoleSettings.quiet);
 }
 
-void ConsoleRemove::OutputInitialAddMessage(const string& archiveFilename, int fileCountToRemove)
+void ConsoleRemove::OutputInitialAddMessage(const string& archiveFilename, std::size_t fileCountToRemove)
 {
 	cout << "Attempting to remove " << fileCountToRemove << " file(s) from the archive " << archiveFilename << endl;
 	cout << ConsoleHelper::dashedLine << endl;
@@ -43,8 +43,8 @@ vector<string> ConsoleRemove::RemoveMatchingFilenames(ArchiveFile& archive, cons
 {
 	vector<string> internalFilenames;
 
-	for (int i = 0; i < archive.GetNumberOfPackedFiles(); ++i) {
-		internalFilenames.push_back(archive.GetInternalFilename(i));
+	for (std::size_t i = 0; i < archive.GetCount(); ++i) {
+		internalFilenames.push_back(archive.GetName(i));
 	}
 
 	return StringHelper::RemoveStrings(internalFilenames, filesToRemove);
@@ -72,8 +72,8 @@ void ConsoleRemove::CheckFilesAvailableToRemove(ArchiveFile& archive, const vect
 {
 	vector<string> internalFilenames;
 
-	for (int i = 0; i < archive.GetNumberOfPackedFiles(); ++i) {
-		internalFilenames.push_back(archive.GetInternalFilename(i));
+	for (std::size_t i = 0; i < archive.GetCount(); ++i) {
+		internalFilenames.push_back(archive.GetName(i));
 	}
 
 	// Unfound filenames are filenames requested for removal that do not exist in the archive.
@@ -89,7 +89,8 @@ void ConsoleRemove::ExtractFilesFromOriginalArchive(ArchiveFile& archive, const 
 {
 	for (const auto& internalFilename : internalFilenames)
 	{
-		int index = archive.GetInternalFileIndex(internalFilename);
+		std::size_t index = archive.GetIndex(internalFilename);
+
 		string pathToExtractTo = XFile::AppendSubDirectory(internalFilename, tempDirectory);
 
 		try {

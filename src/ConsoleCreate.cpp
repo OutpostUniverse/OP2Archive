@@ -114,13 +114,13 @@ void ConsoleCreate::CheckCreateOverwrite(const string& archiveFilename, bool ove
 	}
 }
 
-void ConsoleCreate::OutputInitialCreateMessage(const string& archiveFilename, int packedFileCount)
+void ConsoleCreate::OutputInitialCreateMessage(const string& archiveFilename, std::size_t packedFileCount)
 {
 	cout << "Creating archive " << archiveFilename << ", containing " << packedFileCount << " file(s)." << endl;
 	cout << ConsoleHelper::dashedLine << endl;
 }
 
-void ConsoleCreate::OutputCreateResults(int packedFileCount, const string& archiveFilename)
+void ConsoleCreate::OutputCreateResults(std::size_t packedFileCount, const string& archiveFilename)
 {
 	cout << "Archive created." << endl << endl;
 

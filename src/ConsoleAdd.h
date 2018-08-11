@@ -4,6 +4,7 @@
 #include "ConsoleSettings.h"
 #include <string>
 #include <vector>
+#include <cstddef>
 
 class ConsoleAdd : ConsoleModifyBase
 {
@@ -12,7 +13,7 @@ public:
 	void AddCommand(const ConsoleArgs& consoleArgs);
 
 private:
-	void OutputInitialAddMessage(const std::string& archiveFilename, int fileCountToAdd);
+	void OutputInitialAddMessage(const std::string& archiveFilename, std::size_t fileCountToAdd);
 	bool ArchivedFileTaggedForOverwrite(const std::string& internalFilename, const std::vector<std::string>& filesToAdd);
 	std::vector<std::string> ExtractFilesFromOriginalArchive(const std::string& archiveFilename, const std::vector<std::string>& internalFilenames, bool overwrite);
 	void CheckFilesExist(const std::vector<std::string>& filenames);

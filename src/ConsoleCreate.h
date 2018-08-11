@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <cstddef>
 
 class ConsoleCreate
 {
@@ -17,8 +18,8 @@ private:
 	void CreateUsingDefaultDirectory(const std::string& archiveFilename, const ConsoleSettings& consoleSettings);
 	std::vector<std::string> GatherFilesForArchive(const std::vector<std::string>& paths);
 	void CheckCreateOverwrite(const std::string& archiveFilename, bool overwrite, bool quiet);
-	void OutputInitialCreateMessage(const std::string& archiveFilename, int packedFileCount);
-	void OutputCreateResults(int packedFileCount, const std::string& archiveFilename);
+	void OutputInitialCreateMessage(const std::string& archiveFilename, std::size_t packedFileCount);
+	void OutputCreateResults(std::size_t packedFileCount, const std::string& archiveFilename);
 
 	void CheckForIllegalFilenames(const std::vector<std::string>& paths);
 };

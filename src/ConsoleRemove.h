@@ -5,6 +5,7 @@
 #include "OP2Utility.h"
 #include <vector>
 #include <string>
+#include <cstddef>
 
 class ConsoleRemove : ConsoleModifyBase
 {
@@ -13,7 +14,7 @@ public:
 	void RemoveCommand(const ConsoleArgs& consoleArgs);
 
 private:
-	void OutputInitialAddMessage(const std::string& archiveFilename, int fileCountToRemove);
+	void OutputInitialAddMessage(const std::string& archiveFilename, std::size_t fileCountToRemove);
 	std::vector<std::string> RemoveMatchingFilenames(Archives::ArchiveFile& archive, const std::vector<std::string>& filesToRemove);
 	void ThrowUnfoundFileDuringRemoveException(const std::vector<std::string>& unfoundFilenames);
 	void CheckFilesAvailableToRemove(Archives::ArchiveFile& archive, const std::vector<std::string>& filesToRemove, bool quiet);
