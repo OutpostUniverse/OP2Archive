@@ -116,6 +116,7 @@ if $(ConfigurationName) == Release (
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>./OP2Utility; ./OP2Utility/include</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <PostBuildEvent>
       <Command>SET zipName="OP2Archive Ver1.2.0 "$(Platform)
@@ -195,6 +196,7 @@ if $(ConfigurationName) == Release (
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>./OP2Utility; ./OP2Utility/include</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
