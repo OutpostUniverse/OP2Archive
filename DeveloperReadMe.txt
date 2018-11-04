@@ -19,11 +19,11 @@ Post Build Event Notes: When in RELEASE mode, a command prompt script will run o
  2. Set new version number at top of OP2Archive main.cpp AND in post build event batch script.
  3. Tag current version in repository.
  4. Set Solution Configuration to Release.
- 5. Set Solution Platform to x86. (x64 is not currently supported due to some WINAPI code within OP2Utility Archives).
+ 5. Set Solution Platform to x86.
  6. Compile Code. 
- 7. The following files will automatically be copied into the zipped directory 'OP2Archive X.X.X': 
+ 7. The following files will automatically be copied into the zipped directory 'OP2Archive X.X.X PLATFORM': 
     * OP2Archive.exe (From Release Directory)
-    * VolTemplate.vol
-    * ClmTemplate.clm
     * ReadMe.txt
+	* License.txt
  8. Place zip file on the Outpost Universe GitHub repository.
+ 9. Repeat steps 5 through 8 for x64.
