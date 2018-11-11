@@ -15,7 +15,6 @@ using namespace std;
 int main(int argc, char **argv);
 void SelectCommand(const ConsoleArgs& consoleArgs);
 void OutputHelp();
-void DebugPause();
 
 static string version = "1.2.0";
 
@@ -31,12 +30,8 @@ int main(int argc, char **argv)
 		cerr << e.what() << endl;
 		cerr << "Run without arguments to see usage message." << endl << endl;
 
-		DebugPause();
-
 		return 1;
 	}
-
-	DebugPause();
 
 	return 0;
 }
@@ -109,11 +104,4 @@ void OutputHelp()
 	cout << endl;
 	cout << "For more information about Outpost 2 visit the Outpost Universe (http://outpost2.net/)." << endl;
 	cout << endl;
-}
-
-void DebugPause()
-{
-#if defined _DEBUG
-	getchar();
-#endif
 }
