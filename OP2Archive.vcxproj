@@ -109,6 +109,9 @@ if $(ConfigurationName) == Release (
     RMDIR %25pdbDirectoryName%25 /s /q
 )</Command>
     </PostBuildEvent>
+    <Link>
+      <SubSystem>Console</SubSystem>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -145,6 +148,9 @@ if $(ConfigurationName) == Release (
     RMDIR %25pdbDirectoryName%25 /s /q
 )</Command>
     </PostBuildEvent>
+    <Link>
+      <SubSystem>Console</SubSystem>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -159,6 +165,7 @@ if $(ConfigurationName) == Release (
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <SubSystem>Console</SubSystem>
     </Link>
     <PostBuildEvent>
       <Command>SET zipName="OP2Archive Ver1.2.0 "$(Platform)
@@ -201,6 +208,7 @@ if $(ConfigurationName) == Release (
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <SubSystem>Console</SubSystem>
     </Link>
     <PostBuildEvent>
       <Command>SET zipName="OP2Archive Ver1.2.0 "$(Platform)
