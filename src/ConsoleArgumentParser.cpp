@@ -20,8 +20,9 @@ bool ConsoleArgumentParser::FindSwitch(char* argumentChar, ConsoleSwitch& curren
 	string argument = StringHelper::ConvertToUpper(argumentChar);
 
 	// Remove trailing colon from switch statements.
-	if (argument.size() > 0 && argument[argument.size() - 1] == ':')
+	if (argument.size() > 0 && argument[argument.size() - 1] == ':') {
 		argument.pop_back();
+	}
 
 	for (const auto& consoleSwitch : consoleSwitches)
 	{
