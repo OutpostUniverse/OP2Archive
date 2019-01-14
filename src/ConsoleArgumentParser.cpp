@@ -39,7 +39,7 @@ ConsoleArgs ConsoleArgumentParser::SortArguments(int argc, char **argv)
 {
 	ConsoleArgs consoleArgs;
 
-	if (CheckTooFewArguments(argc)) {
+	if (IsTooFewArguments(argc)) {
 		consoleArgs.consoleCommand = ConsoleCommand::Help;
 		return consoleArgs;
 	}
@@ -175,7 +175,7 @@ void ConsoleArgumentParser::ParseCompressionFormat(const char* value, ConsoleArg
 	consoleArgs.consoleSettings.compression = ParseCompression(value);
 }
 
-bool ConsoleArgumentParser::CheckTooFewArguments(int numberOfArguments)
+bool ConsoleArgumentParser::IsTooFewArguments(int argumentCount)
 {
-	return numberOfArguments < 2;
+	return argumentCount < 2;
 }
