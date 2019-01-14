@@ -48,5 +48,5 @@ private:
 	static void ParseCompressionFormat(const char* value, ConsoleArgs& consoleArgs);
 
 	static Archives::CompressionType ParseCompression(const std::string& compressionStr);
-	bool ParseBool(const std::string& str);
+	static bool ParseBool(const std::string& str);
 };
