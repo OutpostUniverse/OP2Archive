@@ -35,7 +35,7 @@ private:
 	std::vector<ConsoleSwitch> consoleSwitches;
 
 	ConsoleCommand ParseCommand(const std::string& commandStr);
-	bool CheckTooFewArguments(int numberOfArguments);
+	static bool IsTooFewArguments(int argumentCount);
 	void ParseArgument(char** argv, int& i, int argc, ConsoleArgs& consoleArgs);
 
 	void CheckForMissingSwitchArgument(int index, int argc, int numberOfArgsToPass);
@@ -48,5 +48,5 @@ private:
 	static void ParseCompressionFormat(const char* value, ConsoleArgs& consoleArgs);
 
 	static Archives::CompressionType ParseCompression(const std::string& compressionStr);
-	bool ParseBool(const std::string& str);
+	static bool ParseBool(const std::string& str);
 };

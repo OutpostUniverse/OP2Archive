@@ -20,8 +20,9 @@ bool ConsoleArgumentParser::FindSwitch(char* argumentChar, ConsoleSwitch& curren
 	string argument = StringHelper::ConvertToUpper(argumentChar);
 
 	// Remove trailing colon from switch statements.
-	if (argument.size() > 0 && argument[argument.size() - 1] == ':')
+	if (argument.size() > 0 && argument[argument.size() - 1] == ':') {
 		argument.pop_back();
+	}
 
 	for (const auto& consoleSwitch : consoleSwitches)
 	{
@@ -38,7 +39,7 @@ ConsoleArgs ConsoleArgumentParser::SortArguments(int argc, char **argv)
 {
 	ConsoleArgs consoleArgs;
 
-	if (CheckTooFewArguments(argc)) {
+	if (IsTooFewArguments(argc)) {
 		consoleArgs.consoleCommand = ConsoleCommand::Help;
 		return consoleArgs;
 	}
@@ -174,7 +175,7 @@ void ConsoleArgumentParser::ParseCompressionFormat(const char* value, ConsoleArg
 	consoleArgs.consoleSettings.compression = ParseCompression(value);
 }
 
-bool ConsoleArgumentParser::CheckTooFewArguments(int numberOfArguments)
+bool ConsoleArgumentParser::IsTooFewArguments(int argumentCount)
 {
-	return numberOfArguments < 2;
+	return argumentCount < 2;
 }
