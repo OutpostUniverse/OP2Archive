@@ -5,7 +5,7 @@
 using namespace std;
 using namespace Archives;
 
-string ConsoleHelper::dashedLine = "--------------------------------------------------";
+const string ConsoleHelper::dashedLine = "--------------------------------------------------";
 
 bool ConsoleHelper::IsArchiveExtension(const string& filename)
 {

@@ -8,7 +8,7 @@
 class ConsoleHelper
 {
 public: 
-	static std::string dashedLine;
+	static const std::string dashedLine;
 
 	static bool IsArchiveExtension(const std::string& filename);
 	static std::unique_ptr<Archives::ArchiveFile> OpenArchive(const std::string& archivePath);
