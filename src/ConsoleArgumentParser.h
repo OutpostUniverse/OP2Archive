@@ -47,6 +47,6 @@ private:
 	static void ParseOverwrite(const char* value, ConsoleArgs& consoleArgs);
 	static void ParseCompressionFormat(const char* value, ConsoleArgs& consoleArgs);
 
-	static Archives::CompressionType ParseCompression(const std::string& compressionStr);
+	static Archive::CompressionType ParseCompression(const std::string& compressionStr);
 	static bool ParseBool(const std::string& str);
 };

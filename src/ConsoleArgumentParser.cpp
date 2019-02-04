@@ -3,7 +3,7 @@
 #include <stdexcept>
 
 using namespace std;
-using namespace Archives;
+using namespace Archive;
 
 ConsoleArgumentParser::ConsoleArgumentParser() 
 {
@@ -112,16 +112,16 @@ CompressionType ConsoleArgumentParser::ParseCompression(const string& compressio
 	string compressionStrUpper = StringHelper::ConvertToUpper(compressionStr);
 
 	if (compressionStrUpper == "NONE" || compressionStrUpper == "UNCOMPRESSED") {
-		return Archives::CompressionType::Uncompressed;
+		return Archive::CompressionType::Uncompressed;
 	}
 	if (compressionStrUpper == "LZ") {
-		return Archives::CompressionType::LZ;
+		return Archive::CompressionType::LZ;
 	}
 	if (compressionStrUpper == "LZH") {
-		return Archives::CompressionType::LZH;
+		return Archive::CompressionType::LZH;
 	}
 	if (compressionStrUpper == "RLE") {
-		return Archives::CompressionType::RLE;
+		return Archive::CompressionType::RLE;
 	}
 
 	throw invalid_argument("Unable to determine compression type. Try None, LZ, LZH, or RLE.");

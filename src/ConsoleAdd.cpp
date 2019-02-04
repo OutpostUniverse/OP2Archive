@@ -7,7 +7,7 @@
 #include <stdexcept>
 
 using namespace std;
-using namespace Archives;
+using namespace Archive;
 
 void ConsoleAdd::AddCommand(const ConsoleArgs& consoleArgs)
 {
