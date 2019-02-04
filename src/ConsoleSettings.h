@@ -10,7 +10,7 @@ struct ConsoleSettings
 	bool overwrite = false;
 	bool quiet = false;
 	bool helpRequested = false;
-	Archives::CompressionType compression = Archives::CompressionType::Uncompressed;
+	Archive::CompressionType compression = Archive::CompressionType::Uncompressed;
 };
 
 enum class ConsoleCommand

@@ -5,7 +5,7 @@
 #include <memory>
 
 using namespace std;
-using namespace Archives;
+using namespace Archive;
 
 void ConsoleExtract::ExtractCommand(const ConsoleArgs& consoleArgs)
 {

@@ -3,7 +3,7 @@
 #include <stdexcept>
 
 using namespace std;
-using namespace Archives;
+using namespace Archive;
 
 string ConsoleHelper::dashedLine = "--------------------------------------------------";
 

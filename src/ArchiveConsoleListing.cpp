@@ -5,7 +5,7 @@
 #include <sstream>
 
 using namespace std;
-using namespace Archives;
+using namespace Archive;
 
 void ArchiveConsoleListing::ListContents(ArchiveFile& archiveFile)
 {
