@@ -74,7 +74,7 @@ vector<string> ConsoleAdd::ExtractFilesFromOriginalArchive(const string& archive
 		}
 	}		
 
-	return XFile::GetFilesFromDirectory(tempDirectory);
+	return XFile::GetFilenamesFromDirectory(tempDirectory);
 }
 
 void ConsoleAdd::CheckFilesExist(const vector<string>& filenames)

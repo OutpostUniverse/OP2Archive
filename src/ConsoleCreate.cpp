@@ -77,7 +77,7 @@ void ConsoleCreate::CreateUsingDefaultDirectory(const string& archiveFilename, c
 		throw runtime_error("The directory " + sourceDir + " does not exist. Either create this directory or explicity specify the source directory/files.");
 	}
 
-	vector<string> filenames = XFile::GetFilesFromDirectory(sourceDir);
+	vector<string> filenames = XFile::GetFilenamesFromDirectory(sourceDir);
 
 	CreateArchiveFile(archiveFilename, filenames, consoleSettings.quiet);
 }
@@ -90,7 +90,12 @@ vector<string> ConsoleCreate::GatherFilesForArchive(const vector<string>& paths)
 	{
 		if (XFile::IsDirectory(paths[i]))
 		{
-			vector<string> dirFilenames = XFile::GetFilesFromDirectory(paths[i]);
+			vector<string> dirFilenames = XFile::GetFilenamesFromDirectory(paths[i]);
+
+			for (auto& filename : dirFilenames) {
+				filename = XFile::Append(paths[i], filename);
+			}
+
 			filenames.insert(std::end(filenames), std::begin(dirFilenames), std::end(dirFilenames));
 		}
 		else {
