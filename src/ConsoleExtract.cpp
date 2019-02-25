@@ -32,7 +32,7 @@ void ConsoleExtract::ExtractFromDirectory(const string& directory, const Console
 
 	for (const auto& archiveFilename : archiveFilenames)
 	{
-		string archivePath = XFile::AppendSubDirectory(archiveFilename, directory);
+		const string archivePath = XFile::Append(directory, archiveFilename);
 		unique_ptr<ArchiveFile> archive = ConsoleHelper::OpenArchive(archivePath);
 		ExtractAllFiles(*archive, consoleSettings);
 	}

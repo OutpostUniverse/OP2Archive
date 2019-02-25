@@ -40,6 +40,6 @@ void ConsoleList::ListAllArchivesInDirectory(const string& directory)
 	cout << ConsoleHelper::dashedLine << endl << endl;
 
 	for (const auto& filename : archiveFilenames) {
-		ListArchiveContents(filename);
+		ListArchiveContents(XFile::Append(directory, filename));
 	}
 }
