@@ -57,7 +57,7 @@ void ConsoleExtract::ExtractFromArchive(const string& archiveFilename, const vec
 void ConsoleExtract::ExtractAllFiles(ArchiveFile& archiveFile, const ConsoleSettings& consoleSettings)
 {
 	if (!consoleSettings.quiet) {
-		cout << "Extracting all " << archiveFile.GetCount() << " file(s) from archive " << archiveFile.GetVolumeFilename() << "." << endl;
+		cout << "Extracting all " << archiveFile.GetCount() << " file(s) from archive " << archiveFile.GetArchiveFilename() << "." << endl;
 	}
 
 	for (std::size_t i = 0; i < archiveFile.GetCount(); ++i) {
@@ -75,7 +75,7 @@ void ConsoleExtract::ExtractSpecificFile(ArchiveFile& archiveFile, const string&
 		XFile::NewDirectory(consoleSettings.destDirectory);
 	}
 
-	string destPath = XFile::ReplaceFilename(consoleSettings.destDirectory, filenameToExtract);
+	string destPath = XFile::Append(consoleSettings.destDirectory, filenameToExtract);
 
 	if (!consoleSettings.overwrite) {
 		if (CheckIfFileExists(destPath, consoleSettings.quiet)) {

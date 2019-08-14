@@ -86,11 +86,12 @@ vector<string> ConsoleCreate::GatherFilesForArchive(const vector<string>& paths)
 {
 	vector<string> filenames;
 
-	for (std::size_t i = 1; i < paths.size(); i++) //Skip the first path since it is the archive name.
+	for (std::size_t i = 1; i < paths.size(); ++i) //Skip the first path since it is the archive name.
 	{
 		if (XFile::IsDirectory(paths[i]))
 		{
 			vector<string> dirFilenames = XFile::GetFilenamesFromDirectory(paths[i]);
+			XFile::EraseNonFilenames(dirFilenames);
 
 			for (auto& filename : dirFilenames) {
 				filename = XFile::Append(paths[i], filename);

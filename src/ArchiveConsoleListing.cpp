@@ -9,7 +9,7 @@ using namespace Archive;
 
 void ArchiveConsoleListing::ListContents(ArchiveFile& archiveFile)
 {
-	string filename = XFile::GetFilename(archiveFile.GetVolumeFilename());
+	string filename = XFile::GetFilename(archiveFile.GetArchiveFilename());
 
 	if (archiveFile.GetCount() == 0) {
 		cout << filename << " is empty." << endl << endl;
