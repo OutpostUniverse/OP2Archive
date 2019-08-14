@@ -39,6 +39,8 @@ vector<string> ConsoleHelper::GetArchiveFilenames(const string& directory)
 
 	archiveFilenames.insert(std::end(archiveFilenames), std::begin(clmFilenames), std::end(clmFilenames));
 
+	XFile::EraseNonFilenames(archiveFilenames);
+
 	return archiveFilenames;
 }
 
