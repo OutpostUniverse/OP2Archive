@@ -86,6 +86,12 @@ Source code may be found at: https://github.com/OutpostUniverse/OP2Archive. See 
 
 +++ CHANGE LOG +++
 
+Ver 1.2.1
+ * Bug Fix: Allow creating archives in new directories
+ * Bug Fix: Stop attempting to open directories that appear to have proper extensions (IE a directory named archive.vol)
+ * Bug Fix: Stop attempting to package subdirectories into an archive (The subdirectory itself was being added, not the contents of the subdirectory)
+ * Numerous other directory traversal fixes brought in from updated OP2Utility
+
 Ver 1.2.0
  * Provide both an x86 and x64 Windows build.
  * Remove Windows specific dependencies from code base (may now be compiled for use on Linux).
