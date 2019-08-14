@@ -57,7 +57,7 @@ void ConsoleExtract::ExtractFromArchive(const string& archiveFilename, const vec
 void ConsoleExtract::ExtractAllFiles(ArchiveFile& archiveFile, const ConsoleSettings& consoleSettings)
 {
 	if (!consoleSettings.quiet) {
-		cout << "Extracting all " << archiveFile.GetCount() << " file(s) from archive " << archiveFile.GetVolumeFilename() << "." << endl;
+		cout << "Extracting all " << archiveFile.GetCount() << " file(s) from archive " << archiveFile.GetArchiveFilename() << "." << endl;
 	}
 
 	for (std::size_t i = 0; i < archiveFile.GetCount(); ++i) {
