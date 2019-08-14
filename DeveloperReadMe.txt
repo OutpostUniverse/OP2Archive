@@ -5,9 +5,9 @@ If you wish to edit and compile OP2Archive's source code, read this document fir
 
 Source code may be found at: https://github.com/OutpostUniverse/OP2Archive and https://github.com/OutpostUniverse/OP2Utility.
 
-OP2Archive is written in C++ and the solution/project files are built for Visual Studio 2017. C++11 and C++14 features are used. The currently expiremental C++ standard library filesystem is used and is supported by both VS2017 and GCC. 
+OP2Archive is written in C++ and compiles for Windows (MSVC) or Linux (Clang or gcc). It may be compiled in x86 or x64. The Windows the project files are built for Visual Studio 2017. and makefiles are used for the Linux builds. The code is designed to be cross-platform, but has never been tested on Macintosh. C++14 features are used.
 
-OP2Archive depends on the project OP2Utility. OP2Utility requires a Windows machine to compile due to use of windows.h. In particular, the archive read/write code depends on Windows.h. There is some desire to remove the Windows specific code, but the efforts are not yet completed. The project must be compiled for x86. 
+OP2Archive depends on the project OP2Utility. C++17 features are used and recommended, although C++14 with experimental filesystem can also be used. 
 
 OP2Utility may be found at: https://github.com/OutpostUniverse/OP2Utility
 
@@ -24,6 +24,6 @@ Post Build Event Notes: When in RELEASE mode, a command prompt script will run o
  7. The following files will automatically be copied into the zipped directory 'OP2Archive X.X.X PLATFORM': 
     * OP2Archive.exe (From Release Directory)
     * ReadMe.txt
-	* License.txt
+    * License.txt
  8. Place zip file on the Outpost Universe GitHub repository.
  9. Repeat steps 5 through 8 for x64.
