@@ -5,7 +5,7 @@ If you wish to edit and compile OP2Archive's source code, read this document fir
 
 Source code may be found at: https://github.com/OutpostUniverse/OP2Archive and https://github.com/OutpostUniverse/OP2Utility.
 
-OP2Archive is written in C++ and compiles for Windows (MSVC) or Linux (Clang or gcc). It may be compiled in x86 or x64. The Windows the project files are built for Visual Studio 2017. and makefiles are used for the Linux builds. The code is designed to be cross-platform, but has never been tested on Macintosh. C++14 features are used.
+OP2Archive is written in C++ and compiles for Windows (MSVC) or Linux (Clang or gcc). It may be compiled in x86 or x64. The Windows project files are built for Visual Studio 2017. Makefiles are used for the Linux builds. The code is designed to be cross-platform, but has never been tested on Macintosh. C++14 features are used.
 
 OP2Archive depends on the project OP2Utility. C++17 features are used and recommended, although C++14 with experimental filesystem can also be used. 
 
