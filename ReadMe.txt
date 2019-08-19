@@ -1,7 +1,7 @@
 OP2Archive - Outpost 2 Archive Access and Maintenance
 Developed by Hooman and Brett208 (Vagabond)
 
-Allows examining, creating, and extracting files from Outpost 2 .vol and .clm archives. Check the OP2Archive landing page for the newest version at https://wiki.outpost2.net/doku.php?id=outpost_2:helper_programs:op2archive.
+Allows examining, creating, and extracting files from Outpost 2 .vol and .clm archives. Check the OP2Archive GitHub release page for the newest version at https://github.com/OutpostUniverse/OP2Archive/releases.
 
 OP2Archive is released under a MIT license. See License.txt for details.
 
@@ -14,8 +14,7 @@ OP2Archive is released under a MIT license. See License.txt for details.
     * All archives in the same directory as the provided filename are searched.
 
   * OP2Archive CREATE archivename.(vol|clm) [filename | directory]... [-q] [-o]
-    * If no filename(s) or directory(s) provided,
-      archives all contents of the default source directory (./archiveFilename).
+    * If no filename(s) or directory(s) provided, creates an empty archive.
 
   * OP2Archive EXTRACT archivename.(vol|clm) [filename]... [-q] [-d destDirectory] [-o]
     * If no filename(s) provided, extracts entire contents of archive.
@@ -86,6 +85,12 @@ Source code may be found at: https://github.com/OutpostUniverse/OP2Archive. See 
 
 
 +++ CHANGE LOG +++
+
+Ver 1.2.1
+ * Bug Fix: Allow creating archives in new directories
+ * Bug Fix: Stop attempting to open directories that appear to have proper extensions (IE a directory named archive.vol)
+ * Bug Fix: Stop attempting to package subdirectories into an archive (The subdirectory itself was being added, not the contents of the subdirectory)
+ * Numerous other directory traversal fixes brought in from updated OP2Utility
 
 Ver 1.2.0
  * Provide both an x86 and x64 Windows build.

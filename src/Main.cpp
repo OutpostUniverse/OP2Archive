@@ -16,7 +16,7 @@ int main(int argc, char **argv);
 void SelectCommand(const ConsoleArgs& consoleArgs);
 void OutputHelp();
 
-static string version = "1.2.0";
+static string version = "1.2.1";
 
 int main(int argc, char **argv)
 {
@@ -85,8 +85,7 @@ void OutputHelp()
 	cout << "    * Determines which archive contains the file. Stops searching at first instance." << endl;
 	cout << "    * All archives in the same directory as the provided filename are searched." << endl;
 	cout << "  * OP2Archive CREATE archivename.(vol|clm) [filename | directory]... [-q] [-o]" << endl; //If compression added [-c None|LZH]
-	cout << "    * If no filename(s) or directory(s) provided," << endl;
-	cout << "      archives all contents of the default source directory (./archiveFilename)." << endl;
+	cout << "    * If no filename(s) or directory(s) provided, creates an empty archive." << endl;
 	cout << "  * OP2Archive EXTRACT archivename.(vol|clm) [filename]... [-q] [-d destDirectory] [-o]" << endl;
 	cout << "    * If no filename(s) provided, extracts entire contents of archive." << endl;
 	cout << "  * OP2Archive EXTRACT directoryname [-q] [-d destDirectory] [-o]." << endl;
