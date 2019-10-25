@@ -72,7 +72,7 @@ vector<string> ConsoleAdd::ExtractFilesFromOriginalArchive(const string& archive
 				throw runtime_error("Error extracting " + internalFilename + " from archive " + archiveFilename + ". Add operation aborted. Internal error: " + e.what());
 			}
 		}
-	}		
+	}
 
 	return XFile::GetFilenamesFromDirectory(tempDirectory);
 }
