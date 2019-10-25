@@ -21,10 +21,6 @@ void ConsoleCreate::CreateCommand(const ConsoleArgs& consoleArgs)
 
 	if (consoleArgs.paths.size() == 1)
 	{
-		if (false) { // Brett 23AUG17: Currently no way to specify to use the default source directory.
-			CreateUsingDefaultDirectory(archiveFilename, consoleArgs.consoleSettings);
-		}
-
 		CreateArchiveFile(archiveFilename, vector<string>(), consoleArgs.consoleSettings.quiet);
 	}
 	else {
@@ -67,19 +63,6 @@ unique_ptr<ArchiveFile> ConsoleCreate::CreateArchiveTemplate(const string& archi
 	}
 
 	throw runtime_error("Unable to open archive template files VolTemplate.vol and/or ClmTemplate.clm. Ensure both files exist in same directory as OP2Archive.exe and are not open in another application.");
-}
-
-void ConsoleCreate::CreateUsingDefaultDirectory(const string& archiveFilename, const ConsoleSettings& consoleSettings)
-{
-	string sourceDir = XFile::ChangeFileExtension(archiveFilename, "");
-
-	if (!XFile::IsDirectory(sourceDir)) {
-		throw runtime_error("The directory " + sourceDir + " does not exist. Either create this directory or explicity specify the source directory/files.");
-	}
-
-	vector<string> filenames = XFile::GetFilenamesFromDirectory(sourceDir);
-
-	CreateArchiveFile(archiveFilename, filenames, consoleSettings.quiet);
 }
 
 vector<string> ConsoleCreate::GatherFilesForArchive(const vector<string>& paths)
