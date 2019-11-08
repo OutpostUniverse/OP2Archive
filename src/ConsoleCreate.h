@@ -15,7 +15,6 @@ public:
 
 private:
 	std::unique_ptr<Archive::ArchiveFile> CreateArchiveTemplate(const std::string& archiveFilename);
-	void CreateUsingDefaultDirectory(const std::string& archiveFilename, const ConsoleSettings& consoleSettings);
 	std::vector<std::string> GatherFilesForArchive(const std::vector<std::string>& paths);
 	void CheckCreateOverwrite(const std::string& archiveFilename, bool overwrite, bool quiet);
 	void OutputInitialCreateMessage(const std::string& archiveFilename, std::size_t packedFileCount);

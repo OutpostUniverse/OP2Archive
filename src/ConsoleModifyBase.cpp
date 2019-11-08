@@ -23,13 +23,13 @@ ConsoleModifyBase::~ConsoleModifyBase()
 
 vector<string> ConsoleModifyBase::GetFilesToModify(const ConsoleArgs& consoleArgs)
 {
-	vector<string> filesToRemove(consoleArgs.paths.begin() + 1, consoleArgs.paths.end());
+	vector<string> filesToModify(consoleArgs.paths.begin() + 1, consoleArgs.paths.end());
 
-	if (filesToRemove.size() == 0) {
+	if (filesToModify.size() == 0) {
 		throw runtime_error("No filename(s) provided to use in modifying the archive.");
 	}
 
-	return filesToRemove;
+	return filesToModify;
 }
 
 string ConsoleModifyBase::GetArchiveName(const ConsoleArgs& consoleArgs)

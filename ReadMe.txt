@@ -86,6 +86,10 @@ Source code may be found at: https://github.com/OutpostUniverse/OP2Archive. See 
 
 +++ CHANGE LOG +++
 
+Ver 1.2.2
+ * Bug Fix: Make the ADD and REMOVE command work again.
+ * Bug Fix: Allow the CREATE command to work when adding the contents of a directory to a new volume
+
 Ver 1.2.1
  * Bug Fix: Allow creating archives in new directories
  * Bug Fix: Stop attempting to open directories that appear to have proper extensions (IE a directory named archive.vol)

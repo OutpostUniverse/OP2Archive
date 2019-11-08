@@ -30,6 +30,10 @@ void ConsoleRemove::RemoveCommand(const ConsoleArgs& consoleArgs)
 
 	vector<string> filenames = XFile::GetFilenamesFromDirectory(tempDirectory);
 
+	for (auto& filename : filenames) {
+		filename = XFile::Append(tempDirectory, filename);
+	}
+
 	CreateModifiedArchive(archiveFilename, filenames, consoleArgs.consoleSettings.quiet);
 }
 
