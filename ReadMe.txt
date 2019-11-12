@@ -89,6 +89,8 @@ Source code may be found at: https://github.com/OutpostUniverse/OP2Archive. See 
 Ver 1.2.2
  * Bug Fix: Make the ADD and REMOVE command work again.
  * Bug Fix: Allow the CREATE command to work when adding the contents of a directory to a new volume
+ * Bug Fix: Prevent adding a volume to itself.
+ * Bug Fix: Make error messages show filename when problems arise parsing files for inclusion in a CLM.
 
 Ver 1.2.1
  * Bug Fix: Allow creating archives in new directories
