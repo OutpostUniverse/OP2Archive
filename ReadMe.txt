@@ -88,13 +88,15 @@ Source code may be found at: https://github.com/OutpostUniverse/OP2Archive. See 
 
 Ver 1.2.2
  * Bug Fix: Make the ADD and REMOVE command work again.
- * Bug Fix: Allow the CREATE command to work when adding the contents of a directory to a new volume
+ * Bug Fix: Allow the CREATE command to work when adding the contents of a directory to a new volume.
+ * Bug Fix: Prevent adding a volume to itself.
+ * Bug Fix: Make error messages show filename when problems arise parsing files for inclusion in a CLM.
 
 Ver 1.2.1
- * Bug Fix: Allow creating archives in new directories
- * Bug Fix: Stop attempting to open directories that appear to have proper extensions (IE a directory named archive.vol)
- * Bug Fix: Stop attempting to package subdirectories into an archive (The subdirectory itself was being added, not the contents of the subdirectory)
- * Numerous other directory traversal fixes brought in from updated OP2Utility
+ * Bug Fix: Allow creating archives in new directories.
+ * Bug Fix: Stop attempting to open directories that appear to have proper extensions (IE a directory named archive.vol).
+ * Bug Fix: Stop attempting to package subdirectories into an archive (The subdirectory itself was being added, not the contents of the subdirectory).
+ * Numerous other directory traversal fixes brought in from updated OP2Utility.
 
 Ver 1.2.0
  * Provide both an x86 and x64 Windows build.
