@@ -16,7 +16,7 @@ int main(int argc, char **argv);
 void SelectCommand(const ConsoleArgs& consoleArgs);
 void OutputHelp();
 
-static string version = "1.2.1";
+static string version = "1.2.2";
 
 int main(int argc, char **argv)
 {

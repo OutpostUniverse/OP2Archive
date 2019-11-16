@@ -83,7 +83,7 @@
       <EnablePREfast>false</EnablePREfast>
     </ClCompile>
     <PostBuildEvent>
-      <Command>SET zipName="OP2Archive Ver1.2.1 "$(Platform)
+      <Command>SET zipName="OP2Archive Ver1.2.2 "$(Platform)
 SET directoryName=$(OutDir)%25zipName%25 
 
 SET pdbDirectoryName=$(OutDir)%25zipName%"_PDB"
@@ -122,7 +122,7 @@ if $(ConfigurationName) == Release (
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <PostBuildEvent>
-      <Command>SET zipName="OP2Archive Ver1.2.1 "$(Platform)
+      <Command>SET zipName="OP2Archive Ver1.2.2 "$(Platform)
 SET directoryName=$(OutDir)%25zipName%25 
 
 SET pdbDirectoryName=$(OutDir)%25zipName%"_PDB"
@@ -168,7 +168,7 @@ if $(ConfigurationName) == Release (
       <SubSystem>Console</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>SET zipName="OP2Archive Ver1.2.1 "$(Platform)
+      <Command>SET zipName="OP2Archive Ver1.2.2 "$(Platform)
 SET directoryName=$(OutDir)%25zipName%25 
 
 SET pdbDirectoryName=$(OutDir)%25zipName%"_PDB"
@@ -211,7 +211,7 @@ if $(ConfigurationName) == Release (
       <SubSystem>Console</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>SET zipName="OP2Archive Ver1.2.1 "$(Platform)
+      <Command>SET zipName="OP2Archive Ver1.2.2 "$(Platform)
 SET directoryName=$(OutDir)%25zipName%25 
 
 SET pdbDirectoryName=$(OutDir)%25zipName%"_PDB"
