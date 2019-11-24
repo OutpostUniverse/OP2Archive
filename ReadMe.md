@@ -1,7 +1,6 @@
-OP2Archive - Outpost 2 Archive Access and Maintenance
-Developed by Hooman and Brett208 (Vagabond)
+# OP2Archive
 
-Allows examining, creating, and extracting files from Outpost 2 .vol and .clm archives. Check the OP2Archive GitHub release page for the newest version at https://github.com/OutpostUniverse/OP2Archive/releases.
+A cross platform utility for unpacking, repacking, and listing the contents of Outpost 2 Archive files (.VOL and .CLM). Check the [OP2Archive GitHub release page](https://github.com/OutpostUniverse/OP2Archive/releases) for the newest version. Developed by Hooman and Brett208 (Vagabond).
 
 OP2Archive is released under a MIT license. See License.txt for details.
 
