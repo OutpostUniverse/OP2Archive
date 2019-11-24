@@ -35,7 +35,7 @@ OP2Archive is released under a MIT license. See License.txt for details.
 For more information about Outpost 2 visit the Outpost Universe (http://outpost2.net/).
 
 
-+ + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + +
+----
 
 
 +++ INSTALL DIRECTIONS +++
