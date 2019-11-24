@@ -5,7 +5,7 @@ Allows examining, creating, and extracting files from Outpost 2 .vol and .clm ar
 
 OP2Archive is released under a MIT license. See License.txt for details.
 
-+++ COMMANDS +++
+## COMMANDS
   * OP2Archive LIST (archivename.(vol|clm) | directory)...
     * Lists the contents and size of all files contained in provided archives.
 
@@ -26,7 +26,7 @@ OP2Archive is released under a MIT license. See License.txt for details.
 
   * OP2Archive REMOVE archiveName.[vol|clm] filename... [-q] [-o]
 
-+++ OPTIONAL ARGUMENTS +++
+## OPTIONAL ARGUMENTS
   -H / --Help / -?: Displays help information.
   -Q / --Quiet: [Default false] Prevents application from issuing console messages.
   -O / --Overwrite: [Default false] Allows application to overwrite existing files.
@@ -38,21 +38,21 @@ For more information about Outpost 2 visit the Outpost Universe (http://outpost2
 ----
 
 
-+++ INSTALL DIRECTIONS +++
+## INSTALL DIRECTIONS
 
 Unzip OP2Archive.exe using a WINZIP compatible decompression algorithm. The typical place to put OP2Archive.exe is in the root OP2 install directory for ease of use, but this is not required.
 
 Open a command prompt. Navigate to the directory containing OP2Archive and type 'OP2Archive -h' to see Usage Message.
 
 
-+++ ARCHIVE (.VOL/.CLM) FILE CREATION BEST PRACTICES +++
+## ARCHIVE (.VOL/.CLM) FILE CREATION BEST PRACTICES
 
 If you wish to overwrite a file currently in an archive file, use the ADD command and include the optional argument -O / --Overwrite to allow overwriting the original file.
 
 The ADD and REMOVE command will create a new temp directory with the name ./OP2ArchiveTemp-(RANDOM INT) to store the contents of the archive file while rebuilding it. The ADD and REMOVE command will also eventually delete the original archive file before rebuilding it. If certain fatal exceptions occur during this process such as a power loss, the original archive file may be lost and/or the temp directory may not be deleted. If you are performing ADD and REMOVE commands on a heavily modified archive file, consider keeping a backup of the file somewhere. For a stock archive, if a fatal error in a critical step of the ADD and REMOVE commands, you can recover the archive file from the Outpost Universe website by redownloading the game.
 
 
-+++ CLM FILES (AUDIO STORAGE) +++
+## CLM FILES (AUDIO STORAGE)
 
 Outpost 2 stores all music tracks except for the main menu track in the archive file op2.clm.
 
@@ -70,7 +70,7 @@ Outpost 2 audio tracks must be formatted as WAV files with the following setting
 The file size of each WAV audio track (the actual wav data) must be zero padded to a multiple of 32768 bytes (0x8000). Output 2 fills the music buffer in 0x8000 size chunks and will not zero fill if a chunk at the end of a file is too short. If the file is not a multiple of 32768 bytes (0x8000), some garbage data will be played in Outpost 2 before switches to the next track.
 
 
-+++ COMPRESSION +++
+## COMPRESSION
 
 Outpost 2 contains references to 3 types of compression, RLE (Run - Length Encoded), LZ (Lempel - Ziv), and LZH (Lempel - Ziv, with adaptive Huffman encoding). 
 
@@ -79,12 +79,12 @@ Only LZH was used in the final release of Outpost 2. Only one archive file was c
 OP2Archive is capable of reading and decompressing archives using LZH compression. However, it currently cannot CREATE archives or modify via the ADD or REMOVE an archive using LZH compression.
 
 
-+++ SOURCE CODE LOCATION AND COMPILIATION +++
+## SOURCE CODE LOCATION AND COMPILIATION
 
 Source code may be found at: https://github.com/OutpostUniverse/OP2Archive. See the file DeveloperReadMe.txt in the source code for specific instructions.
 
 
-+++ CHANGE LOG +++
+## CHANGE LOG
 
 Ver 1.2.2
  * Bug Fix: Make the ADD and REMOVE command work again.
