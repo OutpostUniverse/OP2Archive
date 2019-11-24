@@ -26,10 +26,10 @@ OP2Archive is released under a MIT license. See License.txt for details.
   * `OP2Archive REMOVE archiveName.[vol|clm] filename... [-q] [-o]`
 
 ## OPTIONAL ARGUMENTS
-  `-H` / `--Help` / `-?`: Displays help information.
-  `-Q` / `--Quiet`: [Default false] Prevents application from issuing console messages.
-  `-O` / `--Overwrite`: [Default false] Allows application to overwrite existing files.
-  `-D` / `--DestinationDirectory`: [Default is `./`]. Sets the destination directory for extracted file(s).
+  * `-H` / `--Help` / `-?`: Displays help information.
+  * `-Q` / `--Quiet`: [Default false] Prevents application from issuing console messages.
+  * `-O` / `--Overwrite`: [Default false] Allows application to overwrite existing files.
+  * `-D` / `--DestinationDirectory`: [Default is `./`]. Sets the destination directory for extracted file(s).
 
 For more information about Outpost 2 visit the Outpost Universe (http://outpost2.net/).
 
