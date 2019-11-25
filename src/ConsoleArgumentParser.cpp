@@ -61,7 +61,7 @@ ConsoleCommand ConsoleArgumentParser::ParseCommand(const string& commandStr)
 	if (commandStrUpper == "LIST") {
 		return ConsoleCommand::List;
 	}
-	if (commandStrUpper == "HELP" || commandStrUpper == "-?" || commandStrUpper == "-H") {
+	if (commandStrUpper == "--HELP" || commandStrUpper == "-?" || commandStrUpper == "-H") {
 		return ConsoleCommand::Help;
 	}
 	if (commandStrUpper == "FIND") {
