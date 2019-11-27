@@ -58,11 +58,12 @@ ConsoleCommand ConsoleArgumentParser::ParseCommand(const string& commandStr)
 {
 	string commandStrUpper = StringHelper::ConvertToUpper(commandStr);
 
+	// Allow detection of help switch in command slot position
+	if (commandStrUpper == "--HELP" || commandStrUpper == "-?" || commandStrUpper == "-H") {
+		return ConsoleCommand::Help;
+	}
 	if (commandStrUpper == "LIST") {
 		return ConsoleCommand::List;
-	}
-	if (commandStrUpper == "HELP" || commandStrUpper == "-?" || commandStrUpper == "-H") {
-		return ConsoleCommand::Help;
 	}
 	if (commandStrUpper == "FIND") {
 		return ConsoleCommand::Find;
