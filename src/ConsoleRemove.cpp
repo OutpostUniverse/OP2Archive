@@ -28,7 +28,7 @@ void ConsoleRemove::RemoveCommand(const ConsoleArgs& consoleArgs)
 
 	archive.reset();
 
-	vector<string> filenames = XFile::GetFilenamesFromDirectory(tempDirectory);
+	vector<string> filenames = XFile::DirFiles(tempDirectory);
 
 	for (auto& filename : filenames) {
 		filename = XFile::Append(tempDirectory, filename);

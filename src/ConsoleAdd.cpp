@@ -74,7 +74,7 @@ vector<string> ConsoleAdd::ExtractFilesFromOriginalArchive(const string& archive
 		}
 	}
 
-	auto filenames = XFile::GetFilenamesFromDirectory(tempDirectory);
+	auto filenames = XFile::DirFiles(tempDirectory);
 
 	for (auto& filename : filenames) {
 		filename = XFile::Append(tempDirectory, filename);
