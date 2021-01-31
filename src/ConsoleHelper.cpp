@@ -34,8 +34,8 @@ unique_ptr<ArchiveFile> ConsoleHelper::OpenArchive(const string& archivePath)
 
 vector<string> ConsoleHelper::GetArchiveFilenames(const string& directory)
 {
-	vector<string> archiveFilenames = XFile::DirFilesWithExtension(directory, ".vol");
-	vector<string> clmFilenames = XFile::DirFilesWithExtension(directory, ".clm");
+	auto archiveFilenames = XFile::DirFilesWithExtension(directory, ".vol");
+	auto clmFilenames = XFile::DirFilesWithExtension(directory, ".clm");
 
 	archiveFilenames.insert(std::end(archiveFilenames), std::begin(clmFilenames), std::end(clmFilenames));
 

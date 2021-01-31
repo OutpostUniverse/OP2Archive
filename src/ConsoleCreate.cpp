@@ -124,7 +124,7 @@ void ConsoleCreate::CheckForIllegalFilenames(const std::vector<std::string>& pat
 {
 	for (const auto& path : paths)
 	{
-		std::string filename = XFile::GetFilename(path);
+		auto filename = XFile::GetFilename(path);
 
 		if (StringHelper::ContainsNonAsciiChars(filename)) {
 			throw std::runtime_error("The following filename contains an illegal character and cannot be packed: " + filename + ".");

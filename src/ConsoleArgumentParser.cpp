@@ -3,7 +3,7 @@
 #include <stdexcept>
 
 using namespace std;
-using namespace Archive;
+using namespace OP2Utility::Archive;
 
 ConsoleArgumentParser::ConsoleArgumentParser() 
 {
@@ -17,7 +17,7 @@ ConsoleArgumentParser::ConsoleArgumentParser()
 
 bool ConsoleArgumentParser::FindSwitch(char* argumentChar, ConsoleSwitch& currentSwitch)
 {
-	string argument = StringHelper::ConvertToUpper(argumentChar);
+	auto argument = OP2Utility::StringUtility::ConvertToUpper(argumentChar);
 
 	// Remove trailing colon from switch statements.
 	if (argument.size() > 0 && argument[argument.size() - 1] == ':') {
@@ -56,7 +56,7 @@ ConsoleArgs ConsoleArgumentParser::SortArguments(int argc, char **argv)
 
 ConsoleCommand ConsoleArgumentParser::ParseCommand(const string& commandStr)
 {
-	string commandStrUpper = StringHelper::ConvertToUpper(commandStr);
+	auto commandStrUpper = OP2Utility::StringUtility::ConvertToUpper(commandStr);
 
 	// Allow detection of help switch in command slot position
 	if (commandStrUpper == "--HELP" || commandStrUpper == "-?" || commandStrUpper == "-H") {
@@ -110,7 +110,7 @@ void ConsoleArgumentParser::ParseArgument(char** argv, int& i, int argc, Console
 
 CompressionType ConsoleArgumentParser::ParseCompression(const string& compressionStr)
 {
-	string compressionStrUpper = StringHelper::ConvertToUpper(compressionStr);
+	auto compressionStrUpper = OP2Utility::StringUtility::ConvertToUpper(compressionStr);
 
 	if (compressionStrUpper == "NONE" || compressionStrUpper == "UNCOMPRESSED") {
 		return Archive::CompressionType::Uncompressed;
@@ -130,7 +130,7 @@ CompressionType ConsoleArgumentParser::ParseCompression(const string& compressio
 
 bool ConsoleArgumentParser::ParseBool(const string& str)
 {
-	string upperStr = StringHelper::ConvertToUpper(str);
+	auto upperStr = OP2Utility::StringUtility::ConvertToUpper(str);
 
 	if (upperStr == "TRUE" || upperStr == "YES") {
 		return true;

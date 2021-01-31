@@ -11,8 +11,8 @@ using namespace Archive;
 
 void ConsoleRemove::RemoveCommand(const ConsoleArgs& consoleArgs)
 {
-	string archiveFilename = GetArchiveName(consoleArgs);
-	vector<string> filesToRemove = GetFilesToModify(consoleArgs);
+	auto archiveFilename = GetArchiveName(consoleArgs);
+	auto filesToRemove = GetFilesToModify(consoleArgs);
 	
 	if (!consoleArgs.consoleSettings.quiet) {
 		OutputInitialAddMessage(archiveFilename, filesToRemove.size());
@@ -28,7 +28,7 @@ void ConsoleRemove::RemoveCommand(const ConsoleArgs& consoleArgs)
 
 	archive.reset();
 
-	vector<string> filenames = XFile::DirFiles(tempDirectory);
+	auto filenames = XFile::DirFiles(tempDirectory);
 
 	for (auto& filename : filenames) {
 		filename = XFile::Append(tempDirectory, filename);
@@ -81,7 +81,7 @@ void ConsoleRemove::CheckFilesAvailableToRemove(ArchiveFile& archive, const vect
 	}
 
 	// Unfound filenames are filenames requested for removal that do not exist in the archive.
-	vector<string> unfoundFilenames = StringHelper::RemoveStrings(filesToRemove, internalFilenames);
+	auto unfoundFilenames = StringHelper::RemoveStrings(filesToRemove, internalFilenames);
 
 	if (unfoundFilenames.size() > 0) {
 		ThrowUnfoundFileDuringRemoveException(unfoundFilenames);
@@ -93,9 +93,9 @@ void ConsoleRemove::ExtractFilesFromOriginalArchive(ArchiveFile& archive, const 
 {
 	for (const auto& internalFilename : internalFilenames)
 	{
-		std::size_t index = archive.GetIndex(internalFilename);
+		auto index = archive.GetIndex(internalFilename);
 
-		string pathToExtractTo = XFile::AppendSubDirectory(internalFilename, tempDirectory);
+		auto pathToExtractTo = XFile::AppendSubDirectory(internalFilename, tempDirectory);
 
 		try {
 			archive.ExtractFile(index, pathToExtractTo);
