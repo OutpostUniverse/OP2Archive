@@ -51,7 +51,7 @@ vector<string> ConsoleRemove::RemoveMatchingFilenames(ArchiveFile& archive, cons
 		internalFilenames.push_back(archive.GetName(i));
 	}
 
-	return StringHelper::RemoveStrings(internalFilenames, filesToRemove);
+	return StringUtility::RemoveStrings(internalFilenames, filesToRemove);
 }
 
 void ConsoleRemove::ThrowUnfoundFileDuringRemoveException(const vector<string>& unfoundFilenames)
@@ -81,7 +81,7 @@ void ConsoleRemove::CheckFilesAvailableToRemove(ArchiveFile& archive, const vect
 	}
 
 	// Unfound filenames are filenames requested for removal that do not exist in the archive.
-	auto unfoundFilenames = StringHelper::RemoveStrings(filesToRemove, internalFilenames);
+	auto unfoundFilenames = StringUtility::RemoveStrings(filesToRemove, internalFilenames);
 
 	if (unfoundFilenames.size() > 0) {
 		ThrowUnfoundFileDuringRemoveException(unfoundFilenames);
