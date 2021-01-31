@@ -113,16 +113,16 @@ CompressionType ConsoleArgumentParser::ParseCompression(const string& compressio
 	auto compressionStrUpper = OP2Utility::StringUtility::ConvertToUpper(compressionStr);
 
 	if (compressionStrUpper == "NONE" || compressionStrUpper == "UNCOMPRESSED") {
-		return Archive::CompressionType::Uncompressed;
+		return CompressionType::Uncompressed;
 	}
 	if (compressionStrUpper == "LZ") {
-		return Archive::CompressionType::LZ;
+		return CompressionType::LZ;
 	}
 	if (compressionStrUpper == "LZH") {
-		return Archive::CompressionType::LZH;
+		return CompressionType::LZH;
 	}
 	if (compressionStrUpper == "RLE") {
-		return Archive::CompressionType::RLE;
+		return CompressionType::RLE;
 	}
 
 	throw invalid_argument("Unable to determine compression type. Try None, LZ, LZH, or RLE.");
