@@ -80,6 +80,7 @@
       <AdditionalIncludeDirectories>./OP2Utility; ./OP2Utility/include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <EnablePREfast>false</EnablePREfast>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <PostBuildEvent>
       <Command>SET zipName="OP2Archive Ver1.2.2 "$(Platform)
@@ -119,6 +120,7 @@ if $(ConfigurationName) == Release (
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>./OP2Utility; ./OP2Utility/include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <PostBuildEvent>
       <Command>SET zipName="OP2Archive Ver1.2.2 "$(Platform)
@@ -160,6 +162,7 @@ if $(ConfigurationName) == Release (
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>./OP2Utility; ./OP2Utility/include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -203,6 +206,7 @@ if $(ConfigurationName) == Release (
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>./OP2Utility; ./OP2Utility/include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
