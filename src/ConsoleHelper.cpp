@@ -3,7 +3,8 @@
 #include <stdexcept>
 
 using namespace std;
-using namespace Archive;
+using namespace OP2Utility;
+using namespace OP2Utility::Archive;
 
 const string ConsoleHelper::dashedLine = "--------------------------------------------------";
 

@@ -11,7 +11,7 @@ public:
 	static const std::string dashedLine;
 
 	static bool IsArchiveExtension(const std::string& filename);
-	static std::unique_ptr<Archive::ArchiveFile> OpenArchive(const std::string& archivePath);
+	static std::unique_ptr<OP2Utility::Archive::ArchiveFile> OpenArchive(const std::string& archivePath);
 	static std::vector<std::string> GetArchiveFilenames(const std::string& directory);
 	static void CheckIfPathsEmpty(const std::vector<std::string>& paths);
 	static std::string CreateTempDirectory();

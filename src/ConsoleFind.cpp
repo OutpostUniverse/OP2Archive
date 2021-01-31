@@ -3,6 +3,7 @@
 #include <iostream>
 
 using namespace std;
+using namespace OP2Utility;
 
 void ConsoleFind::FindCommand(const ConsoleArgs& consoleArgs)
 {

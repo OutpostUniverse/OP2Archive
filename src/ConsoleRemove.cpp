@@ -7,7 +7,8 @@
 #include <stdexcept>
 
 using namespace std;
-using namespace Archive;
+using namespace OP2Utility;
+using namespace OP2Utility::Archive;
 
 void ConsoleRemove::RemoveCommand(const ConsoleArgs& consoleArgs)
 {

@@ -5,7 +5,8 @@
 #include <memory>
 
 using namespace std;
-using namespace Archive;
+using namespace OP2Utility;
+using namespace OP2Utility::Archive;
 
 void ConsoleExtract::ExtractCommand(const ConsoleArgs& consoleArgs)
 {

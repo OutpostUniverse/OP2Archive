@@ -5,7 +5,8 @@
 #include <stdexcept>
 
 using namespace std;
-using namespace Archive;
+using namespace OP2Utility;
+using namespace OP2Utility::Archive;
 
 void ConsoleCreate::CreateCommand(const ConsoleArgs& consoleArgs)
 {
