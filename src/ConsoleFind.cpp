@@ -3,6 +3,7 @@
 #include <iostream>
 
 using namespace std;
+using namespace OP2Utility;
 
 void ConsoleFind::FindCommand(const ConsoleArgs& consoleArgs)
 {
@@ -17,9 +18,9 @@ void ConsoleFind::FindFileInArchives(const string& path)
 {
 	ResourceManager resourceManager(XFile::GetDirectory(path));
 
-	const string filename = XFile::GetFilename(path);
+	const auto filename = XFile::GetFilename(path);
 
-	const string archiveFilename = resourceManager.FindContainingArchivePath(filename);
+	const auto archiveFilename = resourceManager.FindContainingArchivePath(filename);
 
 	if (archiveFilename == "") {
 		cout << "The file " << filename << " is not located in an archive at the supplied directory." << endl << endl;

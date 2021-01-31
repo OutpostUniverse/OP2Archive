@@ -5,7 +5,8 @@
 #include <memory>
 
 using namespace std;
-using namespace Archive;
+using namespace OP2Utility;
+using namespace OP2Utility::Archive;
 
 void ConsoleExtract::ExtractCommand(const ConsoleArgs& consoleArgs)
 {
@@ -28,11 +29,11 @@ void ConsoleExtract::ExtractCommand(const ConsoleArgs& consoleArgs)
 
 void ConsoleExtract::ExtractFromDirectory(const string& directory, const ConsoleSettings& consoleSettings)
 {
-	vector<string> archiveFilenames = ConsoleHelper::GetArchiveFilenames(directory);
+	auto archiveFilenames = ConsoleHelper::GetArchiveFilenames(directory);
 
 	for (const auto& archiveFilename : archiveFilenames)
 	{
-		const string archivePath = XFile::Append(directory, archiveFilename);
+		const auto archivePath = XFile::Append(directory, archiveFilename);
 		unique_ptr<ArchiveFile> archive = ConsoleHelper::OpenArchive(archivePath);
 		ExtractAllFiles(*archive, consoleSettings);
 	}
@@ -75,7 +76,7 @@ void ConsoleExtract::ExtractSpecificFile(ArchiveFile& archiveFile, const string&
 		XFile::NewDirectory(consoleSettings.destDirectory);
 	}
 
-	string destPath = XFile::Append(consoleSettings.destDirectory, filenameToExtract);
+	auto destPath = XFile::Append(consoleSettings.destDirectory, filenameToExtract);
 
 	if (!consoleSettings.overwrite) {
 		if (CheckIfFileExists(destPath, consoleSettings.quiet)) {

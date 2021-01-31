@@ -14,7 +14,7 @@ public:
 	void CreateArchiveFile(const std::string& archiveFilename, const std::vector<std::string>& filenames, bool quiet);
 
 private:
-	std::unique_ptr<Archive::ArchiveFile> CreateArchiveTemplate(const std::string& archiveFilename);
+	std::unique_ptr<OP2Utility::Archive::ArchiveFile> CreateArchiveTemplate(const std::string& archiveFilename);
 	std::vector<std::string> GatherFilesForArchive(const std::vector<std::string>& paths);
 	void CheckCreateOverwrite(const std::string& archiveFilename, bool overwrite, bool quiet);
 	void OutputInitialCreateMessage(const std::string& archiveFilename, std::size_t packedFileCount);

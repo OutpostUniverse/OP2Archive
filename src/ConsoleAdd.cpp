@@ -7,7 +7,8 @@
 #include <stdexcept>
 
 using namespace std;
-using namespace Archive;
+using namespace OP2Utility;
+using namespace OP2Utility::Archive;
 
 void ConsoleAdd::AddCommand(const ConsoleArgs& consoleArgs)
 {
@@ -53,7 +54,7 @@ vector<string> ConsoleAdd::ExtractFilesFromOriginalArchive(const string& archive
 
 	for (std::size_t i = 0; i < archive->GetCount(); ++i)
 	{
-		string internalFilename = archive->GetName(i);
+		auto internalFilename = archive->GetName(i);
 
 		bool taggedForOverwrite = ArchivedFileTaggedForOverwrite(internalFilename, internalFilenames);
 

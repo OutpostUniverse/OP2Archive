@@ -5,11 +5,11 @@
 #include <sstream>
 
 using namespace std;
-using namespace Archive;
+using namespace OP2Utility::Archive;
 
 void ArchiveConsoleListing::ListContents(ArchiveFile& archiveFile)
 {
-	string filename = XFile::GetFilename(archiveFile.GetArchiveFilename());
+	auto filename = OP2Utility::XFile::GetFilename(archiveFile.GetArchiveFilename());
 
 	if (archiveFile.GetCount() == 0) {
 		cout << filename << " is empty." << endl << endl;

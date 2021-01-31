@@ -17,7 +17,7 @@ ConsoleModifyBase::ConsoleModifyBase(const string& successMessage)
 ConsoleModifyBase::~ConsoleModifyBase()
 {
 	if (!tempDirectory.empty()) {
-		XFile::DeletePath(tempDirectory);
+		OP2Utility::XFile::DeletePath(tempDirectory);
 	}
 }
 

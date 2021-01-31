@@ -6,7 +6,7 @@
 #include <stdexcept>
 
 using namespace std;
-using namespace Archive;
+using namespace OP2Utility::Archive;
 
 void ConsoleList::ListCommand(const ConsoleArgs& consoleArgs)
 {
@@ -14,7 +14,7 @@ void ConsoleList::ListCommand(const ConsoleArgs& consoleArgs)
 
 	for (const auto& path : consoleArgs.paths)
 	{
-		if (XFile::IsDirectory(path)) {
+		if (OP2Utility::XFile::IsDirectory(path)) {
 			ListAllArchivesInDirectory(path);
 		}
 		else if (ConsoleHelper::IsArchiveExtension(path)) {
@@ -40,6 +40,6 @@ void ConsoleList::ListAllArchivesInDirectory(const string& directory)
 	cout << ConsoleHelper::dashedLine << endl << endl;
 
 	for (const auto& filename : archiveFilenames) {
-		ListArchiveContents(XFile::Append(directory, filename));
+		ListArchiveContents(OP2Utility::XFile::Append(directory, filename));
 	}
 }
