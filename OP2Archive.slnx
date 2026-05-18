@@ -1,0 +1,8 @@
+﻿<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="OP2Archive.vcxproj" Id="ad0a26b1-2194-4d80-af17-76b2f1983843" />
+  <Project Path="OP2Utility/OP2Utility/OP2Utility.vcxproj" Id="980d53d9-f9e2-4682-9307-1303c9e42313" />
+</Solution>
