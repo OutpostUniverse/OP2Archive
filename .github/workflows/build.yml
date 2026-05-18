@@ -1,0 +1,48 @@
+name: Build
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  windows:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [x86, x64]
+        configuration: [Release]
+    runs-on: windows-2025
+    env:
+      Platform: ${{ matrix.platform }}
+      Configuration: ${{ matrix.configuration }}
+      VcpkgManifestInstall: false
+
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        submodules: recursive
+
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v3
+
+    - name: Build
+      run: |
+        msbuild /maxCpuCount
+
+  linux:
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [g++]
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/outpostuniverse/op2utility:1.4
+      env:
+        CXX: ${{ matrix.compiler }}
+
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        submodules: recursive
+
+    - run: make --keep-going
