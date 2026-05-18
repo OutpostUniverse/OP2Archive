@@ -9,7 +9,7 @@ UTILITYBASE := OP2Utility
 UTILITYDIR := OP2Utility
 UTILITYLIB := $(UTILITYDIR)/lib$(UTILITYBASE).a
 
-CPPFLAGS := -I $(UTILITYDIR)/include
+CPPFLAGS := -I $(UTILITYDIR)/OP2Utility/include
 CXXFLAGS := -std=c++17 -g -Wall -Wno-unknown-pragmas
 LDFLAGS := -L$(UTILITYDIR)
 LDLIBS := -l$(UTILITYBASE) -lstdc++fs -lstdc++ -lm
