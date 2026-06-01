@@ -124,3 +124,8 @@ Ver 1.0.1 (07Nov2017)
 
 Ver 1.0.0 (07Oct2017)
  * Initial Release
+
+
+## Windows GUI
+
+Windows GUI tool can be found here: [OP2ArchiveGUI](https://github.com/leviathan400/OP2ArchiveGUI)
